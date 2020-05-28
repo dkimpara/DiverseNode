@@ -27,14 +27,23 @@ def culture_init(g, std_dev, change_vec, dim=10, distance=3.0):
     print(linalg.norm(culture2-culture1, 2)) #check norm worked
     return g
 
-def sample_n_sphere_surface(ndim, change_vec, distance, norm_p=2):
-    vec = random.randn(ndim) #random vector to put distance between cultures
-    vec = vec / linalg.norm(vec, norm_p) #create random vector with norm 1
-    #calculate needed norm based on fixed change coords
-    diff1 = abs(change_vec[0,0]-change_vec[0,1])
-    diff2 = abs(change_vec[1,0]-change_vec[1,1])
+def random_perturb_culture(ndim, change_vec, distance, norm_p=2):
+    """generate random vector with norm of distance keeping change_vec
+    components constant (last two indices)"""
+
+    vec = sample_n_sphere_surface(ndim, norm_p)
+
+    diff1 = abs(change_vec[0, 0]-change_vec[0, 1])
+    diff2 = abs(change_vec[1, 0]-change_vec[1, 1])
     vec *= np.power(distance ** norm_p - diff1 ** norm_p - diff2 ** norm_p,
                     1.0/norm_p)
+    return vec
+
+def sample_n_sphere_surface(ndim, norm_p=2):
+    """sample random vector from S^n-1 with norm_p"""
+
+    vec = random.randn(ndim) #random vector to put distance between cultures
+    vec = vec / linalg.norm(vec, norm_p) #create random vector with norm 1
     return vec
 
 def edge_weight_init(g, distribution='uniform'):
@@ -48,6 +57,6 @@ def generate_density_matrix(intra_edge_density, extra_edge_density):
     assert isinstance(extra_edge_density, float)
     intra = intra_edge_density
     out = extra_edge_density
-    return [[intra, out],[out, intra]]
+    return [[intra, out], [out, intra]]
 
         
