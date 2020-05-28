@@ -14,8 +14,9 @@ def graph_gen(num_groups, num_nodes, intra_edge_density, extra_edge_density):
     g = stochastic_block_model(sizes, p, directed=True, selfloops=False)
     return g
 
-def culture_init(g, std_dev, change_vec, dim=10, distance=3.0, norm_p=2):
-    """change_vec = [[d1,r1][d2,r2]]"""
+def culture_init(g, std_devs, change_vec, dim=10, distance=3.0, norm_p=2):
+    """change_vec = [[d1,r1][d2,r2]]
+        std_devs = [sd_culture, sd_tolerance, sd_culture_change]"""
     culture1 = random.rand(dim)
     culture2 = culture1 + random_perturb_culture(dim, change_vec, distance)
 
@@ -23,9 +24,19 @@ def culture_init(g, std_dev, change_vec, dim=10, distance=3.0, norm_p=2):
     culture2 = np.append(culture2, change_vec[1])
 
     #now init cultures for each node
-
-    
+    for v in g.nodes():
+        if v:
+            c = generate_node_culture(culture1, std_devs)
+        else:
+            c = generate_node_culture(culture2, std_devs)
+        #associate c with v
     return g
+
+def generate_node_culture(culture_center, std_devs):
+    """generate culture for a node given its culture vec"""
+
+    dim = len(culture_center) - 2
+    return culture_center + random.normal(0, dim * [std_devs[0]] + std_devs[1:])
 
 def random_perturb_culture(ndim, change_vec, distance, norm_p=2):
     """generate random vector with norm of distance keeping change_vec
