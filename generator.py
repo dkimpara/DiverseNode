@@ -12,7 +12,8 @@ def graph_gen(num_groups, num_nodes, intra_edge_density, extra_edge_density):
     p = generate_density_matrix(intra_edge_density, extra_edge_density)
     
     g = stochastic_block_model(sizes, p, directed=True, selfloops=False)
-    return g
+
+    return g, culturemat
 
 def culture_init(g, std_devs, change_vec, dim=10, distance=3.0, norm_p=2):
     """change_vec = [[d1,r1][d2,r2]]
@@ -23,10 +24,12 @@ def culture_init(g, std_devs, change_vec, dim=10, distance=3.0, norm_p=2):
     culture1 = np.append(culture1, change_vec[0])
     culture2 = np.append(culture2, change_vec[1])
 
-    #now init cultures for each node
+    #now init cultures for each node as entries in a n x dim+2 matrix
+    culturemat = np.empty([g.number_of_nodes(), dim])
     for v in g.nodes():
-        if v:
-            c = generate_node_culture(culture1, std_devs)
+        noise
+        if v
+
         else:
             c = generate_node_culture(culture2, std_devs)
         #associate c with v
