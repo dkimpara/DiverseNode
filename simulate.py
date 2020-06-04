@@ -37,7 +37,7 @@ def sim_one_iter(g, culturemat):
     return g, culturemat
 
 def pick_interaction(u):
-	v = 1
+
 	return v
 def p_accept(culture_u, culture_v):
 	prob = 1
