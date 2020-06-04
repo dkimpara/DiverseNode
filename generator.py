@@ -1,4 +1,5 @@
-## generate graphs
+## graph_gen generates graph and edge weights
+## culture_init generates the culture matrix
 
 import networkx as nx
 from networkx.generators.community import stochastic_block_model
@@ -35,14 +36,14 @@ def culture_init(g, std_devs, change_vec, dim=10, distance=3.0, norm_p=2):
         elif b[1] == 1:
             culturemat[v] = generate_node_culture(culture2, std_devs[1])
     
-	return g, culturemat
+	return culturemat
 
 def generate_node_culture(culture_center, std_devs):
     """generate culture for a node given its culture vec"""
 	#dimension of culture features
     dim = len(culture_center) - 2
-	#edit std devs in this:
-	noise = np.append(random.normal(0, dim * [std_devs[0]] + std_devs[1:]),[0,0])
+	#generates std devs for entire culture vec (dim*culture) + tol,change
+	noise = random.normal(0, dim * [std_devs[0]] + std_devs[1:])
     #np matrices are all same dtype
 	return culture_center + noise
 
