@@ -28,6 +28,7 @@ def sim_one_iter(g, culturemat):
 		
 		if random.random() < prob_accept:
 			#accept culture
+			#check if edge exists
 			#add node?
 		else:
 			#reject culture
