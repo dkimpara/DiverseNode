@@ -13,33 +13,37 @@ def graph_gen(num_groups, num_nodes, intra_edge_density, extra_edge_density):
     
     g = stochastic_block_model(sizes, p, directed=True, selfloops=False)
 
-    return g, culturemat
+    return g#, culturemat
 
 def culture_init(g, std_devs, change_vec, dim=10, distance=3.0, norm_p=2):
     """change_vec = [[d1,r1][d2,r2]]
-        std_devs = [sd_culture, sd_tolerance, sd_culture_change]"""
+        std_devs = [sd_culture1, sd_tolerance1, sd_culture_change1],[cult2"""
     culture1 = random.rand(dim)
     culture2 = culture1 + random_perturb_culture(dim, change_vec, distance)
 
     culture1 = np.append(culture1, change_vec[0])
     culture2 = np.append(culture2, change_vec[1])
-
+	#vec is dim+2
+	
     #now init cultures for each node as entries in a n x dim+2 matrix
-    culturemat = np.empty([g.number_of_nodes(), dim])
-    for v in g.nodes():
-        noise
-        if v
-
-        else:
-            c = generate_node_culture(culture2, std_devs)
-        #associate c with v
-    return g
+    culturemat = np.empty([g.number_of_nodes(), dim + 2])
+ 
+	for v, b in g.nodes(data='block'):
+        if b[1] == 0:
+			culturemat[v] = generate_node_culture(culture1, std_devs[0])
+        elif b[1] == 1:
+            culturemat[v] = generate_node_culture(culture2, std_devs[1])
+    
+	return g, culturemat
 
 def generate_node_culture(culture_center, std_devs):
     """generate culture for a node given its culture vec"""
-
+	#dimension of culture features
     dim = len(culture_center) - 2
-    return culture_center + random.normal(0, dim * [std_devs[0]] + std_devs[1:])
+	#edit std devs in this:
+	noise = np.append(random.normal(0, dim * [std_devs[0]] + std_devs[1:]),[0,0])
+    #np matrices are all same dtype
+	return culture_center + noise
 
 def random_perturb_culture(ndim, change_vec, distance, norm_p=2):
     """generate random vector with norm of distance keeping change_vec
