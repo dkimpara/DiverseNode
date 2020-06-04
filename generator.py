@@ -7,13 +7,14 @@ from numpy import random, linalg
 
 def graph_gen(num_groups, num_nodes, intra_edge_density, extra_edge_density):
     """num_groups is number of nodes in each group
-    num_nodes uses SBM as graph generator"""
+    num_nodes uses SBM as graph generator
+	initializes graph and edge weights """
     sizes = [int(num_nodes/num_groups)] * 2
     p = generate_density_matrix(intra_edge_density, extra_edge_density)
     
     g = stochastic_block_model(sizes, p, directed=True, selfloops=False)
-
-    return g#, culturemat
+    g = edge_weight_init(g)
+	return g
 
 def culture_init(g, std_devs, change_vec, dim=10, distance=3.0, norm_p=2):
     """change_vec = [[d1,r1][d2,r2]]
@@ -28,7 +29,7 @@ def culture_init(g, std_devs, change_vec, dim=10, distance=3.0, norm_p=2):
     #now init cultures for each node as entries in a n x dim+2 matrix
     culturemat = np.empty([g.number_of_nodes(), dim + 2])
  
-	for v, b in g.nodes(data='block'):
+	for v, b in g.nodes(data='block'): #iterate thru vtx, group pairs
         if b[1] == 0:
 			culturemat[v] = generate_node_culture(culture1, std_devs[0])
         elif b[1] == 1:
@@ -67,8 +68,8 @@ def sample_n_sphere_surface(ndim, norm_p=2):
     return vec
 
 def edge_weight_init(g, distribution='uniform'):
-    for edge in g.edges():
-        g.edges[edge]['weight'] = random.uniform(0.1)
+    for u,v,d in g.edges(data=True):
+        d['weight'] = random.uniform(0.1)
     return g
 
 # noinspection PyStatementEffect
