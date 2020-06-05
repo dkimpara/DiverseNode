@@ -26,4 +26,6 @@ class Components:
 
     def find_component(self, u):
         """returns connected component of u as set"""
-        return self.uf[u]
+        for c in self.uf.to_sets():
+            if u in c:
+                return c

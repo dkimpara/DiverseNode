@@ -1,30 +1,31 @@
 #simulate dynamics on graph
 
-#global connected component class?
-#optimize by making g,culturemat global?
+#optimize by making g,culturemat,ccomp datastruct?
 import random
+import networkx as nx
+from conComp import Components
 
-def simulate_iterstop(g, iter=500):
+def simulate_iterstop(g, culturemat, iter=500):
     '''input graph g with initialized culture state, edge weights,'''
-
+    ccomp = Components(g)
     for i in range(iter):
-        g, culturemat = sim_one_iter(g, culturemat)
+        g, culturemat, ccomp = sim_one_iter(g, culturemat, ccomp)
 
     #write adj matrix and culture vec to file
     return g #for prototyping purposes.
 
-def sim_one_iter(g, culturemat):
-	
+def sim_one_iter(g, culturemat, ccomp):
+
 	#determine random sequence of individuals
 	nodeList = list(g.nodes)
 	random.shuffle(nodeList)
 	
 	for u in nodeList:
 		#pick interaction randomly
-		v  = pick_interaction(u) #with connected component class
+		v, g, ccomp  = pick_interaction(u, g, ccomp) #use connected component class
 		
 		#carry out interaction
-		prob_accept = p_accept(culturemat[u],culturemat[v])
+		prob_accept, = p_accept(culturemat[u],culturemat[v])
 		
 		if random.random() < prob_accept:
 			#accept culture
@@ -34,11 +35,29 @@ def sim_one_iter(g, culturemat):
 			#reject culture
 			#check for node to remove
 	
-    return g, culturemat
+    return g, culturemat, ccomp
 
-def pick_interaction(u):
 
-	return v
+# noinspection PyUnreachableCode
+def pick_interaction(u, g, ccomp):
+	if random.random() < 0.99:
+		#interact with random incoming nbrs
+		v = random.choice(list(g.predecessors(u)))
+	else: #interact with ccomp random
+		v = random.choice(ccomp.find_component(u))
+
+	g, ccomp = check_create_edge(v, u, g, ccomp)
+	return v, g, ccomp
+
+def check_create_edge(v, u, g, ccomp): #create dir edge from v to u
+	if (v, u) not in g.edges:
+		g.add_edge(v, u)
+		g[v, u]['weight'] = 0.01
+
+		#modify connected comp
+		ccomp.merge(u, v)
+	return g, ccomp
+
 def p_accept(culture_u, culture_v):
 	prob = 1
 	return prob
