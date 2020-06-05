@@ -31,12 +31,13 @@ def sim_one_iter(g, culturemat, ccomp):
 			#accept culture
 			#check if edge exists
 			#add node?
+			pass
 		else:
 			#reject culture
 			#check for node to remove
+			pass
 	
-    return g, culturemat, ccomp
-
+	return g, culturemat, ccomp
 
 # noinspection PyUnreachableCode
 def pick_interaction(u, g, ccomp):
@@ -52,7 +53,7 @@ def pick_interaction(u, g, ccomp):
 def check_create_edge(v, u, g, ccomp): #create dir edge from v to u
 	if (v, u) not in g.edges:
 		g.add_edge(v, u)
-		g[v, u]['weight'] = 0.01
+		g.edges[v, u]['weight'] = 0.01
 
 		#modify connected comp
 		ccomp.merge(u, v)
