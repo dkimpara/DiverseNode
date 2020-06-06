@@ -13,11 +13,11 @@ def simulate_iterstop(g, culturemat, iter=500):
     for i in range(iter):
         g, culturemat, ccomp = sim_one_iter(g, culturemat, ccomp)
 
-	# write adj matrix and culture vec to file
+    # write adj matrix and culture vec to file
     return g  # for prototyping purposes.
 
 
-def sim_one_iter(g, culturemat, ccomp):
+def sim_one_iter(g, culturemat, ccomp, culture_change_all=False):
     # determine random sequence of individuals
     nodeList = list(g.nodes)
     random.shuffle(nodeList)
@@ -27,17 +27,17 @@ def sim_one_iter(g, culturemat, ccomp):
         v, g, ccomp = pick_interaction(u, g, ccomp)  # use connected component class
 
         # carry out interaction
-        prob_accept = p_accept(culturemat[u], culturemat[v])
+        prob_accept = p_accept(culturemat[u], culturemat[v], culture_change_all)
 
         if random.random() < prob_accept:
             # accept culture
-            # check if edge exists
-            # add node?
-            pass
+            culturemat = update_culture(u, v, culturemat, culture_change_all)
+            # update edge
+            g = increase_edge(u, v, g)
         else:
-            # reject culture
+            # reject culture no update to culturemat
             # check for node to remove
-            pass
+            g, ccomp = decrease_edge(u, v, g, ccomp)
 
     return g, culturemat, ccomp
 
@@ -64,8 +64,55 @@ def check_create_edge(v, u, g, ccomp):  # create dir edge from v to u
     return g, ccomp
 
 
-def p_accept(culture_u, culture_v, norm_p=2):
-    prob = 1
+def p_accept(culture_u, culture_v, culture_change_all, norm_p=2):
     d = culture_u[-2]
-    dist = linalg.norm(culture_u - culture_v, norm_p)
+    if culture_change_all:  # entire culture vec change
+        dist = linalg.norm(culture_u - culture_v, norm_p)
+    else:  # only original culture vec change (as in sayama)
+        dist = linalg.norm(culture_u[:-2] - culture_v[:-2], norm_p)
+
     return 0.5 ** (dist / d)
+
+
+def update_culture(node, other_node, culturemat, culture_change_all):
+    r_s = culturemat[node, -1]  # rate of cultural state change for node u
+
+    if culture_change_all:
+        culturemat[node] = (1 - r_s) * culturemat[node] \
+                           + r_s * culturemat[other_node]
+    else:  # update as in sayama
+        culturemat[node, :-2] = (1 - r_s) * culturemat[node, :-2] \
+                                + r_s * culturemat[other_node, :-2]
+    return culturemat
+
+
+def increase_edge(u, v, g):
+    """if the received culture is accepted, function to update edge weight"""
+    weight_vu = g.edges[v, u]['weight']
+    # TODO: extract graph level property r_w rate of edge change
+
+    # TODO: update weight with logistic
+
+    # no need to check for edge removal
+    return g
+
+
+def decrease_edge(u, v, g, ccomp):
+    weight_vu = g.edges[v, u]['weight']
+    # TODO: extract graph level property r_w rate of edge change
+
+    # TODO: update weight with logistic
+
+    # check for edge removal and update g and ccomp
+    if weight_vu < 0.01:  # remove edge
+        g.remove_edge(v, u)
+        assert isinstance(ccomp, Components)
+        ccomp.split(g)
+
+    return g, ccomp
+
+
+
+
+
+
