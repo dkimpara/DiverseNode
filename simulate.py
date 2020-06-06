@@ -36,7 +36,7 @@ def sim_one_iter(g, culturemat, ccomp, culture_change_all=False):
             g = increase_edge(u, v, g)
         else:
             # reject culture no update to culturemat
-            # check for node to remove
+            # update edge and check for edge to remove
             g, ccomp = decrease_edge(u, v, g, ccomp)
 
     return g, culturemat, ccomp
