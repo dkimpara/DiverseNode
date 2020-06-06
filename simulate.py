@@ -16,7 +16,7 @@ def simulate_iterstop(g, culturemat, iter=500):
     # write adj matrix and culture vec to file
     return g  # for prototyping purposes.
 
-
+# TODO: test
 def sim_one_iter(g, culturemat, ccomp, culture_change_all=False):
     # determine random sequence of individuals
     nodeList = list(g.nodes)
@@ -63,7 +63,7 @@ def check_create_edge(v, u, g, ccomp):  # create dir edge from v to u
         ccomp.merge(u, v)
     return g, ccomp
 
-
+# TODO: test
 def p_accept(culture_u, culture_v, culture_change_all, norm_p=2):
     d = culture_u[-2]
     if culture_change_all:  # entire culture vec change
@@ -73,7 +73,7 @@ def p_accept(culture_u, culture_v, culture_change_all, norm_p=2):
 
     return 0.5 ** (dist / d)
 
-
+# TODO: test
 def update_culture(node, other_node, culturemat, culture_change_all):
     r_s = culturemat[node, -1]  # rate of cultural state change for node u
 
@@ -85,7 +85,7 @@ def update_culture(node, other_node, culturemat, culture_change_all):
                                 + r_s * culturemat[other_node, :-2]
     return culturemat
 
-
+# TODO: test
 def increase_edge(u, v, g):
     """if the received culture is accepted, function to update edge weight"""
     weight_vu = g.edges[v, u]['weight']
@@ -96,7 +96,7 @@ def increase_edge(u, v, g):
     # no need to check for edge removal
     return g
 
-
+# TODO: test
 def decrease_edge(u, v, g, ccomp):
     weight_vu = g.edges[v, u]['weight']
     # TODO: extract graph level property r_w rate of edge change
