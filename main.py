@@ -23,14 +23,23 @@ def main_sayama():  #for running sayama experiments
 	param_grid = {'std_d': values, 'std_rs': values, 'std_rw': values}
 	grid = ParameterGrid(param_grid)
 	for params in grid:
+		graphs = []
+		cultures = []
+		dev = [0.1, params['std_d'], params['std_rs'], params['std_rw']]
+		std_devs = [dev, dev]
+
 		for i in range(100):  #100 iters per param setting
-			dev = [0.1, params['std_d'], params['std_rs'], params['std_rw']]
-			std_devs = [dev, dev]
+
 			g, culturemat = run_sayama_sim(std_devs)
 
 			# analyze+extract each run
-			analyze(g, culturemat)
+			analyze(g, culturemat) #todo use dataframe for this
+
+			graphs.append(g)
+			cultures.append(culturemat)
+
 		# save each parameter iteration
+		store_graphs_cultures(graphs,cultures, str(dev) + sayama)
 
 
 
@@ -48,7 +57,7 @@ def run_sayama_sim(std_devs):
 def analyze(g, culturemat):  # for analysis of sayama sim
     pass
 
-def pickle(graphs, cultures, filename):  # pickle a bunch of graphs and cultures
+def store_graphs_cultures(graphs, cultures, filename):  # pickle a bunch of graphs and cultures
     pass
 
 
