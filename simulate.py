@@ -5,6 +5,7 @@ import random
 import networkx as nx
 from conComp import Components
 from numpy import linalg
+import math
 
 
 def simulate_iterstop(g, culturemat, iter=500):
@@ -15,6 +16,7 @@ def simulate_iterstop(g, culturemat, iter=500):
 
     # write adj matrix and culture vec to file
     return g, culturemat  # for prototyping purposes.
+
 
 # TODO: test
 def sim_one_iter(g, culturemat, ccomp, culture_change_all=False):
@@ -29,20 +31,20 @@ def sim_one_iter(g, culturemat, ccomp, culture_change_all=False):
         # carry out interaction
         prob_accept = p_accept(culturemat[u], culturemat[v], culture_change_all)
 
+        r_w = culturemat[u, -1]  # edge rate change for receiving node
         if random.random() < prob_accept:
             # accept culture
             culturemat = update_culture(u, v, culturemat, culture_change_all)
             # update edge
-            g = increase_edge(u, v, g)
+            g = increase_edge(u, v, g, r_w)
         else:
             # reject culture no update to culturemat
             # update edge and check for edge to remove
-            g, ccomp = decrease_edge(u, v, g, ccomp)
+            g, ccomp = decrease_edge(u, v, g, ccomp, r_w)
 
     return g, culturemat, ccomp
 
 
-# noinspection PyUnreachableCode
 def pick_interaction(u, g, ccomp):
     if random.random() < 0.99:
         # interact with random incoming nbrs
@@ -50,11 +52,11 @@ def pick_interaction(u, g, ccomp):
     else:  # interact with ccomp random
         v = random.choice(ccomp.find_component(u))
 
-    g, ccomp = check_create_edge(v, u, g, ccomp)
+    g, ccomp = check_create_edge(u, v, g, ccomp)
     return v, g, ccomp
 
 
-def check_create_edge(v, u, g, ccomp):  # create dir edge from v to u
+def check_create_edge(u, v, g, ccomp):  # create dir edge from v to u
     if (v, u) not in g.edges:
         g.add_edge(v, u)
         g.edges[v, u]['weight'] = 0.01
@@ -63,56 +65,61 @@ def check_create_edge(v, u, g, ccomp):  # create dir edge from v to u
         ccomp.merge(u, v)
     return g, ccomp
 
+
 # TODO: test
 def p_accept(culture_u, culture_v, culture_change_all, norm_p=2):
-    d = culture_u[-2]
+    d = culture_u[-3]
     if culture_change_all:  # entire culture vec change
         dist = linalg.norm(culture_u - culture_v, norm_p)
     else:  # only original culture vec change (as in sayama)
-        dist = linalg.norm(culture_u[:-2] - culture_v[:-2], norm_p)
+        dist = linalg.norm(culture_u[:-3] - culture_v[:-3], norm_p)
 
     return 0.5 ** (dist / d)
 
+
 # TODO: test
 def update_culture(node, other_node, culturemat, culture_change_all):
-    r_s = culturemat[node, -1]  # rate of cultural state change for node u
+    r_s = culturemat[node, -2]  # rate of cultural state change for node u
 
-    if culture_change_all:
+    if culture_change_all:  # update entire culturemat row
         culturemat[node] = (1 - r_s) * culturemat[node] \
                            + r_s * culturemat[other_node]
     else:  # update as in sayama
-        culturemat[node, :-2] = (1 - r_s) * culturemat[node, :-2] \
-                                + r_s * culturemat[other_node, :-2]
+        culturemat[node, :-3] = (1 - r_s) * culturemat[node, :-3] \
+                                + r_s * culturemat[other_node, :-3]
     return culturemat
 
+
 # TODO: test
-def increase_edge(u, v, g):
+def increase_edge(u, v, g, r_w):
     """if the received culture is accepted, function to update edge weight"""
     weight_vu = g.edges[v, u]['weight']
-    # TODO: extract graph level property r_w rate of edge change
-
     # TODO: update weight with logistic
-
+    g.edges[v, u]['weight'] = sigmoid(logit(weight_vu) + r_w)
     # no need to check for edge removal
     return g
 
+
 # TODO: test
-def decrease_edge(u, v, g, ccomp):
+def decrease_edge(u, v, g, ccomp, r_w):
     weight_vu = g.edges[v, u]['weight']
-    # TODO: extract graph level property r_w rate of edge change
 
     # TODO: update weight with logistic
-
+    weight_vu = sigmoid(logit(weight_vu) - r_w)
     # check for edge removal and update g and ccomp
     if weight_vu < 0.01:  # remove edge
         g.remove_edge(v, u)
         assert isinstance(ccomp, Components)
         ccomp.split(g)
+    else:
+        g.edges[v, u]['weight'] = weight_vu
 
     return g, ccomp
 
 
+def logit(x):
+    return math.log(1 / (1 - x))
 
 
-
-
+def sigmoid(x):
+    return 1 / (1 + math.exp(-x))

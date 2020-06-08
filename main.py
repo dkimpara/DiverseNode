@@ -24,7 +24,7 @@ def main_sayama():  #for running sayama experiments
 	grid = ParameterGrid(param_grid)
 	for params in grid:
 		for i in range(100):  #100 iters per param setting
-			dev = [0.1, params['std_d'], params['std_rs']]
+			dev = [0.1, params['std_d'], params['std_rs'], params['std_rw']]
 			std_devs = [dev, dev]
 			g, culturemat = run_sayama_sim(std_devs)
 
@@ -35,13 +35,14 @@ def main_sayama():  #for running sayama experiments
 
 
 def run_sayama_sim(std_devs):
-	change_vec = [[0.5, 0.5], [0.5, 0.5]]
+	change_vec = [[0.5, 0.5, 0.5], [0.5, 0.5, 0.5]]
 	#need to integrate edge change rate
 
 	g = generator.graph_gen(2, 50, 0.2, 0.02)
 	culturemat = generator.culture_init(g, std_devs, change_vec)
 	g, culturemat = simulate.simulate_iterstop(g, culturemat)
 
+	return g, culturemat
 
 
 def analyze(g, culturemat):  # for analysis of sayama sim
