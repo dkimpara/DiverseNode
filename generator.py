@@ -21,17 +21,17 @@ def graph_gen(num_groups, num_nodes, intra_edge_density, extra_edge_density):
 
 
 def culture_init(g, std_devs, change_vec, dim=10, distance=3.0, norm_p=2):
-    """change_vec = [[d1,r1][d2,r2]]
-        std_devs = [sd_culture1, sd_tolerance1, sd_culture_change1],[cult2"""
+    """change_vec = [[d1,r1,w1][d2,r2,w2]]
+        std_devs = [sd_culture1, sd_tolerance1, sd_culture_change1, sd w1],[cult2"""
     culture1 = random.rand(dim)
     culture2 = culture1 + random_perturb_culture(dim, change_vec, distance)
 
     culture1 = np.append(culture1, change_vec[0])
     culture2 = np.append(culture2, change_vec[1])
-    # vec is dim+2
+    # vec is dim+3
 
-    # now init cultures for each node as entries in a n x dim+2 matrix
-    culturemat = np.empty([g.number_of_nodes(), dim + 2])
+    # now init cultures for each node as entries in a n x dim+3 matrix
+    culturemat = np.empty([g.number_of_nodes(), dim + 3])
 
     for v, b in g.nodes(data='block'):  # iterate thru vtx, group pairs
         if b[1] == 0:
@@ -43,9 +43,9 @@ def culture_init(g, std_devs, change_vec, dim=10, distance=3.0, norm_p=2):
 
 
 def generate_node_culture(culture_center, std_devs):
-    """generate culture for a node given its culture vec"""
+    """generate culture for a node given its culture center vec"""
     # dimension of culture features
-    dim = len(culture_center) - 2
+    dim = len(culture_center) - 3
     # generates std devs for entire culture vec (dim*culture) + tol,change
     noise = random.normal(0, dim * [std_devs[0]] + std_devs[1:])
     # np matrices are all same dtype
@@ -60,9 +60,11 @@ def random_perturb_culture(ndim, change_vec, distance, norm_p=2):
 
     diff1 = abs(change_vec[0][0] - change_vec[1][0])
     diff2 = abs(change_vec[0][1] - change_vec[1][1])
-    vec *= np.power(np.power(distance, norm_p)
-                    - np.power(diff1, norm_p)
-                    - np.power(diff2, norm_p),
+    diff3 = abs(change_vec[0][2] - change_vec[1][2])
+    vec *= np.power(distance ** norm_p
+                    - diff1 ** norm_p
+                    - diff2 ** norm_p
+                    - diff3 ** norm_p,
                     1.0 / norm_p)
     return vec
 

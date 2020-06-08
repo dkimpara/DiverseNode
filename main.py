@@ -5,32 +5,43 @@ import simulate
 import networkx as nx
 import pickle as pk
 import numpy as np
+from sklearn.model_selection import ParameterGrid
 
 
 # TODO: create i/o pipeline for experiments have nx.graph and culturemat
 # use graph tool compatible formats “graphml”, or “gml” or pickle? try
 # first
 # need to figure out params to extract via nx to save on r/w time
-# todo: use multiprocess and sklearn
+# todo: use multiprocess
+
 
 def main_sayama():  #for running sayama experiments
-	"""change_vec = [[d1,r1][d2,r2]] (means of params d, culturechange)
-	    std_devs = [sd_culture1, sd_tolerance1, sd_culture_change1],[cult2"""
-	g = generator.graph_gen(2, 50, 0.2, 0.02)
+	"""change_vec = [[d1,r1,w1][d2,r2,w2]] (means of params d, culturechange)
+	    std_devs = [sd_culture1, sd_tolerance1, sd_culture_change1, sd_w1],[cult2"""
+
+	values = np.linspace(0.0, 0.5, 6)
+	param_grid = {'std_d': values, 'std_rs': values, 'std_rw': values}
+	grid = ParameterGrid(param_grid)
+	for params in grid:
+		for i in range(100):  #100 iters per param setting
+			dev = [0.1, params['std_d'], params['std_rs']]
+			std_devs = [dev, dev]
+			g, culturemat = run_sayama_sim(std_devs)
+
+			# analyze+extract each run
+			analyze(g, culturemat)
+		# save each parameter iteration
+
+
+
+def run_sayama_sim(std_devs):
 	change_vec = [[0.5, 0.5], [0.5, 0.5]]
 	#need to integrate edge change rate
 
-	#vary std_devs from 0.0 to 0.5 intervals of 0.1
-	std_values = np.linspace(0.0, 0.5, 6)
-	for std_d in std_values:
-		for std_rs in std_values:
-			for std_rw in std_values:
-				dev = [0.1, std_d, std_rs]
-				std_devs = [dev, dev]
-				run_s
+	g = generator.graph_gen(2, 50, 0.2, 0.02)
+	culturemat = generator.culture_init(g, std_devs, change_vec)
+	g, culturemat = simulate.simulate_iterstop(g, culturemat)
 
-				culturemat = generator.culture_init(g, std_devs, change_vec)
-				g, culturemat = simulate.simulate_iterstop(g, culturemat)
 
 
 def analyze(g, culturemat):  # for analysis of sayama sim
@@ -42,9 +53,3 @@ def pickle(graphs, cultures, filename):  # pickle a bunch of graphs and cultures
 
 
 '''sklearn example:
-from sklearn.model_selection import ParameterGrid
-values = np.linspace(0.0, 0.5, 6)
-param_grid = {'a': values, 'b' : values}
-grid = ParameterGrid(param_grid)
-for params in grid:
-    print(params['a'],params['b'])'''
