@@ -14,7 +14,7 @@ def simulate_iterstop(g, culturemat, iter=500):
         g, culturemat, ccomp = sim_one_iter(g, culturemat, ccomp)
 
     # write adj matrix and culture vec to file
-    return g  # for prototyping purposes.
+    return g, culturemat  # for prototyping purposes.
 
 # TODO: test
 def sim_one_iter(g, culturemat, ccomp, culture_change_all=False):
