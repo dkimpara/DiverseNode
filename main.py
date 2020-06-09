@@ -1,4 +1,5 @@
 # helper functions for running sayama et all experiments
+from typing import Dict, List, Any, Union
 
 import generator
 import simulate
@@ -54,18 +55,17 @@ def run_sayama_sim(std_devs):
 
 
 def analyze(g, culturemat, culture_change_all, norm=2):  # for analysis of sayama sim
-    dataDict = {}
-    dataDict['diam'] = nx.diameter(g)
-    dataDict['degrees'] = sorted([d for n, d in g.degree()], reverse=True)
-    dataDict['clusterCoeff'] = nx.average_clustering(g)
-    dataDict['reciprocity'] = nx.reciprocity(g)
+    data_dict = {'diam': nx.diameter(g),
+                 'degrees': sorted([d for n, d in g.degree()], reverse=True),
+                 'clusterCoeff': nx.average_clustering(g),
+                 'reciprocity': nx.reciprocity(g)}
     giant = max(nx.connected_components(g), key=len)
-    dataDict['giantComponent'] = len(giant) / len(g.nodes())
+    data_dict['giantComponent'] = len(giant) / len(g.nodes())
 
-    dataDict['SPL'] = nx.average_shortest_path_length(g)
-    dataDict['CD'] = culture_distance(g, culturemat, culture_change_all, norm)
+    data_dict['SPL'] = nx.average_shortest_path_length(g)
+    data_dict['CD'] = culture_distance(g, culturemat, culture_change_all, norm)
 
-    return dataDict
+    return data_dict
 
 
 def culture_distance(g, culturemat, culture_change_all, norm):
@@ -82,7 +82,7 @@ def culture_distance(g, culturemat, culture_change_all, norm):
         for u in b1:
             for v in b2:
                 distance += np.linalg.norm(culturemat[u, :-3]
-                                   - culturemat[v, :-3], norm)
+                                           - culturemat[v, :-3], norm)
     return distance / (len(b1) * len(b2))
 
 
