@@ -94,7 +94,7 @@ def update_culture(node, other_node, culturemat, culture_change_all):
 def increase_edge(u, v, g, r_w):
     """if the received culture is accepted, function to update edge weight"""
     weight_vu = g.edges[v, u]['weight']
-    # TODO: update weight with logistic
+    # update weight
     g.edges[v, u]['weight'] = sigmoid(logit(weight_vu) + r_w)
     # no need to check for edge removal
     return g
@@ -104,7 +104,7 @@ def increase_edge(u, v, g, r_w):
 def decrease_edge(u, v, g, ccomp, r_w):
     weight_vu = g.edges[v, u]['weight']
 
-    # TODO: update weight with logistic
+    # update weight
     weight_vu = sigmoid(logit(weight_vu) - r_w)
     # check for edge removal and update g and ccomp
     if weight_vu < 0.01:  # remove edge
