@@ -7,6 +7,7 @@ import networkx as nx
 import pickle as pk
 import os
 import numpy as np
+import pandas as pd
 from sklearn.model_selection import ParameterGrid
 
 
@@ -19,9 +20,11 @@ from sklearn.model_selection import ParameterGrid
 def main_sayama():  # for running sayama experiments
     """change_vec = [[d1,r1,w1][d2,r2,w2]] (means of params d, culturechange)
         std_devs = [sd_culture1, sd_tolerance1, sd_culture_change1, sd_w1],[cult2"""
+
     values = np.linspace(0.0, 0.5, 6)
     param_grid = {'std_d': values, 'std_rs': values, 'std_rw': values}
     grid = ParameterGrid(param_grid)
+    data = []
     for params in grid:
         graphs = []
         cultures = []
@@ -31,24 +34,37 @@ def main_sayama():  # for running sayama experiments
         for i in range(100):  # 100 iters per param setting
 
             g, culturemat = run_sayama_sim(std_devs)
-
-            # analyze+extract each run
-            dataDict = analyze(g, culturemat, False)  # todo use dataframe for this, store frame?
-            # load to dataframe
-
             graphs.append(g)
             cultures.append(culturemat)
+
+            # analyze+extract each run
+            dataDict = analyze(g, culturemat, False)
+            dataDict['std_d'] = params['std_d']
+            dataDict['std_rs'] = params['std_rs']
+            dataDict['std_rw'] = params['std_rw'] #no need to store anything else cuz sayama base sim
+
+            data.append(dataDict) #add to list of dicts to be turned into dataframe
+
 
         # save graphs for each parameter setting (100 trials)
         sayamaChangeVec = [[0.5, 0.5, 0.5], [0.5, 0.5, 0.5]]
         store_graphs_cultures(graphs, cultures, std_devs, sayamaChangeVec,
                               'sayama', str(dev))
+    df = pd.DataFrame(data)
+    df.name = 'Sayama'
+    df.to_pickle("./tests/df_" + df.name)
 
+    '''to unpickle:
+    df =pd.read_pickle("./dummy.pkl")
+    '''
 
 def run_sayama_sim(std_devs):
+    #generate
     change_vec = [[0.5, 0.5, 0.5], [0.5, 0.5, 0.5]]
     g = generator.graph_gen(2, 50, 0.2, 0.02)
     culturemat = generator.culture_init(g, std_devs, change_vec)
+
+    #simulate
     g, culturemat = simulate.simulate_iterstop(g, culturemat)
 
     return g, culturemat
@@ -86,8 +102,9 @@ def culture_distance(g, culturemat, culture_change_all, norm):
     return distance / (len(b1) * len(b2))
 
 
-def store_graphs_cultures(graphs, cultures, std_devs, change_vec, subdir,
-                          filename):  # pickle a bunch of graphs and cultures
+def store_graphs_cultures(graphs: nx.DiGraph, cultures: np.ndarray,
+                          std_devs: list, change_vec: list, subdir: str,
+                          filename: str) -> None:  # pickle a bunch of graphs and cultures
     dataDict = {'graphs': graphs, 'cultures': cultures,
                 'change1': change_vec[0], 'change2': change_vec[1],
                 'std1': std_devs[0], 'std2': std_devs[1]}
