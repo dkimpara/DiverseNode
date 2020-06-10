@@ -9,12 +9,28 @@ import os
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import ParameterGrid
-
+from multiprocessing import Pool
 
 # use graph tool compatible formats “graphml”, or “gml” or pickle? try
 # first
 # need to figure out params to extract via nx to save on r/w time
 # todo: use multiprocess
+
+if __name__ == '__main__':
+    p = Pool(3)
+    print(p.map(main_sayama, [1, 2, 3]))
+
+
+def run_one_sim(std_devs):
+    g, culturemat = run_sayama_sim(std_devs)
+
+    # analyze run
+    dataDict = analyze(g, culturemat, False)
+    dataDict['std_d'] = params['std_d']
+    dataDict['std_rs'] = params['std_rs']
+    dataDict['std_rw'] = params['std_rw']  # no need to store anything else cuz sayama base sim
+
+    return g, culturemat, dataDict
 
 
 def main_sayama():  # for running sayama experiments
@@ -24,15 +40,16 @@ def main_sayama():  # for running sayama experiments
     values = np.linspace(0.0, 0.5, 6)
     param_grid = {'std_d': values, 'std_rs': values, 'std_rw': values}
     grid = ParameterGrid(param_grid)
-    data = []
+    data: List[Any] = []
     for params in grid:
-        graphs = []
-        cultures = []
         dev = [0.1, params['std_d'], params['std_rs'], params['std_rw']]
         std_devs = [dev, dev]
+        data_per_iter = []
+        with Pool(processes=os.cpu_count() - 1) as pool:
+            data_per_iter = pool.imap_unordered(run_one_sim, std_devs * 100)  # run 100 iters, async
+            #  data is a list of tuples, one tuple g,culturemat, dataDict for each run
 
-        for i in range(100):  # 100 iters per param setting
-
+            '''
             g, culturemat = run_sayama_sim(std_devs)
             graphs.append(g)
             cultures.append(culturemat)
@@ -44,12 +61,15 @@ def main_sayama():  # for running sayama experiments
             dataDict['std_rw'] = params['std_rw'] #no need to store anything else cuz sayama base sim
 
             data.append(dataDict) #add to list of dicts to be turned into dataframe
-
-
+            '''
+        graphs, cultures, iter_dicts = zip(*data_per_iter)  # unzip tuples
         # save graphs for each parameter setting (100 trials)
         sayamaChangeVec = [[0.5, 0.5, 0.5], [0.5, 0.5, 0.5]]
         store_graphs_cultures(graphs, cultures, std_devs, sayamaChangeVec,
                               'sayama', str(dev))
+        data += iter_dicts  # append list of data from each sim to the main data list
+
+    #  write all data to dataframe
     df = pd.DataFrame(data)
     df.name = 'Sayama'
     df.to_pickle("./tests/df_" + df.name)
@@ -58,13 +78,14 @@ def main_sayama():  # for running sayama experiments
     df =pd.read_pickle("./dummy.pkl")
     '''
 
+
 def run_sayama_sim(std_devs):
-    #generate
+    # generate
     change_vec = [[0.5, 0.5, 0.5], [0.5, 0.5, 0.5]]
     g = generator.graph_gen(2, 50, 0.2, 0.02)
     culturemat = generator.culture_init(g, std_devs, change_vec)
 
-    #simulate
+    # simulate
     g, culturemat = simulate.simulate_iterstop(g, culturemat)
 
     return g, culturemat

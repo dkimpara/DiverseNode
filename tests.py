@@ -1,14 +1,9 @@
-import generator as gen
-import networkx as nx
+from multiprocessing import Process
 
-def test_graph_gen():
-    g, culturemat = graph_gen(2, 50, 0.2, 0.02)
+def f(name):
+    print('hello', name)
 
-
-
-
-def test_culture():
-    avg = 0
-    for i in range(500):
-        d = gen.culture_init(0, 0, [[0.5,0.5],[1.0,1.0]])
-        avg += d
+if __name__ == '__main__':
+    p = Process(target=f, args=('bob',))
+    p.start()
+    p.join()
