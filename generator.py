@@ -34,20 +34,22 @@ def culture_init(g, std_devs, change_vec, dim=10, distance=3.0, norm_p=2):
     culturemat = np.empty([g.number_of_nodes(), dim + 3])
 
     for v, b in g.nodes(data='block'):  # iterate thru vtx, group pairs
-        if b[1] == 0:
+        if b == 0:
             culturemat[v] = generate_node_culture(culture1, std_devs[0])
-        elif b[1] == 1:
+        elif b == 1:
             culturemat[v] = generate_node_culture(culture2, std_devs[1])
 
     return culturemat
 
 
-def generate_node_culture(culture_center, std_devs):
+#  todo edit distribution
+def generate_node_culture(culture_center, distribution, std_devs):
     """generate culture for a node given its culture center vec"""
     # dimension of culture features
     dim = len(culture_center) - 3
     # generates std devs for entire culture vec (dim*culture) + tol,change
     noise = random.normal(0, dim * [std_devs[0]] + std_devs[1:])
+
     # np matrices are all same dtype
     return culture_center + noise
 
