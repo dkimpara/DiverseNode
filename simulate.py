@@ -8,14 +8,14 @@ from numpy import linalg
 import math
 
 
-def simulate_iterstop(g, culturemat, iter=500):
-    '''input graph g with initialized culture state, edge weights,'''
+def simulate_iterstop(g, culturemat, iterstop=500):
+    """input graph g with initialized culture state, edge weights,"""
     ccomp = Components(g)
-    for i in range(iter):
+    for i in range(iterstop):
         g, culturemat, ccomp = sim_one_iter(g, culturemat, ccomp)
 
     # write adj matrix and culture vec to file
-    return g, culturemat  # for prototyping purposes.
+    return g, culturemat
 
 
 # TODO: test
