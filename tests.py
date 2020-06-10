@@ -1,9 +1,6 @@
-from multiprocessing import Process
+import os
+from pathlib import Path
 
-def f(name):
-    print('hello', name)
+print(1)
+print(str(os.path.dirname(__file__)))
 
-if __name__ == '__main__':
-    p = Process(target=f, args=('bob',))
-    p.start()
-    p.join()
