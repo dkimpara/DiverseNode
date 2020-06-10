@@ -1,39 +1,34 @@
 # helper functions for running sayama et all experiments
-from typing import Dict, List, Any, Union
-
-import generator
-import simulate
-import networkx as nx
-import pickle as pk
 import os
+import pickle as pk
+from multiprocessing import Pool
+from typing import List, Any
+
+import networkx as nx
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import ParameterGrid
-from multiprocessing import Pool
 
-# use graph tool compatible formats “graphml”, or “gml” or pickle? try
-# first
-# need to figure out params to extract via nx to save on r/w time
-# todo: use multiprocess
-
-if __name__ == '__main__':
-    p = Pool(3)
-    print(p.map(main_sayama, [1, 2, 3]))
+import generator
+import simulate
 
 
-def run_one_sim(std_devs):
-    g, culturemat = run_sayama_sim(std_devs)
+# use graph tool compatible formats “graphml”, or “gml” or pickle?
+# pickle tried first
+
+def run_one_sim(s_devs):
+    g, culturemat = run_sayama_sim(s_devs)
 
     # analyze run
     dataDict = analyze(g, culturemat, False)
-    dataDict['std_d'] = params['std_d']
-    dataDict['std_rs'] = params['std_rs']
-    dataDict['std_rw'] = params['std_rw']  # no need to store anything else cuz sayama base sim
+    dataDict['std_d'] = s_devs[1]
+    dataDict['std_rs'] = s_devs[2]
+    dataDict['std_rw'] = s_devs[3]  # no need to store anything else cuz sayama base sim
 
     return g, culturemat, dataDict
 
 
-def main_sayama():  # for running sayama experiments
+if __name__ == '__main__':  # for running sayama experiments
     """change_vec = [[d1,r1,w1][d2,r2,w2]] (means of params d, culturechange)
         std_devs = [sd_culture1, sd_tolerance1, sd_culture_change1, sd_w1],[cult2"""
 
@@ -44,7 +39,7 @@ def main_sayama():  # for running sayama experiments
     for params in grid:
         dev = [0.1, params['std_d'], params['std_rs'], params['std_rw']]
         std_devs = [dev, dev]
-        data_per_iter = []
+        data_per_iter: List[tuple] = []
         with Pool(processes=os.cpu_count() - 1) as pool:
             data_per_iter = pool.imap_unordered(run_one_sim, std_devs * 100)  # run 100 iters, async
             #  data is a list of tuples, one tuple g,culturemat, dataDict for each run
