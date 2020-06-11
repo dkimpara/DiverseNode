@@ -8,18 +8,18 @@ from numpy import linalg
 import math
 
 
-def simulate_iterstop(g, culturemat, iterstop=500):
+def simulate_iterstop(g, culturemat, culture_change_all=False, iterstop=500):
     """input graph g with initialized culture state, edge weights,"""
     ccomp = Components(g)
     for i in range(iterstop):
-        g, culturemat, ccomp = sim_one_iter(g, culturemat, ccomp)
+        g, culturemat, ccomp = sim_one_iter(g, culturemat, ccomp, culture_change_all)
 
     # write adj matrix and culture vec to file
     return g, culturemat
 
 
 # TODO: test
-def sim_one_iter(g, culturemat, ccomp, culture_change_all=False):
+def sim_one_iter(g, culturemat, ccomp, culture_change_all):
     # determine random sequence of individuals
     nodeList = list(g.nodes)
     random.shuffle(nodeList)
@@ -44,14 +44,21 @@ def sim_one_iter(g, culturemat, ccomp, culture_change_all=False):
 
     return g, culturemat, ccomp
 
-
+#  edge case handling
 def pick_interaction(u, g, ccomp):
-    if random.random() < 0.99:
-        # interact with random incoming nbrs
-        v = random.choice(list(g.predecessors(u)))
-    else:  # interact with ccomp random
-        v = random.choice(ccomp.find_component(u))
-
+    try:
+        if random.random() < 0.99:
+            # interact with random incoming nbrs
+            v = random.choice(list(g.predecessors(u)))
+        else:  # interact with ccomp random
+            v = random.choice(list(ccomp.find_component(u)))
+    except:
+        try:
+            v = random.choice(list(ccomp.find_component(u)))
+        except:
+            nodes = list(g.nodes())
+            v = random.choice(nodes.remove(u))
+    
     g, ccomp = check_create_edge(u, v, g, ccomp)
     return v, g, ccomp
 
@@ -60,13 +67,11 @@ def check_create_edge(u, v, g, ccomp):  # create dir edge from v to u
     if (v, u) not in g.edges:
         g.add_edge(v, u)
         g.edges[v, u]['weight'] = 0.01
-
-        # modify connected comp
-        ccomp.merge(u, v)
+    #dont need to modify connected component
+    #cuz always interact in cc
     return g, ccomp
 
 
-# TODO: test
 def p_accept(culture_u, culture_v, culture_change_all, norm_p=2):
     d = culture_u[-3]
     if culture_change_all:  # entire culture vec change
@@ -77,7 +82,6 @@ def p_accept(culture_u, culture_v, culture_change_all, norm_p=2):
     return 0.5 ** (dist / d)
 
 
-# TODO: test
 def update_culture(node, other_node, culturemat, culture_change_all):
     r_s = culturemat[node, -2]  # rate of cultural state change for node u
 
@@ -90,7 +94,6 @@ def update_culture(node, other_node, culturemat, culture_change_all):
     return culturemat
 
 
-# TODO: test
 def increase_edge(u, v, g, r_w):
     """if the received culture is accepted, function to update edge weight"""
     weight_vu = g.edges[v, u]['weight']
@@ -100,12 +103,12 @@ def increase_edge(u, v, g, r_w):
     return g
 
 
-# TODO: test
 def decrease_edge(u, v, g, ccomp, r_w):
     weight_vu = g.edges[v, u]['weight']
 
     # update weight
     weight_vu = sigmoid(logit(weight_vu) - r_w)
+    
     # check for edge removal and update g and ccomp
     if weight_vu < 0.01:  # remove edge
         g.remove_edge(v, u)
@@ -118,7 +121,11 @@ def decrease_edge(u, v, g, ccomp, r_w):
 
 
 def logit(x):
-    return math.log(1 / (1 - x))
+    if (1 - x) < 0.000001:  # prevent div by 0 error
+        x = 0.999999
+    elif x > 1.0:
+        print(x)
+    return math.log((x / (1 - x)))
 
 
 def sigmoid(x):

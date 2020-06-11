@@ -42,8 +42,7 @@ def culture_init(g, std_devs, change_vec, dim=10, distance=3.0, norm_p=2):
     return culturemat
 
 
-#  todo edit distribution
-def generate_node_culture(culture_center, distribution, std_devs):
+def generate_node_culture(culture_center, std_devs):
     """generate culture for a node given its culture center vec"""
     # dimension of culture features
     dim = len(culture_center) - 3
@@ -78,10 +77,10 @@ def sample_n_sphere_surface(ndim, norm_p=2):
     vec = vec / linalg.norm(vec, norm_p)  # create random vector with norm 1
     return vec
 
-
+#  todo check random.uniform
 def edge_weight_init(g, distribution='uniform'):
     for u, v, d in g.edges(data=True):
-        d['weight'] = random.uniform(0.1)
+        d['weight'] = random.uniform(0.1,0.99)
     return g
 
 

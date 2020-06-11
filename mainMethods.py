@@ -100,7 +100,7 @@ def analyze(g, culturemat, culture_change_all, norm=2):  # for analysis of sayam
 
     return data_dict
 
-
+# tested
 def culture_distance(g, culturemat, culture_change_all, norm):
     blocks = list(g.nodes(data='block'))
     b1 = [v for v, block in blocks if block == 0]
