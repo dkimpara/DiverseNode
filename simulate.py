@@ -44,6 +44,7 @@ def sim_one_iter(g, culturemat, ccomp, culture_change_all):
 
     return g, culturemat, ccomp
 
+
 #  edge case handling
 def pick_interaction(u, g, ccomp):
     try:
@@ -58,7 +59,7 @@ def pick_interaction(u, g, ccomp):
         except:
             nodes = list(g.nodes())
             v = random.choice(nodes.remove(u))
-    
+
     g, ccomp = check_create_edge(u, v, g, ccomp)
     return v, g, ccomp
 
@@ -67,8 +68,8 @@ def check_create_edge(u, v, g, ccomp):  # create dir edge from v to u
     if (v, u) not in g.edges:
         g.add_edge(v, u)
         g.edges[v, u]['weight'] = 0.01
-    #dont need to modify connected component
-    #cuz always interact in cc
+    # dont need to modify connected component
+    # cuz always interact in cc
     return g, ccomp
 
 
@@ -108,7 +109,7 @@ def decrease_edge(u, v, g, ccomp, r_w):
 
     # update weight
     weight_vu = sigmoid(logit(weight_vu) - r_w)
-    
+
     # check for edge removal and update g and ccomp
     if weight_vu < 0.01:  # remove edge
         g.remove_edge(v, u)
@@ -121,11 +122,12 @@ def decrease_edge(u, v, g, ccomp, r_w):
 
 
 def logit(x):
-    if (1 - x) < 0.000001:  # prevent div by 0 error
-        x = 0.999999
-    elif x > 1.0:
-        print(x)
-    return math.log((x / (1 - x)))
+    try:
+        odds = x / (1 - x)
+        return math.log(odds)
+
+    except ZeroDivisionError:
+        return 1000.0
 
 
 def sigmoid(x):
