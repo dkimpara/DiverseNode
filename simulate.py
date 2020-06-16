@@ -126,6 +126,7 @@ def logit(x):
         return math.log(odds)
 
     except ZeroDivisionError:
+        print('zde')
         return 1000.0
 
 
