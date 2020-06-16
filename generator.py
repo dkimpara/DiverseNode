@@ -58,6 +58,7 @@ def generate_node_culture(culture_center, std_devs):
             newculture[-3 + i] = 0.99
     return newculture
 
+
 def random_perturb_culture(ndim, change_vec, distance, norm_p=2):
     """generate random vector with norm of distance keeping change_vec
     components constant (last two indices)"""
@@ -82,13 +83,13 @@ def sample_n_sphere_surface(ndim, norm_p=2):
     vec = vec / linalg.norm(vec, norm_p)  # create random vector with norm 1
     return vec
 
+
 def edge_weight_init(g, distribution='uniform'):
     for u, v, d in g.edges(data=True):
         d['weight'] = np.random.uniform(0.1, 0.99)
     return g
 
 
-# noinspection PyStatementEffect
 def generate_density_matrix(intra_edge_density, extra_edge_density):
     assert isinstance(intra_edge_density, float)
     assert isinstance(extra_edge_density, float)
