@@ -50,8 +50,13 @@ def generate_node_culture(culture_center, std_devs):
     noise = random.normal(0, dim * [std_devs[0]] + std_devs[1:])
 
     # np matrices are all same dtype
-    return culture_center + noise
-
+    newculture = culture_center + noise
+    for i in range(3):
+        if newculture[-3 + i] <= 0.0:
+            newculture[-3 + i] = 0.01
+        elif newculture[-3 + i] >= 1.0:
+            newculture[-3 + i] = 0.99
+    return newculture
 
 def random_perturb_culture(ndim, change_vec, distance, norm_p=2):
     """generate random vector with norm of distance keeping change_vec
