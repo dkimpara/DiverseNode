@@ -4,7 +4,7 @@
 import networkx as nx
 from networkx.generators.community import stochastic_block_model
 import numpy as np
-from numpy import random, linalg
+from numpy import linalg
 
 
 def graph_gen(num_groups, num_nodes, intra_edge_density, extra_edge_density):
@@ -23,7 +23,7 @@ def graph_gen(num_groups, num_nodes, intra_edge_density, extra_edge_density):
 def culture_init(g, std_devs, change_vec, dim=10, distance=3.0, norm_p=2):
     """change_vec = [[d1,r1,w1][d2,r2,w2]]
         std_devs = [sd_culture1, sd_tolerance1, sd_culture_change1, sd w1],[cult2"""
-    culture1 = random.rand(dim)
+    culture1 = np.random.rand(dim)
     culture2 = culture1 + random_perturb_culture(dim, change_vec, distance)
 
     culture1 = np.append(culture1, change_vec[0])
@@ -47,7 +47,7 @@ def generate_node_culture(culture_center, std_devs):
     # dimension of culture features
     dim = len(culture_center) - 3
     # generates std devs for entire culture vec (dim*culture) + tol,change
-    noise = random.normal(0, dim * [std_devs[0]] + std_devs[1:])
+    noise = np.random.normal(0, dim * [std_devs[0]] + std_devs[1:])
 
     # np matrices are all same dtype
     newculture = culture_center + noise
@@ -78,14 +78,13 @@ def random_perturb_culture(ndim, change_vec, distance, norm_p=2):
 def sample_n_sphere_surface(ndim, norm_p=2):
     """sample random vector from S^n-1 with norm_p"""
 
-    vec = random.randn(ndim)  # random ve ctor to put distance between cultures
+    vec = np.random.randn(ndim)  # random ve ctor to put distance between cultures
     vec = vec / linalg.norm(vec, norm_p)  # create random vector with norm 1
     return vec
 
-#  todo check random.uniform
 def edge_weight_init(g, distribution='uniform'):
     for u, v, d in g.edges(data=True):
-        d['weight'] = random.uniform(0.1,0.99)
+        d['weight'] = np.random.uniform(0.1, 0.99)
     return g
 
 

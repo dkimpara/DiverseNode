@@ -80,13 +80,8 @@ def p_accept(culture_u, culture_v, culture_change_all, norm_p=2):
     else:  # only original culture vec change (as in sayama)
         dist = linalg.norm(culture_u[:-3] - culture_v[:-3], norm_p)
     z = dist / d
-    ## todo: overflow encountered in double_scalars
-    try:
-        res = 0.5 ** z
-        return res
-    except FloatingPointError:
-        print(dist, d, z)
-        return 0.5
+    return 0.5 ** z
+
 
 
 def update_culture(node, other_node, culturemat, culture_change_all):
