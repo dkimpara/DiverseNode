@@ -12,7 +12,7 @@ def simulate_iterstop(g, culturemat, culture_change_all=False, iterstop=500):
     """input graph g with initialized culture state, edge weights,"""
     ccomp = Components(g)
     for i in range(iterstop):
-        g, culturemat, ccomp = sim_one_iter(g, culturemat, ccomp, culture_change_all)
+        g, culturemat, ccomp, d = sim_one_iter(g, culturemat, ccomp, culture_change_all)
 
     # write adj matrix and culture vec to file
     return g, culturemat
@@ -23,14 +23,14 @@ def sim_one_iter(g, culturemat, ccomp, culture_change_all):
     # determine random sequence of individuals
     nodeList = list(g.nodes)
     random.shuffle(nodeList)
-
+    distances = []
     for u in nodeList:
         # pick interaction randomly
         v, g, ccomp = pick_interaction(u, g, ccomp)  # use connected component class
 
         # carry out interaction
         prob_accept = p_accept(culturemat[u], culturemat[v], culture_change_all)
-
+        distances.append(linalg.norm(culturemat[u][:-3] - culturemat[v][:-3]))
         r_w = culturemat[u, -1]  # edge rate change for receiving node
         if random.random() < prob_accept:
             # accept culture
@@ -42,7 +42,7 @@ def sim_one_iter(g, culturemat, ccomp, culture_change_all):
             # update edge and check for edge to remove
             g, ccomp = decrease_edge(u, v, g, ccomp, r_w)
 
-    return g, culturemat, ccomp
+    return g, culturemat, ccomp, distances
 
 
 #  edge case handling
@@ -119,7 +119,8 @@ def decrease_edge(u, v, g, ccomp, r_w):
 
     return g, ccomp
 
-#todo zero division errors messing up edge weights?
+
+# todo zero division errors messing up edge weights?
 def logit(x):
     try:
         odds = x / (1 - x)
