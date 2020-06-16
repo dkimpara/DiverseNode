@@ -54,9 +54,9 @@ def pick_interaction(u, g, ccomp):
         else:  # interact with ccomp random
             v = random.choice(list(ccomp.find_component(u)))
     except:
-        try:
+        try:  # if no predecessors
             v = random.choice(list(ccomp.find_component(u)))
-        except:
+        except:  # if disconnected?
             nodes = list(g.nodes())
             v = random.choice(nodes.remove(u))
 
@@ -68,8 +68,7 @@ def check_create_edge(u, v, g, ccomp):  # create dir edge from v to u
     if (v, u) not in g.edges:
         g.add_edge(v, u)
         g.edges[v, u]['weight'] = 0.01
-    # dont need to modify connected component
-    # cuz always interact in cc
+    ccomp.merge(u, v)  # merge components if any part of graph disconnected
     return g, ccomp
 
 
@@ -81,7 +80,6 @@ def p_accept(culture_u, culture_v, culture_change_all, norm_p=2):
         dist = linalg.norm(culture_u[:-3] - culture_v[:-3], norm_p)
     z = dist / d
     return 0.5 ** z
-
 
 
 def update_culture(node, other_node, culturemat, culture_change_all):

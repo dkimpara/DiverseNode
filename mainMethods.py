@@ -31,7 +31,7 @@ def run_one_sim(s_devs):
 
 def main_sayama():
     """change_vec = [[d1,r1,w1][d2,r2,w2]] (means of params d, culturechange)
-        std_devs = [sd_culture1, sd_tolerance1, sd_culture_change1, sd_w1],[cult2"""
+        std_devs = [sd_culture1, sd_d, sd_rs, sd_rw],[cult2"""
 
     values = np.linspace(0.0, 0.5, 6)
     param_grid = {'std_d': values, 'std_rs': values, 'std_rw': values}
