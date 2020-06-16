@@ -119,14 +119,13 @@ def decrease_edge(u, v, g, ccomp, r_w):
 
     return g, ccomp
 
-
+#todo zero division errors messing up edge weights?
 def logit(x):
     try:
         odds = x / (1 - x)
         return math.log(odds)
 
     except ZeroDivisionError:
-        print('zde')
         return 1000.0
 
 
