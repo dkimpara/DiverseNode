@@ -55,8 +55,8 @@ def generate_node_culture(culture_center, std_devs):
     for i in range(3):
         if newculture[-3 + i] <= 0.0:
             newculture[-3 + i] = 0.0001
-        elif newculture[-3 + i] >= 1.0:
-            newculture[-3 + i] = 0.9999
+        elif (newculture[-3 + i] >= 1.0) and (i == 1) :
+            newculture[-3 + i] = 0.9999  # only clip r_s
     return newculture
 
 

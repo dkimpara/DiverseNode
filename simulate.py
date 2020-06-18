@@ -55,6 +55,7 @@ def pick_interaction(u, g, ccomp):
             preds = list(g.predecessors(u))
             weights = [g.edges[vtx,u]['weight'] for vtx in preds]
             v = random.choices(preds, weights)
+            v = v[0]
         else:  # interact with ccomp random
             v = random.choice(list(ccomp.find_component(u)))
     except:
