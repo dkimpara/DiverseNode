@@ -51,7 +51,7 @@ def generate_node_culture(culture_center, std_devs):
 
     # np matrices are all same dtype
     newculture = culture_center + noise
-	#which values bounded from above? all geq 0. otherwise..
+    #which values bounded from above? all geq 0. otherwise..
     for i in range(3):
         if newculture[-3 + i] <= 0.0:
             newculture[-3 + i] = 0.0001

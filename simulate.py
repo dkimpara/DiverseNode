@@ -32,7 +32,7 @@ def sim_one_iter(g, culturemat, ccomp, culture_change_all):
         prob_accept = p_accept(culturemat[u], culturemat[v], culture_change_all)
         distances.append(linalg.norm(culturemat[u][:-3] - culturemat[v][:-3]))
         
-		r_w = culturemat[u, -1]  # edge rate change for receiving node
+        r_w = culturemat[u, -1]  # edge rate change for receiving node
         if random.random() < prob_accept:
             # accept culture
             culturemat = update_culture(u, v, culturemat, culture_change_all)
@@ -48,12 +48,12 @@ def sim_one_iter(g, culturemat, ccomp, culture_change_all):
 
 #  edge case handling
 def pick_interaction(u, g, ccomp):
-	#selection probabilities proportional to edge weights!!
+    #selection probabilities proportional to edge weights!!
     try:
         if random.random() < 0.99:
             # interact with random incoming nbrs
-			preds = list(g.predecessors(u))
-			weights = [g.edges[vtx,u]['weight'] for vtx in preds]
+            preds = list(g.predecessors(u))
+            weights = [g.edges[vtx,u]['weight'] for vtx in preds]
             v = random.choices(preds, weights)
         else:  # interact with ccomp random
             v = random.choice(list(ccomp.find_component(u)))
