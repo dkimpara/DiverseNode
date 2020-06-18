@@ -51,11 +51,12 @@ def generate_node_culture(culture_center, std_devs):
 
     # np matrices are all same dtype
     newculture = culture_center + noise
+	#which values bounded from above? all geq 0. otherwise..
     for i in range(3):
         if newculture[-3 + i] <= 0.0:
-            newculture[-3 + i] = 0.01
+            newculture[-3 + i] = 0.0001
         elif newculture[-3 + i] >= 1.0:
-            newculture[-3 + i] = 0.99
+            newculture[-3 + i] = 0.9999
     return newculture
 
 

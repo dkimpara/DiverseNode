@@ -31,7 +31,8 @@ def sim_one_iter(g, culturemat, ccomp, culture_change_all):
         # carry out interaction
         prob_accept = p_accept(culturemat[u], culturemat[v], culture_change_all)
         distances.append(linalg.norm(culturemat[u][:-3] - culturemat[v][:-3]))
-        r_w = culturemat[u, -1]  # edge rate change for receiving node
+        
+		r_w = culturemat[u, -1]  # edge rate change for receiving node
         if random.random() < prob_accept:
             # accept culture
             culturemat = update_culture(u, v, culturemat, culture_change_all)
@@ -41,20 +42,23 @@ def sim_one_iter(g, culturemat, ccomp, culture_change_all):
             # reject culture no update to culturemat
             # update edge and check for edge to remove
             g, ccomp = decrease_edge(u, v, g, ccomp, r_w)
-
-    return g, culturemat, ccomp, distances
+    weights = [w for u,v,w in g.edges.data('weight')]
+    return g, culturemat, ccomp, distances, weights
 
 
 #  edge case handling
 def pick_interaction(u, g, ccomp):
+	#selection probabilities proportional to edge weights!!
     try:
         if random.random() < 0.99:
             # interact with random incoming nbrs
-            v = random.choice(list(g.predecessors(u)))
+			preds = list(g.predecessors(u))
+			weights = [g.edges[vtx,u]['weight'] for vtx in preds]
+            v = random.choices(preds, weights)
         else:  # interact with ccomp random
             v = random.choice(list(ccomp.find_component(u)))
     except:
-        try:  # if no predecessors
+        try:  # if no predecessors, function will throw exception
             v = random.choice(list(ccomp.find_component(u)))
         except:  # if disconnected?
             nodes = list(g.nodes())
@@ -97,9 +101,10 @@ def update_culture(node, other_node, culturemat, culture_change_all):
 def increase_edge(u, v, g, r_w):
     """if the received culture is accepted, function to update edge weight"""
     weight_vu = g.edges[v, u]['weight']
-    # update weight
-    g.edges[v, u]['weight'] = sigmoid(logit(weight_vu) + r_w)
-    # no need to check for edge removal
+    if weight_vu < 1.0:  #only update if edge weight not max
+        # update weight
+        g.edges[v, u]['weight'] = sigmoid(logit(weight_vu) + r_w)
+        # no need to check for edge removal
     return g
 
 
