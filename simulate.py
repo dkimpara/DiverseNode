@@ -18,7 +18,6 @@ def simulate_iterstop(g, culturemat, culture_change_all=False, iterstop=500):
     return g, culturemat
 
 
-# TODO: test
 def sim_one_iter(g, culturemat, ccomp, culture_change_all):
     # determine random sequence of individuals
     nodeList = list(g.nodes)
@@ -42,11 +41,10 @@ def sim_one_iter(g, culturemat, ccomp, culture_change_all):
             # reject culture no update to culturemat
             # update edge and check for edge to remove
             g, ccomp = decrease_edge(u, v, g, ccomp, r_w)
-    weights = [w for u,v,w in g.edges.data('weight')]
+    weights = [w for u, v, w in g.edges.data('weight')]
     return g, culturemat, ccomp, distances, weights
 
 
-#  edge case handling
 def pick_interaction(u, g, ccomp):
     #selection probabilities proportional to edge weights!!
     try:
@@ -126,7 +124,6 @@ def decrease_edge(u, v, g, ccomp, r_w):
     return g, ccomp
 
 
-# todo zero division errors messing up edge weights?
 def logit(x):
     try:
         odds = x / (1 - x)

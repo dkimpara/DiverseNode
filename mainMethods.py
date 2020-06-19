@@ -86,7 +86,7 @@ def run_sayama_sim(std_devs):
 
     return g, culturemat
 
-# todo: disconnected graphs?
+
 def analyze(g, culturemat, culture_change_all, norm=2):  # for analysis of sayama sim
     data_dict = {'diam': nx.diameter(g),
                  'degrees': sorted([d for n, d in g.degree()], reverse=True),
