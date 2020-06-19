@@ -69,7 +69,7 @@ def main_sayama():
     #  write all data to dataframe. tests dir already made in storegraphs method
     df = pd.DataFrame(data)
     df.name = 'Sayama'
-    df.to_pickle("./tests/df_" + df.name)
+    df.to_pickle('./tests/df_' + df.name)
 
     '''to unpickle:
     df =pd.read_pickle("./dummy.pkl")
