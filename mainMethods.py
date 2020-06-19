@@ -66,7 +66,7 @@ def main_sayama():
                               'sayama', str(dev))
         data += iter_dicts  # append list of data from each sim to the main data list
 
-    #  write all data to dataframe
+    #  write all data to dataframe. tests dir already made in storegraphs method
     df = pd.DataFrame(data)
     df.name = 'Sayama'
     df.to_pickle("./tests/df_" + df.name)
