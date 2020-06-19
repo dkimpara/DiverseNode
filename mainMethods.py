@@ -94,6 +94,7 @@ def run_sayama_sim(std_devs):
 
 
 def analyze(g, culturemat, culture_change_all, norm=2):  # for analysis of sayama sim
+    # todo: diameter error because not s connected, returning infinite dist
     data_dict = {'diam': nx.diameter(g),
                  'degrees': sorted([d for n, d in g.degree()], reverse=True),
                  'clusterCoeff': nx.average_clustering(g),
