@@ -29,6 +29,7 @@ def run_one_sim(s_devs):
     return g, culturemat, dataDict
 
 
+#  todo test multiprocessing
 def main_sayama():
     """change_vec = [[d1,r1,w1][d2,r2,w2]] (means of params d, culturechange)
         std_devs = [sd_culture1, sd_d, sd_rs, sd_rw],[cult2"""
@@ -107,7 +108,7 @@ def analyze(g, culturemat, culture_change_all, norm=2):  # for analysis of sayam
 
     return data_dict
 
-# tested
+
 def culture_distance(g, culturemat, culture_change_all, norm):
     blocks = list(g.nodes(data='block'))
     b1 = [v for v, block in blocks if block == 0]
@@ -134,10 +135,13 @@ def store_graphs_cultures(graphs: nx.DiGraph, cultures: np.ndarray,
                 'std1': std_devs[0], 'std2': std_devs[1]}
 
     # now pickle
-    # todo mkdir code
-    Path("/tests/" + subdir).mkdir(parents=True, exist_ok=True)
-
     script_dir = os.path.dirname(__file__)  # <-- absolute dir the script is in
+    rel_path = "tests/" + subdir
+    abs_dir_path = os.path.join(script_dir, rel_path)
+    # safely make dir
+    Path(abs_dir_path).mkdir(parents=True, exist_ok=True)
+
+    # path for file
     rel_path = "tests/" + subdir + '/' + filename
     abs_file_path = os.path.join(script_dir, rel_path)
 
