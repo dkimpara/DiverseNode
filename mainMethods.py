@@ -34,31 +34,31 @@ def main_sayama():
     """change_vec = [[d1,r1,w1][d2,r2,w2]] (means of params d, culturechange)
         std_devs = [sd_culture1, sd_d, sd_rs, sd_rw],[cult2"""
 
-    values = np.linspace(0.0, 0.5, 6)
+    values = np.linspace(0.0, 0.5, 2)
     param_grid = {'std_d': values, 'std_rs': values, 'std_rw': values}
     grid = ParameterGrid(param_grid)
     data: List[Any] = []
     for params in grid:
         dev = [0.1, params['std_d'], params['std_rs'], params['std_rw']]
         std_devs = [dev, dev]
-        data_per_iter: List[tuple] = []
-        with Pool(processes=os.cpu_count() - 1) as pool:
-            data_per_iter = pool.imap_unordered(run_one_sim, std_devs * 100)  # run 100 iters, async
+        #data_per_iter: List[tuple] = []
+        #with Pool(processes=os.cpu_count() - 1) as pool:
+            #data_per_iter = pool.imap_unordered(run_one_sim, std_devs * 100)  # run 100 iters, async
             #  data is a list of tuples, one tuple g,culturemat, dataDict for each run
+        data_per_iter = list(map(run_one_sim, std_devs * 20))
+        '''
+        g, culturemat = run_sayama_sim(std_devs)
+        graphs.append(g)
+        cultures.append(culturemat)
 
-            '''
-            g, culturemat = run_sayama_sim(std_devs)
-            graphs.append(g)
-            cultures.append(culturemat)
+        # analyze+extract each run
+        dataDict = analyze(g, culturemat, False)
+        dataDict['std_d'] = params['std_d']
+        dataDict['std_rs'] = params['std_rs']
+        dataDict['std_rw'] = params['std_rw'] #no need to store anything else cuz sayama base sim
 
-            # analyze+extract each run
-            dataDict = analyze(g, culturemat, False)
-            dataDict['std_d'] = params['std_d']
-            dataDict['std_rs'] = params['std_rs']
-            dataDict['std_rw'] = params['std_rw'] #no need to store anything else cuz sayama base sim
-
-            data.append(dataDict) #add to list of dicts to be turned into dataframe
-            '''
+        data.append(dataDict) #add to list of dicts to be turned into dataframe
+        '''
         graphs, cultures, iter_dicts = zip(*data_per_iter)  # unzip tuples
         # save graphs for each parameter setting (100 trials)
         sayamaChangeVec = [[0.5, 0.5, 0.5], [0.5, 0.5, 0.5]]
