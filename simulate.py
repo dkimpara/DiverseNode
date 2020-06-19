@@ -12,7 +12,7 @@ def simulate_iterstop(g, culturemat, culture_change_all=False, iterstop=500):
     """input graph g with initialized culture state, edge weights,"""
     ccomp = Components(g)
     for i in range(iterstop):
-        g, culturemat, ccomp, d = sim_one_iter(g, culturemat, ccomp, culture_change_all)
+        g, culturemat, ccomp = sim_one_iter(g, culturemat, ccomp, culture_change_all)
 
     # write adj matrix and culture vec to file
     return g, culturemat
@@ -29,7 +29,7 @@ def sim_one_iter(g, culturemat, ccomp, culture_change_all):
 
         # carry out interaction
         prob_accept = p_accept(culturemat[u], culturemat[v], culture_change_all)
-        distances.append(linalg.norm(culturemat[u][:-3] - culturemat[v][:-3]))
+        #distances.append(linalg.norm(culturemat[u][:-3] - culturemat[v][:-3]))
         
         r_w = culturemat[u, -1]  # edge rate change for receiving node
         if random.random() < prob_accept:
@@ -41,8 +41,8 @@ def sim_one_iter(g, culturemat, ccomp, culture_change_all):
             # reject culture no update to culturemat
             # update edge and check for edge to remove
             g, ccomp = decrease_edge(u, v, g, ccomp, r_w)
-    weights = [w for u, v, w in g.edges.data('weight')]
-    return g, culturemat, ccomp, distances, weights
+    #weights = [w for u, v, w in g.edges.data('weight')]
+    return g, culturemat, ccomp#, distances, weights
 
 
 def pick_interaction(u, g, ccomp):

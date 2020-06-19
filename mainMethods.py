@@ -23,6 +23,7 @@ def run_one_sim(s_devs):
 
     # analyze run
     dataDict = analyze(g, culturemat, False)
+    s_devs = s_devs[0]
     dataDict['std_d'] = s_devs[1]
     dataDict['std_rs'] = s_devs[2]
     dataDict['std_rw'] = s_devs[3]  # no need to store anything else cuz sayama base sim
@@ -40,8 +41,8 @@ def main_sayama():
     grid = ParameterGrid(param_grid)
     data: List[Any] = []
     for params in grid:
-        dev = (0.1, params['std_d'], params['std_rs'], params['std_rw'])
-        std_devs = (dev, dev)
+        dev = [0.1, params['std_d'], params['std_rs'], params['std_rw']]
+        std_devs = [dev, dev]
         #data_per_iter: List[tuple] = []
         #with Pool(processes=os.cpu_count() - 1) as pool:
             #data_per_iter = pool.imap_unordered(run_one_sim, std_devs * 100)  # run 100 iters, async
@@ -97,10 +98,12 @@ def analyze(g, culturemat, culture_change_all, norm=2):  # for analysis of sayam
                  'degrees': sorted([d for n, d in g.degree()], reverse=True),
                  'clusterCoeff': nx.average_clustering(g),
                  'reciprocity': nx.reciprocity(g)}
-    giant = max(nx.connected_components(g), key=len)
+    g_undir = nx.DiGraph.to_undirected(g)
+    giant = max(nx.connected_components(g_undir), key=len)
     data_dict['giantComponent'] = len(giant) / len(g.nodes())
     try:
         data_dict['SPL'] = nx.average_shortest_path_length(g)
+
     except nx.NetworkXError:
         num_connected_components = len(list(nx.connected_components(g)))
 
