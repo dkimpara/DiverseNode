@@ -86,7 +86,7 @@ def run_sayama_sim(std_devs):
 
     return g, culturemat
 
-
+# todo: disconnected graphs?
 def analyze(g, culturemat, culture_change_all, norm=2):  # for analysis of sayama sim
     data_dict = {'diam': nx.diameter(g),
                  'degrees': sorted([d for n, d in g.degree()], reverse=True),
@@ -94,8 +94,15 @@ def analyze(g, culturemat, culture_change_all, norm=2):  # for analysis of sayam
                  'reciprocity': nx.reciprocity(g)}
     giant = max(nx.connected_components(g), key=len)
     data_dict['giantComponent'] = len(giant) / len(g.nodes())
+    try:
+        data_dict['SPL'] = nx.average_shortest_path_length(g)
+    except nx.NetworkXError:
+        num_connected_components = len(list(nx.connected_components(g)))
 
-    data_dict['SPL'] = nx.average_shortest_path_length(g)
+        #  analyze biggest component
+        spl = nx.average_shortest_path_length(g.subgraph(giant))
+        data_dict['SPL'] = (spl, num_connected_components)
+
     data_dict['CD'] = culture_distance(g, culturemat, culture_change_all, norm)
 
     return data_dict
