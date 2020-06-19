@@ -42,12 +42,12 @@ def culture_init(g, std_devs, change_vec, dim=10, distance=3.0, norm_p=2):
     return culturemat
 
 
-def generate_node_culture(culture_center, std_devs):
+def generate_node_culture(culture_center, s_devs):
     """generate culture for a node given its culture center vec"""
     # dimension of culture features
     dim = len(culture_center) - 3
     # generates std devs for entire culture vec (dim*culture) + tol,change
-    noise = np.random.normal(0, dim * [std_devs[0]] + std_devs[1:])
+    noise = np.random.normal(0, dim * [s_devs[0]] + s_devs[1:])
 
     # np matrices are all same dtype
     newculture = culture_center + noise

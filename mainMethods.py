@@ -1,6 +1,7 @@
 # helper functions for running sayama et all experiments
 import os
 import pickle as pk
+from itertools import repeat
 from multiprocessing import Pool
 from typing import List, Any
 from pathlib import Path
@@ -39,13 +40,13 @@ def main_sayama():
     grid = ParameterGrid(param_grid)
     data: List[Any] = []
     for params in grid:
-        dev = [0.1, params['std_d'], params['std_rs'], params['std_rw']]
-        std_devs = [dev, dev]
+        dev = (0.1, params['std_d'], params['std_rs'], params['std_rw'])
+        std_devs = (dev, dev)
         #data_per_iter: List[tuple] = []
         #with Pool(processes=os.cpu_count() - 1) as pool:
             #data_per_iter = pool.imap_unordered(run_one_sim, std_devs * 100)  # run 100 iters, async
             #  data is a list of tuples, one tuple g,culturemat, dataDict for each run
-        data_per_iter = list(map(run_one_sim, std_devs * 20))
+        data_per_iter = list(map(run_one_sim, repeat(std_devs, 20)))
         '''
         g, culturemat = run_sayama_sim(std_devs)
         graphs.append(g)
@@ -131,7 +132,7 @@ def culture_distance(g, culturemat, culture_change_all, norm):
 
 
 def store_graphs_cultures(graphs: nx.DiGraph, cultures: np.ndarray,
-                          std_devs: list, change_vec: list, subdir: str,
+                          std_devs: tuple, change_vec: list, subdir: str,
                           filename: str) -> None:  # pickle a bunch of graphs and cultures
     dataDict = {'graphs': graphs, 'cultures': cultures,
                 'change1': change_vec[0], 'change2': change_vec[1],
