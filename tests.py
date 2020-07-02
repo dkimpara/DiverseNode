@@ -1,5 +1,10 @@
-import pandas as pd
-data = [1,2,3,34]
-df = pd.DataFrame(data)
-df.name = 'Sayama'
-df.to_pickle("./tests/df_" + df.name)
+import os
+import pickle as pk
+
+def read():
+    script_dir = os.path.dirname(__file__)
+    rel_path = "tests/sayama/[0.1, 0.0, 0.0, 0.0]"
+    abs_file_path = os.path.join(script_dir, rel_path)
+    with (open(abs_file_path, 'rb')) as f:
+        return pk.load(f)
+    

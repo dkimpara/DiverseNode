@@ -48,20 +48,8 @@ def main_sayama():
         #with Pool(processes=os.cpu_count() - 1) as pool:
             #data_per_iter = pool.imap_unordered(run_one_sim, std_devs * 100)  # run 100 iters, async
             #  data is a list of tuples, one tuple g,culturemat, dataDict for each run
-        data_per_iter = list(map(run_one_sim, repeat(std_devs, 20)))
-        '''
-        g, culturemat = run_sayama_sim(std_devs)
-        graphs.append(g)
-        cultures.append(culturemat)
+        data_per_iter = list(map(run_one_sim, repeat(std_devs, 1)))
 
-        # analyze+extract each run
-        dataDict = analyze(g, culturemat, False)
-        dataDict['std_d'] = params['std_d']
-        dataDict['std_rs'] = params['std_rs']
-        dataDict['std_rw'] = params['std_rw'] #no need to store anything else cuz sayama base sim
-
-        data.append(dataDict) #add to list of dicts to be turned into dataframe
-        '''
         graphs, cultures, iter_dicts = zip(*data_per_iter)  # unzip tuples
         # save graphs for each parameter setting (100 trials)
         sayamaChangeVec = [[0.5, 0.5, 0.5], [0.5, 0.5, 0.5]]
@@ -71,7 +59,7 @@ def main_sayama():
 
     #  write all data to dataframe. tests dir already made in storegraphs method
     df = pd.DataFrame(data) #empty dicts will be stored as NaNs
-    tags = list(range(100)) * len(data) // 100
+    tags = list(range(100)) * (len(data) // 100)
     df['tags'] = tags
 
     df.name = 'Sayama'
