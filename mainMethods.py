@@ -84,27 +84,28 @@ def run_sayama_sim(std_devs):
 
 
 def analyze(g, culturemat, culture_change_all, norm=2):  # for analysis of sayama sim
-    try: #transform to undirected g?
-        data_dict = {'diam': nx.diameter(g),
-                     'degrees': sorted([d for n, d in g.degree()], reverse=True),
-                     'clusterCoeff': nx.average_clustering(g),
-                     'reciprocity': nx.reciprocity(g)}
-        g_undir = nx.DiGraph.to_undirected(g)
-        giant = max(nx.connected_components(g_undir), key=len)
-        data_dict['giantComponent'] = len(giant) / len(g.nodes())
-        try:
-            data_dict['SPL'] = nx.average_shortest_path_length(g)
+    g_undir = nx.DiGraph.to_undirected(g)
+    data_dict = {'degrees': sorted([d for n, d in g.degree()], reverse=True),
+                 'clusterCoeff': nx.average_clustering(g),
+                 'reciprocity': nx.reciprocity(g)}
 
-        except nx.NetworkXError:
-            num_connected_components = len(list(nx.connected_components(g)))
+    giant = max(nx.connected_components(g_undir), key=len)
+    data_dict['giantComponent'] = len(giant) / len(g.nodes())
 
-            #  analyze biggest component
-            spl = nx.average_shortest_path_length(g.subgraph(giant))
-            data_dict['SPL'] = (spl, num_connected_components)
-
-        data_dict['CD'] = culture_distance(g, culturemat, culture_change_all, norm)
+    try:
+        data_dict['diam'] = nx.diameter(g_undir)
+        data_dict['SPL'] = nx.average_shortest_path_length(g)
     except nx.NetworkXError: #graph not strongly connected, throw away trial
-        data_dict = {}
+        num_connected_components = len(list(nx.connected_components(g_undir)))
+
+        d = nx.diameter(g_undir.subgraph(giant))
+        data_dict['diam'] = (d, num_connected_components)
+        #  analyze biggest component
+        spl = nx.average_shortest_path_length(g.subgraph(giant))
+        data_dict['SPL'] = (spl, num_connected_components)
+        print('!')
+
+    data_dict['CD'] = culture_distance(g, culturemat, culture_change_all, norm)
     return data_dict
 
 
