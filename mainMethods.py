@@ -37,6 +37,8 @@ def run_one_sim(s_devs):
 def main_sayama():
     """change_vec = [[d1,r1,w1][d2,r2,w2]] (means of params d, culturechange)
         std_devs = [sd_culture1, sd_d, sd_rs, sd_rw],[cult2"""
+    #create directory to store data
+    create_dir('sayama')
 
     values = np.linspace(0.0, 0.5, 6)
     param_grid = {'std_d': values, 'std_rs': values, 'std_rw': values}
@@ -140,10 +142,6 @@ def store_graphs_cultures(graphs: nx.DiGraph, cultures: np.ndarray,
 
     # now pickle
     script_dir = os.path.dirname(__file__)  # <-- absolute dir the script is in
-    rel_path = "tests/" + subdir
-    abs_dir_path = os.path.join(script_dir, rel_path)
-    # safely make dir
-    Path(abs_dir_path).mkdir(parents=True, exist_ok=True)
 
     # path for file
     rel_path = "tests/" + subdir + '/' + filename
@@ -152,3 +150,10 @@ def store_graphs_cultures(graphs: nx.DiGraph, cultures: np.ndarray,
     f = open(abs_file_path, 'wb')
     pk.dump(dataDict, f)
     f.close()
+
+def create_dir(subdir):
+    script_dir = os.path.dirname(__file__)  # <-- absolute dir the script is in
+    rel_path = "tests/" + subdir
+    abs_dir_path = os.path.join(script_dir, rel_path)
+    # safely make dir
+    Path(abs_dir_path).mkdir(parents=True, exist_ok=True)
