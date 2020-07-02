@@ -41,6 +41,7 @@ def main_sayama():
     param_grid = {'std_d': values, 'std_rs': values, 'std_rw': values}
     grid = ParameterGrid(param_grid)
     data: List[Any] = []
+    trials = 2
     for params in grid:
         dev = [0.1, params['std_d'], params['std_rs'], params['std_rw']]
         std_devs = [dev, dev]
@@ -48,7 +49,7 @@ def main_sayama():
         #with Pool(processes=os.cpu_count() - 1) as pool:
             #data_per_iter = pool.imap_unordered(run_one_sim, std_devs * 100)  # run 100 iters, async
             #  data is a list of tuples, one tuple g,culturemat, dataDict for each run
-        data_per_iter = list(map(run_one_sim, repeat(std_devs, 1)))
+        data_per_iter = list(map(run_one_sim, repeat(std_devs, trials)))
 
         graphs, cultures, iter_dicts = zip(*data_per_iter)  # unzip tuples
         # save graphs for each parameter setting (100 trials)
@@ -59,7 +60,7 @@ def main_sayama():
 
     #  write all data to dataframe. tests dir already made in storegraphs method
     df = pd.DataFrame(data) #empty dicts will be stored as NaNs
-    tags = list(range(100)) * (len(data) // 100)
+    tags = list(range(trials)) * (len(data) // trials)
     df['tags'] = tags
 
     df.name = 'Sayama'
@@ -83,7 +84,7 @@ def run_sayama_sim(std_devs):
 
 
 def analyze(g, culturemat, culture_change_all, norm=2):  # for analysis of sayama sim
-    try:
+    try: #transform to undirected g?
         data_dict = {'diam': nx.diameter(g),
                      'degrees': sorted([d for n, d in g.degree()], reverse=True),
                      'clusterCoeff': nx.average_clustering(g),
