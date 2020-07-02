@@ -19,6 +19,7 @@ import simulate
 # pickle tried first
 
 def run_one_sim(s_devs):
+    '''simulate and collect data'''
     g, culturemat = run_sayama_sim(s_devs)
 
     # analyze run
@@ -37,19 +38,22 @@ def main_sayama():
     """change_vec = [[d1,r1,w1][d2,r2,w2]] (means of params d, culturechange)
         std_devs = [sd_culture1, sd_d, sd_rs, sd_rw],[cult2"""
 
-    values = np.linspace(0.0, 0.5, 2)
+    values = np.linspace(0.0, 0.5, 6)
     param_grid = {'std_d': values, 'std_rs': values, 'std_rw': values}
     grid = ParameterGrid(param_grid)
     data: List[Any] = []
-    trials = 2
+    trials = 100
     for params in grid:
         dev = [0.1, params['std_d'], params['std_rs'], params['std_rw']]
         std_devs = [dev, dev]
-        #data_per_iter: List[tuple] = []
-        #with Pool(processes=os.cpu_count() - 1) as pool:
-            #data_per_iter = pool.imap_unordered(run_one_sim, std_devs * 100)  # run 100 iters, async
+        data_per_iter: List[tuple] = []
+        with Pool(processes=os.cpu_count() - 1) as pool:
+            process = pool.map_async(run_one_sim, repeat(std_devs, trials))
+            data_per_iter = process.get() # run iters, async
             #  data is a list of tuples, one tuple g,culturemat, dataDict for each run
-        data_per_iter = list(map(run_one_sim, repeat(std_devs, trials)))
+
+        # non parallel code:
+        #data_per_iter = list(map(run_one_sim, repeat(std_devs, trials)))
 
         graphs, cultures, iter_dicts = zip(*data_per_iter)  # unzip tuples
         # save graphs for each parameter setting (100 trials)
@@ -72,6 +76,7 @@ def main_sayama():
 
 
 def run_sayama_sim(std_devs):
+    '''simulate a single instance'''
     # generate
     change_vec = [[0.5, 0.5, 0.5], [0.5, 0.5, 0.5]]
     g = generator.graph_gen(2, 50, 0.2, 0.02)
@@ -103,7 +108,6 @@ def analyze(g, culturemat, culture_change_all, norm=2):  # for analysis of sayam
         #  analyze biggest component
         spl = nx.average_shortest_path_length(g.subgraph(giant))
         data_dict['SPL'] = (spl, num_connected_components)
-        print('!')
 
     data_dict['CD'] = culture_distance(g, culturemat, culture_change_all, norm)
     return data_dict
