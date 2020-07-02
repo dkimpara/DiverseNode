@@ -23,10 +23,11 @@ def run_one_sim(s_devs):
 
     # analyze run
     dataDict = analyze(g, culturemat, False)
-    s_devs = s_devs[0]
-    dataDict['std_d'] = s_devs[1]
-    dataDict['std_rs'] = s_devs[2]
-    dataDict['std_rw'] = s_devs[3]  # no need to store anything else cuz sayama base sim
+    if dataDict: #if the trial succeeded
+        s_devs = s_devs[0]
+        dataDict['std_d'] = s_devs[1]
+        dataDict['std_rs'] = s_devs[2]
+        dataDict['std_rw'] = s_devs[3]  # no need to store anything else cuz sayama base sim
 
     return g, culturemat, dataDict
 
@@ -64,12 +65,12 @@ def main_sayama():
         graphs, cultures, iter_dicts = zip(*data_per_iter)  # unzip tuples
         # save graphs for each parameter setting (100 trials)
         sayamaChangeVec = [[0.5, 0.5, 0.5], [0.5, 0.5, 0.5]]
-        store_graphs_cultures(graphs, cultures, std_devs, sayamaChangeVec,
+        store_graphs_cultures(list(graphs), list(cultures), std_devs, sayamaChangeVec,
                               'sayama', str(dev))
-        data += iter_dicts  # append list of data from each sim to the main data list
+        data += list(iter_dicts)  # append list of data from each sim to the main data list
 
     #  write all data to dataframe. tests dir already made in storegraphs method
-    df = pd.DataFrame(data)
+    df = pd.DataFrame(data) #empty dicts will be stored as NaNs
     tags = list(range(100)) * len(data) // 100
     df['tags'] = tags
 
@@ -94,26 +95,27 @@ def run_sayama_sim(std_devs):
 
 
 def analyze(g, culturemat, culture_change_all, norm=2):  # for analysis of sayama sim
-    # todo: diameter error because not s connected, returning infinite dist
-    data_dict = {'diam': nx.diameter(g),
-                 'degrees': sorted([d for n, d in g.degree()], reverse=True),
-                 'clusterCoeff': nx.average_clustering(g),
-                 'reciprocity': nx.reciprocity(g)}
-    g_undir = nx.DiGraph.to_undirected(g)
-    giant = max(nx.connected_components(g_undir), key=len)
-    data_dict['giantComponent'] = len(giant) / len(g.nodes())
     try:
-        data_dict['SPL'] = nx.average_shortest_path_length(g)
+        data_dict = {'diam': nx.diameter(g),
+                     'degrees': sorted([d for n, d in g.degree()], reverse=True),
+                     'clusterCoeff': nx.average_clustering(g),
+                     'reciprocity': nx.reciprocity(g)}
+        g_undir = nx.DiGraph.to_undirected(g)
+        giant = max(nx.connected_components(g_undir), key=len)
+        data_dict['giantComponent'] = len(giant) / len(g.nodes())
+        try:
+            data_dict['SPL'] = nx.average_shortest_path_length(g)
 
-    except nx.NetworkXError:
-        num_connected_components = len(list(nx.connected_components(g)))
+        except nx.NetworkXError:
+            num_connected_components = len(list(nx.connected_components(g)))
 
-        #  analyze biggest component
-        spl = nx.average_shortest_path_length(g.subgraph(giant))
-        data_dict['SPL'] = (spl, num_connected_components)
+            #  analyze biggest component
+            spl = nx.average_shortest_path_length(g.subgraph(giant))
+            data_dict['SPL'] = (spl, num_connected_components)
 
-    data_dict['CD'] = culture_distance(g, culturemat, culture_change_all, norm)
-
+        data_dict['CD'] = culture_distance(g, culturemat, culture_change_all, norm)
+    except nx.NetworkXError: #graph not strongly connected, throw away trial
+        data_dict = {}
     return data_dict
 
 
