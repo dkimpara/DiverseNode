@@ -3,13 +3,13 @@ import os
 import pickle as pk
 from itertools import repeat
 from multiprocessing import Pool
-from typing import List, Any
+from typing import List
 from pathlib import Path
+from sklearn.model_selection import ParameterGrid
 
 import networkx as nx
 import numpy as np
 import pandas as pd
-from sklearn.model_selection import ParameterGrid
 
 import generator
 import simulate
@@ -18,12 +18,43 @@ import simulate
 # use graph tool compatible formats “graphml”, or “gml” or pickle?
 # pickle tried first
 
-def run_one_sim(s_devs):
-    '''simulate and collect data'''
-    g, culturemat = run_sayama_sim(s_devs)
+def run_on_grid(grid, trials, experiment_name, change_all, change_vec):
+    """
+    :type grid: iterable
+    """
+    data = List[tuple]
+    for params in grid:
+        #modify for non-symmetric cultures_change
+        dev = [0.1, params['std_d'], params['std_rs'], params['std_rw']]
+        std_devs = [dev, dev]
+        input_data = (std_devs, change_vec, change_all)
+        data_per_iter: List[tuple] = []
+        with Pool(processes=os.cpu_count() - 1) as pool:
+            process = pool.map_async(run_and_analyze, repeat(input_data, trials))
+            data_per_iter = process.get() # run iters, async
+            #  data is a list of tuples, one tuple g,culturemat, dataDict for each run
 
+        # non parallel code:
+        #data_per_iter = list(map(run_one_sim, repeat(std_devs, trials)))
+
+        graphs: nx.DiGraph
+        graphs, cultures, iter_dicts = zip(*data_per_iter)  # unzip tuples
+        # save graphs for each parameter setting (100 trials)
+        assert isinstance(graphs, nx.DiGraph)
+        store_graphs_cultures(list(graphs), list(cultures), std_devs, change_vec,
+                              experiment_name, str(dev))
+        data += list(iter_dicts)  # append list of data from each sim to the main data list
+    return data
+
+
+def run_and_analyze(input):
+    '''simulate and collect data
+    input_data = (std_devs, change_vec, change_all)'''
+    g, culturemat = run_sayama_sim(input)
+    change_all = input[2]
+    s_devs = input[0]
     # analyze run
-    dataDict = analyze(g, culturemat, False)
+    dataDict = analyze(g, culturemat, change_all)
     if dataDict: #if the trial succeeded
         s_devs = s_devs[0]
         dataDict['std_d'] = s_devs[1]
@@ -32,63 +63,20 @@ def run_one_sim(s_devs):
 
     return g, culturemat, dataDict
 
-
-def main_sayama():
-    """change_vec = [[d1,r1,w1][d2,r2,w2]] (means of params d, culturechange)
-         std_devs = [sd_culture1, sd_d, sd_rs, sd_rw],[cult2"""
-    #create directory to store data
-    create_dir('sayama')
-
-    values = np.linspace(0.0, 0.5, 6)
-    param_grid = {'std_d': values, 'std_rs': values, 'std_rw': values}
-    grid = ParameterGrid(param_grid)
-    data: List[Any] = []
-    trials = 100
-    for params in grid:
-        dev = [0.1, params['std_d'], params['std_rs'], params['std_rw']]
-        std_devs = [dev, dev]
-        data_per_iter: List[tuple] = []
-        with Pool(processes=os.cpu_count() - 1) as pool:
-            process = pool.map_async(run_one_sim, repeat(std_devs, trials))
-            data_per_iter = process.get() # run iters, async
-            #  data is a list of tuples, one tuple g,culturemat, dataDict for each run
-
-        # non parallel code:
-        #data_per_iter = list(map(run_one_sim, repeat(std_devs, trials)))
-
-        graphs, cultures, iter_dicts = zip(*data_per_iter)  # unzip tuples
-        # save graphs for each parameter setting (100 trials)
-        sayamaChangeVec = [[0.5, 0.5, 0.5], [0.5, 0.5, 0.5]]
-        store_graphs_cultures(list(graphs), list(cultures), std_devs, sayamaChangeVec,
-                              'sayama', str(dev))
-        data += list(iter_dicts)  # append list of data from each sim to the main data list
-
-    #  write all data to dataframe. tests dir already made in storegraphs method
-    df = pd.DataFrame(data) #empty dicts will be stored as NaNs
-    tags = list(range(trials)) * (len(data) // trials)
-    df['tags'] = tags
-
-    df.name = 'Sayama'
-    df.to_pickle('./tests/df_' + df.name)
-
-    '''to unpickle:
-    df =pd.read_pickle("./dummy.pkl")
-    '''
-
-
-def run_sayama_sim(std_devs):
-    '''simulate a single instance'''
+def run_sayama_sim(input):
+    '''simulate an instance'''
     # generate
-    change_vec = [[0.5, 0.5, 0.5], [0.5, 0.5, 0.5]]
+    # todo: check line
+    std_devs, change_vec, change_all = zip(*input)
     g = generator.graph_gen(2, 50, 0.2, 0.02)
     culturemat = generator.culture_init(g, std_devs, change_vec)
 
     # simulate
-    g, culturemat = simulate.simulate_iterstop(g, culturemat)
+    g, culturemat = simulate.simulate_iterstop(g, culturemat, change_all)
 
     return g, culturemat
 
-
+#helper for run_and_analyze
 def analyze(g, culturemat, culture_change_all, norm=2):  # for analysis of sayama sim
     g_undir = nx.DiGraph.to_undirected(g)
     data_dict = {'degrees': sorted([d for n, d in g.degree()], reverse=True),
@@ -113,7 +101,7 @@ def analyze(g, culturemat, culture_change_all, norm=2):  # for analysis of sayam
     data_dict['CD'] = culture_distance(g, culturemat, culture_change_all, norm)
     return data_dict
 
-
+#helper for analyze func
 def culture_distance(g, culturemat, culture_change_all, norm):
     blocks = list(g.nodes(data='block'))
     b1 = [v for v, block in blocks if block == 0]
@@ -132,10 +120,10 @@ def culture_distance(g, culturemat, culture_change_all, norm):
     return distance / (len(b1) * len(b2))
 
 
-def store_graphs_cultures(graphs: nx.DiGraph, cultures: np.ndarray,
-                          std_devs: tuple, change_vec: list, subdir: str,
+def store_graphs_cultures(graphs: list, cultures: list,
+                          std_devs: list, change_vec: list, subdir: str,
                           filename: str) -> None:  # pickle a bunch of graphs and cultures
-    dataDict = {'graphs': graphs, 'cultures': cultures,
+    data_dict = {'graphs': graphs, 'cultures': cultures,
                 'change1': change_vec[0], 'change2': change_vec[1],
                 'std1': std_devs[0], 'std2': std_devs[1]}
 
@@ -147,8 +135,20 @@ def store_graphs_cultures(graphs: nx.DiGraph, cultures: np.ndarray,
     abs_file_path = os.path.join(script_dir, rel_path)
 
     f = open(abs_file_path, 'wb')
-    pk.dump(dataDict, f)
+    pk.dump(data_dict, f)
     f.close()
+
+def write_dataframe(data, trials, experiment_name):
+    df = pd.DataFrame(data)  # empty dicts will be stored as NaNs
+    tags = list(range(trials)) * (len(data) // trials)
+    df['tags'] = tags
+
+    df.name = experiment_name
+    df.to_pickle('./tests/df_' + df.name)
+
+    '''to unpickle:
+    df =pd.read_pickle("./dummy.pkl")
+    '''
 
 def create_dir(subdir):
     script_dir = os.path.dirname(__file__)  # <-- absolute dir the script is in

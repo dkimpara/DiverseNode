@@ -1,4 +1,4 @@
-import sayama_change_all
+from experimentRunner import *
 
 if __name__ == '__main__':  # run experiments for sayama
-    sayama_change_all.main_sayama()
+    sayama_change_all()
