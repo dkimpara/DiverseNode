@@ -18,7 +18,7 @@ import simulate
 # use graph tool compatible formats “graphml”, or “gml” or pickle?
 # pickle tried first
 
-def run_on_grid(gfunc, grid, change_all, change_vec, experiment_name, trials=100):
+def run_on_grid(g_func, grid, change_all, change_vec, experiment_name, trials=100):
     """
     :type grid: iterable
     """
@@ -28,7 +28,7 @@ def run_on_grid(gfunc, grid, change_all, change_vec, experiment_name, trials=100
         #todo fix this constant
         dev = [0.1, params['std_d'], params['std_rs'], params['std_rw']]
         std_devs = [dev, dev]
-        input_data = (gfunc, std_devs, change_vec, change_all)
+        input_data = (g_func, std_devs, change_vec, change_all)
         data_per_iter: List[tuple] = []
         with Pool(processes=os.cpu_count() - 1) as pool:
             process = pool.map_async(run_and_analyze, repeat(input_data, trials))
@@ -53,9 +53,9 @@ def run_and_analyze(input):
     '''simulate and collect data
     input_data = (std_devs, change_vec, change_all)'''
     #unpack input tuple
-    gfunc, std_devs, change_vec, change_all = input
+    g_func, std_devs, change_vec, change_all = input
 
-    g, culturemat = run_sayama_sim(gfunc, std_devs, change_vec, change_all)
+    g, culturemat = run_sayama_sim(g_func, std_devs, change_vec, change_all)
 
     # analyze run
     dataDict = analyze(g, culturemat, change_all)
@@ -67,12 +67,12 @@ def run_and_analyze(input):
 
     return g, culturemat, dataDict
 
-def run_sayama_sim(g, std_devs, change_vec, change_all):
+def run_sayama_sim(g_func, std_devs, change_vec, change_all):
     '''simulate an instance'''
     # generate
     # todo run function with args defined top level
-    g = gfunc() #run generator function def'd in experiment runner
-    culturemat = generator.culture_init(g, std_devs, change_vec)
+    g = g_func() #run generator function def'd in experiment runner
+    culturemat = gen.culture_init(g, std_devs, change_vec)
 
     # simulate
     g, culturemat = simulate.simulate_iterstop(g, culturemat, change_all)
