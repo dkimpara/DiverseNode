@@ -50,24 +50,24 @@ def run_on_grid(grid, trials, experiment_name, change_all, change_vec):
 def run_and_analyze(input):
     '''simulate and collect data
     input_data = (std_devs, change_vec, change_all)'''
-    g, culturemat = run_sayama_sim(input)
-    change_all = input[2]
-    s_devs = input[0]
+    #unpack input tuple
+    std_devs, change_vec, change_all = input
+
+    g, culturemat = run_sayama_sim(std_devs, change_vec, change_all)
+
     # analyze run
     dataDict = analyze(g, culturemat, change_all)
     if dataDict: #if the trial succeeded
-        s_devs = s_devs[0]
+        s_devs = std_devs[0]
         dataDict['std_d'] = s_devs[1]
         dataDict['std_rs'] = s_devs[2]
         dataDict['std_rw'] = s_devs[3]  # no need to store anything else cuz sayama base sim
 
     return g, culturemat, dataDict
 
-def run_sayama_sim(input):
+def run_sayama_sim(std_devs, change_vec, change_all):
     '''simulate an instance'''
     # generate
-    # todo: check line
-    std_devs, change_vec, change_all = zip(*input)
     g = generator.graph_gen(2, 50, 0.2, 0.02)
     culturemat = generator.culture_init(g, std_devs, change_vec)
 
