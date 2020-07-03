@@ -15,17 +15,16 @@ import generator as gen
 import simulate
 
 
-# use graph tool compatible formats “graphml”, or “gml” or pickle?
-# pickle tried first
-
-def run_on_grid(g_func, grid, change_all, change_vec, experiment_name, trials=100):
+def experiment_collect_store(g_func, grid, change_all, change_vec, experiment_name, trials=100):
     """
     :type grid: iterable
     """
+    create_dir(experiment_name)
+
     data = List[tuple]
     for params in grid:
         #modify for non-symmetric cultures_change
-        #todo fix this constant
+        #todo fix this constant, optimize this section?
         dev = [0.1, params['std_d'], params['std_rs'], params['std_rw']]
         std_devs = [dev, dev]
         input_data = (g_func, std_devs, change_vec, change_all)
@@ -45,7 +44,6 @@ def run_on_grid(g_func, grid, change_all, change_vec, experiment_name, trials=10
         store_graphs_cultures(list(graphs), list(cultures), std_devs, change_vec,
                               experiment_name, str(dev))
         data += list(iter_dicts)  # append list of data from each sim to the main data list
-    #write dataframe
     write_dataframe(data, trials, experiment_name)
 
 
