@@ -70,7 +70,6 @@ def run_and_analyze(input):
 def run_sayama_sim(g_func, std_devs, change_vec, change_all):
     '''simulate an instance'''
     # generate
-    # todo run function with args defined top level
     g = g_func() #run generator function def'd in experiment runner
     culturemat = gen.culture_init(g, std_devs, change_vec)
 
