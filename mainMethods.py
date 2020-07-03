@@ -18,13 +18,14 @@ import simulate
 # use graph tool compatible formats “graphml”, or “gml” or pickle?
 # pickle tried first
 
-def run_on_grid(grid, trials, experiment_name, change_all, change_vec):
+def run_on_grid(grid, change_all, change_vec, experiment_name, trials=100):
     """
     :type grid: iterable
     """
     data = List[tuple]
     for params in grid:
         #modify for non-symmetric cultures_change
+        #todo fix this constant
         dev = [0.1, params['std_d'], params['std_rs'], params['std_rw']]
         std_devs = [dev, dev]
         input_data = (std_devs, change_vec, change_all)
@@ -44,16 +45,17 @@ def run_on_grid(grid, trials, experiment_name, change_all, change_vec):
         store_graphs_cultures(list(graphs), list(cultures), std_devs, change_vec,
                               experiment_name, str(dev))
         data += list(iter_dicts)  # append list of data from each sim to the main data list
-    return data
+    #write dataframe
+    write_dataframe(data, trials, experiment_name)
 
 
 def run_and_analyze(input):
     '''simulate and collect data
     input_data = (std_devs, change_vec, change_all)'''
     #unpack input tuple
-    std_devs, change_vec, change_all = input
+    generator, std_devs, change_vec, change_all = input
 
-    g, culturemat = run_sayama_sim(std_devs, change_vec, change_all)
+    g, culturemat = run_sayama_sim(generator, std_devs, change_vec, change_all)
 
     # analyze run
     dataDict = analyze(g, culturemat, change_all)
@@ -65,10 +67,11 @@ def run_and_analyze(input):
 
     return g, culturemat, dataDict
 
-def run_sayama_sim(std_devs, change_vec, change_all):
+def run_sayama_sim(g, std_devs, change_vec, change_all):
     '''simulate an instance'''
     # generate
-    g = generator.graph_gen(2, 50, 0.2, 0.02)
+    # todo run function with args defined top level
+    g = generator.
     culturemat = generator.culture_init(g, std_devs, change_vec)
 
     # simulate

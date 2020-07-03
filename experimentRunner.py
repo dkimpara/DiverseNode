@@ -15,8 +15,9 @@ def sayama_base(change_all):
     values = np.linspace(0.0, 0.5, 6)
     param_grid = {'std_d': values, 'std_rs': values, 'std_rw': values}
     grid = ParameterGrid(param_grid)
-    trials = 100
     change_vec = [[0.5, 0.5, 0.5], [0.5, 0.5, 0.5]]
 
-    data = mmethods.run_on_grid(grid, trials, experiment_name, change_all, change_vec)
-    mmethods.write_dataframe(data, trials, experiment_name)
+    g = generator.graph_gen(2, 50, 0.2, 0.02)
+
+    #run experiment and write data. default trials=100
+    mmethods.run_on_grid(grid, g, change_all, change_vec, experiment_name)
