@@ -33,10 +33,9 @@ def run_one_sim(s_devs):
     return g, culturemat, dataDict
 
 
-#  todo test multiprocessing
 def main_sayama():
     """change_vec = [[d1,r1,w1][d2,r2,w2]] (means of params d, culturechange)
-        std_devs = [sd_culture1, sd_d, sd_rs, sd_rw],[cult2"""
+         std_devs = [sd_culture1, sd_d, sd_rs, sd_rw],[cult2"""
     #create directory to store data
     create_dir('sayama')
 
