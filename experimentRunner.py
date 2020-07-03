@@ -1,6 +1,9 @@
 import mainMethods as mmethods
 import numpy as np
+import functools
 from sklearn.model_selection import ParameterGrid
+
+import generator as gen
 
 def sayama_change_all(): #  same as sayama but change all of culture vec
     sayama_base(True)
@@ -17,7 +20,8 @@ def sayama_base(change_all):
     grid = ParameterGrid(param_grid)
     change_vec = [[0.5, 0.5, 0.5], [0.5, 0.5, 0.5]]
 
-    g = generator.graph_gen(2, 50, 0.2, 0.02)
+    #create graph generator o
+    g_func = functools.partial(gen.graph_gen, 2, 50, 0.2, 0.02)
 
     #run experiment and write data. default trials=100
-    mmethods.run_on_grid(grid, g, change_all, change_vec, experiment_name)
+    mmethods.run_on_grid(g_func, grid, change_all, change_vec, experiment_name)
