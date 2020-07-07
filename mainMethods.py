@@ -87,8 +87,9 @@ def analyze(g, culturemat, culture_change_all, norm=2):  # for analysis of sayam
     data_dict['giantComponent'] = len(giant) / len(g.nodes())
 
     try:
-        data_dict['diam'] = nx.diameter(g_undir)
-        data_dict['SPL'] = nx.average_shortest_path_length(g)
+        data_dict['diam'] = nx.diameter(g_undir) #goto except if g_undir unconnected
+        #g connected:
+        data_dict['SPL'] = nx.average_shortest_path_length(g) #goes to except if g not weakly connected
     except nx.NetworkXError: #graph not strongly connected, throw away trial
         num_connected_components = len(list(nx.connected_components(g_undir)))
 
