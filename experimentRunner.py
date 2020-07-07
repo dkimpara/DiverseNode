@@ -5,6 +5,9 @@ from sklearn.model_selection import ParameterGrid
 
 import generator as gen
 
+def change_norm(norm):
+
+
 def sayama_change_all(): #  same as sayama but change all of culture vec
     sayama_base('sayam_change_all', True)
 

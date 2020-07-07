@@ -15,7 +15,7 @@ import generator as gen
 import simulate
 
 
-def experiment_collect_store(g_func, grid, change_all, change_vec, experiment_name, trials=100):
+def experiment_collect_store(g_func, grid, change_all, change_vec, experiment_name, norm=2, trials=100):
     """
     :type grid: iterable
     """
@@ -27,7 +27,7 @@ def experiment_collect_store(g_func, grid, change_all, change_vec, experiment_na
         #todo fix this constant, optimize this section?
         dev = [0.1, params['std_d'], params['std_rs'], params['std_rw']]
         std_devs = [dev, dev]
-        input_data = (g_func, std_devs, change_vec, change_all)
+        input_data = (g_func, std_devs, change_vec, change_all, norm)
         data_per_iter: List[tuple] = []
         with Pool(processes=os.cpu_count() - 1) as pool:
             process = pool.map_async(run_and_analyze, repeat(input_data, trials))
@@ -47,16 +47,16 @@ def experiment_collect_store(g_func, grid, change_all, change_vec, experiment_na
     write_dataframe(data, trials, experiment_name)
 
 
-def run_and_analyze(input):
+def run_and_analyze(input_data):
     '''simulate and collect data
     input_data = (std_devs, change_vec, change_all)'''
     #unpack input tuple
-    g_func, std_devs, change_vec, change_all = input
+    g_func, std_devs, change_vec, change_all, norm = input_data
 
-    g, culturemat = run_sayama_sim(g_func, std_devs, change_vec, change_all)
+    g, culturemat = run_sayama_sim(g_func, std_devs, change_vec, change_all, norm)
 
     # analyze run
-    dataDict = analyze(g, culturemat, change_all)
+    dataDict = analyze(g, culturemat, change_all, norm)
     if dataDict: #if the trial succeeded
         s_devs = std_devs[0]
         dataDict['std_d'] = s_devs[1]
@@ -72,7 +72,7 @@ def run_sayama_sim(g_func, std_devs, change_vec, change_all):
     culturemat = gen.culture_init(g, std_devs, change_vec)
 
     # simulate
-    g, culturemat = simulate.simulate_iterstop(g, culturemat, change_all)
+    g, culturemat = simulate.simulate_iterstop(g, culturemat, change_all, norm)
 
     return g, culturemat
 

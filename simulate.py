@@ -8,7 +8,7 @@ from numpy import linalg
 import math
 
 
-def simulate_iterstop(g, culturemat, culture_change_all=False, iterstop=500):
+def simulate_iterstop(g, culturemat, culture_change_all=False, norm, iterstop=500):
     """input graph g with initialized culture state, edge weights,"""
     ccomp = Components(g)
     for i in range(iterstop):
