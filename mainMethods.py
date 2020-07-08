@@ -53,6 +53,7 @@ def run_and_analyze(input_data):
     input_data = (std_devs, change_vec, change_all)'''
     #unpack input tuple
     g_func, std_devs, change_vec, change_all, norm = input_data
+
     g = g_func()
     cmat, c1, c2 = gen.culture_init(g, std_devs, change_vec)
     g, culturemat = run_sayama_sim(g, cmat, change_all, norm)
