@@ -1,6 +1,7 @@
 # helper functions for running sayama et all experiments
 import os
 import pickle as pk
+from functools import partial
 from itertools import repeat
 from multiprocessing import Pool
 from typing import List
@@ -46,45 +47,53 @@ def experiment_collect_store(g_func, grid, change_all, change_vec, experiment_na
         data += list(iter_dicts)  # append list of data from each sim to the main data list
     write_dataframe(data, trials, experiment_name)
 
-
+# todo: need to extract culture dat
 def run_and_analyze(input_data):
     '''simulate and collect data
     input_data = (std_devs, change_vec, change_all)'''
     #unpack input tuple
     g_func, std_devs, change_vec, change_all, norm = input_data
-
-    g, culturemat = run_sayama_sim(g_func, std_devs, change_vec, change_all, norm)
+    g = g_func()
+    cmat, c1, c2 = gen.culture_init(g, std_devs, change_vec)
+    g, culturemat = run_sayama_sim(g, cmat, change_all, norm)
 
     # analyze run
     dataDict = analyze(g, culturemat, change_all, norm)
-    if dataDict: #if the trial succeeded
-        s_devs = std_devs[0]
-        dataDict['std_d'] = s_devs[1]
-        dataDict['std_rs'] = s_devs[2]
-        dataDict['std_rw'] = s_devs[3]  # no need to store anything else cuz sayama base sim
+    dataDict['c1_init'] = c1
+    dataDict['c2_init'] = c2
+    dataDict['c_avg_init'] = analyze_c_init(c1, c2)
+    s_devs = std_devs[0]
+    dataDict['std_d'] = s_devs[1]
+    dataDict['std_rs'] = s_devs[2]
+    dataDict['std_rw'] = s_devs[3]  # no need to store anything else cuz sayama base sim
 
     return g, culturemat, dataDict
 
-def run_sayama_sim(g_func, std_devs, change_vec, change_all):
-    '''simulate an instance'''
-    # generate
-    g = g_func() #run generator function def'd in experiment runner
-    culturemat = gen.culture_init(g, std_devs, change_vec)
 
+
+
+def run_sayama_sim(g, cmat, change_all):
+    '''simulate an instance'''
     # simulate
-    g, culturemat = simulate.simulate_iterstop(g, culturemat, change_all, norm)
+    g, culturemat = simulate.simulate_iterstop(g, cmat, change_all)
 
     return g, culturemat
 
 #helper for run_and_analyze
+def culture_analyze(data_dict, g, culturemat, norm):
+    #need to add to datadict culture centers + overall center + average of two cultures
+    pass
+
+
 def analyze(g, culturemat, culture_change_all, norm=2):  # for analysis of sayama sim
     g_undir = nx.DiGraph.to_undirected(g)
     data_dict = {'degrees': sorted([d for n, d in g.degree()], reverse=True),
                  'clusterCoeff': nx.average_clustering(g),
                  'reciprocity': nx.reciprocity(g)}
-
+    data_dict = culture_analyze(data_dict, g, culturemat, norm)
     giant = max(nx.connected_components(g_undir), key=len)
     data_dict['giantComponent'] = len(giant) / len(g.nodes())
+    # analyze cultures
 
     try:
         data_dict['diam'] = nx.diameter(g_undir) #goto except if g_undir unconnected
@@ -120,6 +129,8 @@ def culture_distance(g, culturemat, culture_change_all, norm):
                                            - culturemat[v, :-3], norm)
     return distance / (len(b1) * len(b2))
 
+def analyze_c_init(c1, c2):
+    return 0.5 * c1 + 0.5 * c2
 
 def store_graphs_cultures(graphs: list, cultures: list,
                           std_devs: list, change_vec: list, subdir: str,
