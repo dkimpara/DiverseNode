@@ -15,7 +15,7 @@ def read_pickle(subpath):
         return pk.load(f)
 
     
-def plotfig(std, cd, spl, label):
+def plotfig(std, cd, spl, label, filename=None, az=305, e=27):
     fig = plt.figure()
     fig.set_size_inches(10, 10)
     ax = fig.add_subplot(111, projection='3d')
@@ -27,6 +27,7 @@ def plotfig(std, cd, spl, label):
     ax.set_xlabel("s.d. of " + label)
     ax.set_ylabel("<CD>")
     ax.set_zlabel("<SPL>")
-    ax.view_init(elev=27, azim=305)
+    ax.view_init(elev=e, azim=az)
     plt.draw()
-    fig.savefig('test2png.png', dpi=100)
+    if filename:
+        fig.savefig(filename, dpi=100)
