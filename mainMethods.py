@@ -23,19 +23,19 @@ def experiment_collect_store(g_func, grid, change_all, change_vec, experiment_na
 
     data = List[tuple]
     for params in grid:
-        #modify for non-symmetric cultures_change
-        #todo fix this constant, optimize this section?
+        # modify for non-symmetric cultures_change
+        # todo fix this constant, optimize this section?
         dev = [0.1, params['std_d'], params['std_rs'], params['std_rw']]
         std_devs = [dev, dev]
         input_data = (g_func, std_devs, change_vec, change_all, norm)
         data_per_iter: List[tuple] = []
         with Pool(processes=os.cpu_count() - 1) as pool:
             process = pool.map_async(run_and_analyze, repeat(input_data, trials))
-            data_per_iter = process.get() # run iters, async
+            data_per_iter = process.get()  # run iters, async
             #  data is a list of tuples, one tuple g,culturemat, dataDict for each run
 
         # non parallel code:
-        #data_per_iter = list(map(run_one_sim, repeat(std_devs, trials)))
+        # data_per_iter = list(map(run_one_sim, repeat(std_devs, trials)))
 
         graphs: nx.DiGraph
         graphs, cultures, iter_dicts = zip(*data_per_iter)  # unzip tuples
@@ -50,14 +50,14 @@ def experiment_collect_store(g_func, grid, change_all, change_vec, experiment_na
 def run_and_analyze(input_data):
     '''simulate and collect data
     input_data = (std_devs, change_vec, change_all)'''
-    #unpack input tuple
+    # unpack input tuple
     g_func, std_devs, change_vec, change_all, norm = input_data
 
     g, culturemat = run_sayama_sim(g_func, std_devs, change_vec, change_all, norm)
 
     # analyze run
     dataDict = analyze(g, culturemat, change_all, norm)
-    if dataDict: #if the trial succeeded
+    if dataDict:  # if the trial succeeded
         s_devs = std_devs[0]
         dataDict['std_d'] = s_devs[1]
         dataDict['std_rs'] = s_devs[2]
@@ -65,10 +65,11 @@ def run_and_analyze(input_data):
 
     return g, culturemat, dataDict
 
+
 def run_sayama_sim(g_func, std_devs, change_vec, change_all):
     '''simulate an instance'''
     # generate
-    g = g_func() #run generator function def'd in experiment runner
+    g = g_func()  # run generator function def'd in experiment runner
     culturemat = gen.culture_init(g, std_devs, change_vec)
 
     # simulate
@@ -76,7 +77,8 @@ def run_sayama_sim(g_func, std_devs, change_vec, change_all):
 
     return g, culturemat
 
-#helper for run_and_analyze
+
+# helper for run_and_analyze
 def analyze(g, culturemat, culture_change_all, norm=2):  # for analysis of sayama sim
     g_undir = nx.DiGraph.to_undirected(g)
     data_dict = {'degrees': sorted([d for n, d in g.degree()], reverse=True),
@@ -87,10 +89,10 @@ def analyze(g, culturemat, culture_change_all, norm=2):  # for analysis of sayam
     data_dict['giantComponent'] = len(giant) / len(g.nodes())
 
     try:
-        data_dict['diam'] = nx.diameter(g_undir) #goto except if g_undir unconnected
-        #g connected:
-        data_dict['SPL'] = nx.average_shortest_path_length(g) #goes to except if g not weakly connected
-    except nx.NetworkXError: #graph not strongly connected, throw away trial
+        data_dict['diam'] = nx.diameter(g_undir)  # goto except if g_undir unconnected
+        # g connected:
+        data_dict['SPL'] = nx.average_shortest_path_length(g)  # goes to except if g not weakly connected
+    except nx.NetworkXError:  # graph not strongly connected, throw away trial
         num_connected_components = len(list(nx.connected_components(g_undir)))
 
         d = nx.diameter(g_undir.subgraph(giant))
@@ -102,7 +104,8 @@ def analyze(g, culturemat, culture_change_all, norm=2):  # for analysis of sayam
     data_dict['CD'] = culture_distance(g, culturemat, culture_change_all, norm)
     return data_dict
 
-#helper for analyze func
+
+# helper for analyze func
 def culture_distance(g, culturemat, culture_change_all, norm):
     blocks = list(g.nodes(data='block'))
     b1 = [v for v, block in blocks if block == 0]
@@ -125,8 +128,8 @@ def store_graphs_cultures(graphs: list, cultures: list,
                           std_devs: list, change_vec: list, subdir: str,
                           filename: str) -> None:  # pickle a bunch of graphs and cultures
     data_dict = {'graphs': graphs, 'cultures': cultures,
-                'change1': change_vec[0], 'change2': change_vec[1],
-                'std1': std_devs[0], 'std2': std_devs[1]}
+                 'change1': change_vec[0], 'change2': change_vec[1],
+                 'std1': std_devs[0], 'std2': std_devs[1]}
 
     # now pickle
     script_dir = os.path.dirname(__file__)  # <-- absolute dir the script is in
@@ -139,6 +142,7 @@ def store_graphs_cultures(graphs: list, cultures: list,
     pk.dump(data_dict, f)
     f.close()
 
+
 def write_dataframe(data, trials, experiment_name):
     df = pd.DataFrame(data)  # empty dicts will be stored as NaNs
     tags = list(range(trials)) * (len(data) // trials)
@@ -150,6 +154,7 @@ def write_dataframe(data, trials, experiment_name):
     '''to unpickle:
     df =pd.read_pickle("./dummy.pkl")
     '''
+
 
 def create_dir(subdir):
     script_dir = os.path.dirname(__file__)  # <-- absolute dir the script is in
