@@ -1,5 +1,5 @@
-## graph_gen generates graph and edge weights
-## culture_init generates the culture matrix
+# graph_gen generates graph and edge weights
+# culture_init generates the culture matrix
 
 import networkx as nx
 from networkx.generators.community import stochastic_block_model

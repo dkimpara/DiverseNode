@@ -17,9 +17,6 @@ import simulate
 
 
 def experiment_collect_store(g_func, grid, change_all, change_vec, experiment_name, norm=2, trials=100):
-    """
-    :type grid: iterable
-    """
     create_dir(experiment_name)
 
     data = List[tuple]
