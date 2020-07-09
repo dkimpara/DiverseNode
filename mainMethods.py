@@ -123,6 +123,7 @@ def culture_center(cmat, change_all, nodes):
     else:
         return np.mean(cmat[nodes, :-3], axis=0)
 
+
 # helper for analyze func
 def culture_distance(g, culturemat, culture_change_all, norm):
     b1, b2 = get_blocks(g)
