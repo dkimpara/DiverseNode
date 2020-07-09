@@ -19,7 +19,7 @@ import simulate
 def experiment_collect_store(g_func, grid, change_all, change_vec, experiment_name, norm=2, trials=100):
     create_dir(experiment_name)
 
-    data = List[tuple]
+    data = []
     for params in grid:
         # modify for non-symmetric cultures_change
         # todo fix this constant, optimize this section?
@@ -35,10 +35,8 @@ def experiment_collect_store(g_func, grid, change_all, change_vec, experiment_na
         # non parallel code:
         # data_per_iter = list(map(run_one_sim, repeat(std_devs, trials)))
 
-        graphs: nx.DiGraph
         graphs, cultures, iter_dicts = zip(*data_per_iter)  # unzip tuples
         # save graphs for each parameter setting (100 trials)
-        assert isinstance(graphs, nx.DiGraph)
         store_graphs_cultures(list(graphs), list(cultures), std_devs, change_vec,
                               experiment_name, str(dev))
         data += list(iter_dicts)  # append list of data from each sim to the main data list
