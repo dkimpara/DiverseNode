@@ -83,16 +83,18 @@ def run_sayama_sim(g, cmat, change_all, norm):
 # helper for run_and_analyze
 def culture_analyze(data_dict, g, cmat, change_all, norm):
     # need to add to datadict culture centers + overall center + average of two cultures
+    c_func = partial(culture_center, cmat, change_all)
     b1, b2 = get_blocks(g)
-    data_dict['center_1'] = culture_center(b1, cmat, change_all, norm)
-    data_dict['center_2'] = culture_center(b2, cmat, change_all, norm)
-    data_dict['mean_center_1,2'] = mean_c_init(data_dict['center_1'],
+
+    data_dict['center_1'] = c_func(b1)
+    data_dict['center_2'] = c_func(b2)
+    data_dict['mean_centers'] = mean_c_init(data_dict['center_1'],
                                                data_dict['center_2'])
-    data_dict['overall_mean_culture'] = culture_center(b1 + b2, cmat, change_all, norm)
+    data_dict['overall_mean_culture'] = c_func(b1 + b2)
     return data_dict
 
 
-def culture_center(nodes, cmat, change_all, norm):
+def culture_center(cmat, change_all, nodes):
     if change_all:
         return np.mean(cmat[nodes, :], axis=0)
     else:
