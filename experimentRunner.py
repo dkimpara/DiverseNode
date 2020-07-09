@@ -20,7 +20,7 @@ def sayama_base(experiment_name, change_all):
     change_vec = [[0.5, 0.5, 0.5], [0.5, 0.5, 0.5]]
 
     #create graph generator func
-    g_func = functools.partial(gen.graph_gen, 2, 50, 0.2, 0.02)
+    g_func = functools.partial(gen.graph_gen, [25, 25], 0.2, 0.02)
 
     #run experiment and write data. default trials=100
     mmethods.experiment_collect_store(g_func, grid, change_all, change_vec, experiment_name)

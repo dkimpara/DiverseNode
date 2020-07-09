@@ -6,20 +6,19 @@ from networkx.generators.community import stochastic_block_model
 import numpy as np
 from numpy import linalg
 
-# todo: modify for different g
-def graph_gen(num_groups, num_nodes, intra_edge_density, extra_edge_density):
+
+def graph_gen(group_sizes, intra_edge_density, extra_edge_density):
     """num_groups is number of nodes in each group
     num_nodes uses SBM as graph generator
     initializes graph and edge weights"""
 
-    sizes = [int(num_nodes / num_groups)] * 2
     p = generate_density_matrix(intra_edge_density, extra_edge_density)
 
-    g = stochastic_block_model(sizes, p, directed=True, selfloops=False)
+    g = stochastic_block_model(group_sizes, p, directed=True, selfloops=False)
     g = edge_weight_init(g)
     return g
 
-# todo: integrate to extract original culture
+
 def culture_init(g, std_devs, change_vec, dim=10, distance=3.0, norm_p=2):
     """change_vec = [[d1,r1,w1][d2,r2,w2]]
         std_devs = [sd_culture1, sd_tolerance1, sd_culture_change1, sd w1],[cult2"""
@@ -33,6 +32,7 @@ def culture_init(g, std_devs, change_vec, dim=10, distance=3.0, norm_p=2):
     # now init cultures for each node as entries in a n x dim+3 matrix
     culturemat = np.empty([g.number_of_nodes(), dim + 3])
 
+    #num of group specific code:
     for v, b in g.nodes(data='block'):  # iterate thru vtx, group pairs
         if b == 0:
             culturemat[v] = generate_node_culture(culture1, std_devs[0])
