@@ -48,19 +48,19 @@ def experiment_collect_store(g_func, grid, change_all, change_vec, experiment_na
     write_dataframe(data, trials, experiment_name)
 
 
-# todo: need to extract culture dat
 def run_and_analyze(input_data):
     '''simulate and collect data
     input_data = (std_devs, change_vec, change_all)'''
     # unpack input tuple
     g_func, std_devs, change_vec, change_all, norm = input_data
 
+    # run the simulation
     g = g_func()
     cmat, c1, c2 = gen.culture_init(g, std_devs, change_vec)
-    g, culturemat = run_sayama_sim(g, cmat, change_all, norm)
+    g, culturemat_result = run_sayama_sim(g, cmat, change_all, norm)
 
     # analyze run
-    dataDict = analyze(g, culturemat, change_all, norm)
+    dataDict = analyze(g, culturemat_result, change_all, norm)
     dataDict['c1_init'] = c1
     dataDict['c2_init'] = c2
     dataDict['c_avg_init'] = mean_c_init(c1, c2)
@@ -69,7 +69,7 @@ def run_and_analyze(input_data):
     dataDict['std_rs'] = s_devs[2]
     dataDict['std_rw'] = s_devs[3]  # no need to store anything else cuz sayama base sim
 
-    return g, culturemat, dataDict
+    return g, culturemat_result, dataDict
 
 
 def run_sayama_sim(g, cmat, change_all, norm):
@@ -80,32 +80,12 @@ def run_sayama_sim(g, cmat, change_all, norm):
     return g, culturemat
 
 
-# helper for run_and_analyze
-def culture_analyze(data_dict, g, cmat, change_all, norm):
-    # need to add to datadict culture centers + overall center + average of two cultures
-    c_func = partial(culture_center, cmat, change_all)
-    b1, b2 = get_blocks(g)
-
-    data_dict['center_1'] = c_func(b1)
-    data_dict['center_2'] = c_func(b2)
-    data_dict['mean_centers'] = mean_c_init(data_dict['center_1'],
-                                               data_dict['center_2'])
-    data_dict['overall_mean_culture'] = c_func(b1 + b2)
-    return data_dict
-
-
-def culture_center(cmat, change_all, nodes):
-    if change_all:
-        return np.mean(cmat[nodes, :], axis=0)
-    else:
-        return np.mean(cmat[nodes, :-3], axis=0)
-
-
 def analyze(g, culturemat, culture_change_all, norm=2):  # for analysis of sayama sim
     g_undir = nx.DiGraph.to_undirected(g)
     data_dict = {'degrees': sorted([d for n, d in g.degree()], reverse=True),
                  'clusterCoeff': nx.average_clustering(g),
                  'reciprocity': nx.reciprocity(g)}
+    # extra culture analysis
     data_dict = culture_analyze(data_dict, g, culturemat, culture_change_all, norm)
     giant = max(nx.connected_components(g_undir), key=len)
     data_dict['giantComponent'] = len(giant) / len(g.nodes())
@@ -127,6 +107,26 @@ def analyze(g, culturemat, culture_change_all, norm=2):  # for analysis of sayam
     data_dict['CD'] = culture_distance(g, culturemat, culture_change_all, norm)
     return data_dict
 
+
+# helper for run_and_analyze
+def culture_analyze(data_dict, g, cmat, change_all, norm):
+    # need to add to datadict culture centers + overall center + average of two cultures
+    c_func = partial(culture_center, cmat, change_all)
+    b1, b2 = get_blocks(g)
+
+    data_dict['center_1'] = c_func(b1)
+    data_dict['center_2'] = c_func(b2)
+    data_dict['mean_centers'] = mean_c_init(data_dict['center_1'],
+                                               data_dict['center_2'])
+    data_dict['overall_mean_culture'] = c_func(b1 + b2)
+    return data_dict
+
+
+def culture_center(cmat, change_all, nodes):
+    if change_all:
+        return np.mean(cmat[nodes, :], axis=0)
+    else:
+        return np.mean(cmat[nodes, :-3], axis=0)
 
 # helper for analyze func
 def culture_distance(g, culturemat, culture_change_all, norm):
