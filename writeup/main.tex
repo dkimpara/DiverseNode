@@ -1,0 +1,60 @@
+\documentclass{article}
+
+\usepackage{fullpage}
+\usepackage{natbib}
+
+% custom %
+\usepackage{amsmath,amsthm,amssymb,amsfonts}
+\usepackage{mathtools}
+\usepackage{xcolor}
+\usepackage[]{algorithm,algorithmic}
+\usepackage{fancyhdr}
+\usepackage{bbm}
+\usepackage{enumitem}
+% \usepackage{algorithm, algorithmic}
+\usepackage{cleveref}
+\usepackage{thm-restate}
+
+\newcommand\tab[1][0.5cm]{\hspace*{#1}}
+%
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+
+%
+\newenvironment{claim}[1]{\par\noindent\underline{Claim:}\space#1}{}
+\newenvironment{claimproof}[1]{\par\noindent\underline{Proof:}\space#1}
+
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+% end custom %
+
+\begin{document}
+
+\title{Coexistence of Cultural Diversity}
+ \author{Dhamma Kimpara}
+
+
+\renewcommand{\thefootnote}{\arabic{footnote}}
+
+\maketitle
+
+%\begin{abstract}
+%In this work, we investigate whether privacy and fairness can be simultaneously achieved by a single classifier in several different models. Some of the earliest work on fairness in algorithm design defined fairness as a guarantee of similar outputs for ``similar'' input data, a notion with tight technical connections to differential privacy. We study whether tensions exist between differential privacy and statistical notions of fairness, namely Equality of False Positives and Equality of False Negatives (EFP/EFN). We show that even under full distributional access, there are cases where the constraint of differential privacy precludes exact EFP/EFN. We then turn to ask whether one can learn a differentially private classifier which approximately satisfies EFP/EFN, and show the existence of a PAC learner which is private and approximately fair with high probability. We conclude by giving an efficient algorithm for classification that maintains utility and satisfies both privacy and approximate fairness with high probability.
+%\end{abstract}
+
+\input{intro.tex}
+
+
+\newpage
+
+\bibliographystyle{plainnat}
+\bibliography{bib.bib}
+
+
+\end{document}

@@ -1,0 +1,219 @@
+% !TEX root = main.tex
+
+\section{Approximate Fairness with Differential Privacy}\label{s.approx}
+%
+%
+%
+
+
+%\rc{rough draft intro para to segue from previous section. needs to be edited} Since we gave impossibility results in the last section, we considered the easiest possible setting in which to do learning (full distributional access and the goal was simply non-trivial classification accuracy).  Even in this simplest setting, privacy and exact fairness were not compatible.  Here we relax our fairness constraint to alpha-discrim (presented in prelims), and give positive results for privacy and this notion of approximate fairness.  Correspondingly, we consider here a more challenging learning environment.  We only allow the algorithm sample access to the distribution, and we ask the algorithm to agnostically PAC learn a hypothesis class.
+
+In the previous section we sought impossibility results, so we considered the simplest possible learning setting: the algorithm was allowed full distributional access, and the goal was simply non-trivial classification accuracy.  We showed that even in that simple setting, privacy and exact fairness are not compatible. Here we relax our fairness constraint to \emph{$\alpha$-discrimination} (Definition \ref{def.eqop}) and give positive results for learning under the constraints of privacy and this notion of approximate fairness. As we shift our focus to positive results, we correspondingly consider a more challenging learning environment. In this section, we only allow the algorithm sample access to the distribution, and we ask the algorithm to agnostically PAC learn a hypothesis class.
+
+%\rc{Need any other reminders of notation from finite sample setting and PAC model? Commented out below}
+%$\zya := \{z_i \in Z | y_i = y, a_i = a \}.$
+%$\gamma_{ya}^Z(h) := \frac{1}{|\zya|} \sum_{z_i \in \zya} h(x_i).$
+%$ \Gamma^Z(h) := |\gz{10} - \gz{11}| \leq \alpha. $
+
+Recall from Section \ref{s.dpprelim} that in the finite sample setting, a database is a vector $Z = (z_1, ..., z_n)$ with entries drawn i.i.d. from a distribution $D$ over $\X$. In this setting, our goal is to release a hypothesis that minimizes error with respect to $D$ and is approximately fair.  Our algorithm for this task (Algorithm \ref{alg:exp}) is an instantiation of the $(\eps,0)$-differentially private Exponential Mechanism \citep{MT07} to select a hypothesis $h \in \H$.
+In the following analysis, we assume that our databases contain at least two positively labled instances for each protected attribute. This proves useful in our analysis of differential privacy and is a very reasonable assumption in practice if one hopes to learn an accurate classifier. 
+
+The Exponential Mechanism relies on a \emph{utility loss score} $u : \X^n \times \H \to \mathbb{R}$, where $u(Z,h)$ is the utility loss from producing hypothesis $h$ on input database $Z$.  The mechanism then samples an output $h$ with probability exponentially biased by negative loss score, which ensures that a hypothesis with small loss is sampled with high probability.\footnote{The standard Exponential Mechanism of \citet{MT07} is designed to sample an output with high utility.  We change signs because we wish to minimize loss rather than maximize utility.  The two versions are equivalent.}
+
+We wish to optimize both fairness and accuracy, so we incorporate both objectives into our utility function.  We use $\alpha$-discrimination as our in-sample fairness measure, quantified by $\Gamma^Z(h) = |\gz{10} - \gz{11}|$ for group-conditional true positive rates $\gz{10}, \gz{11}$.  We would ideally like to measure accuracy with respect to the underlying distribution $D$, using accuracy measure $err(h)$, but the algorithm does not have access to $D$.  Instead, we will use the empirical misclassification error $err^Z(h) = \frac{1}{n} \sum_{z_i \in Z}\Pr[h(x_i,a_i) \neq y_i]$, and will later have to reason that $err^Z(h)$ is close to $err(h)$.  Therefore Algorithm \ref{alg:exp} uses the utility score\footnote{Any weighted combination of the fairness and accuracy terms would suffice.  We use the unweighted sum for simplicity.}
+$$u(Z,h) = \Gamma^Z(h) + err^Z(h).$$
+
+To instantiate the Exponential Mechanism, we also need to know the \emph{sensitivity} of the utility score, defined as $$\Delta u = \max_{h\in \H} \max_{Z, Z' \text{neighbors}} |u(Z,h) - u(Z',h) |.$$
+The sensitivity of a function is the maximum change in its value from changing one entry in the database.  We can analogously define $\Delta\Gamma$ and $\Delta err$ as the respective sensitivities of the discrimination level $\Gamma^Z(h)$ and the empirical misclassification error $err^Z(h)$. By Triangle Inequality, it suffices to set $\Delta u = \Delta\Gamma + \Delta err$.  Both terms will be bounded in our analysis of Algorithm \ref{alg:exp}.
+%The term $\Delta\Gamma$ is bounded in Lemma \ref{lem.sensitivity} below. \rc{decide if this goes here or can wait until after algo is given}
+
+%We wish to minimize both the discrimination level and the misclassification error of our hypothesis, so we incorporate both objectives into our utility function.  The discrimination level of a hypothesis is $ \Gamma^Z(h) = |\gz{10} - \gz{11}|$ for group-conditional true positive rates $\gz{10}, \gz{11}$.
+%The discrimination level of a hypothesis is $\Gamma^Z(h) = |\gz{10} - \gz{11}|$ for group-conditional true positive rates $\gz{10}, \gz{11}$.
+%We use $\Gamma^Z(h) = |\gz{10} - \gz{11}|$ as our in-sample fairness measure, for group-conditional true positive rates $\gz{10}, \gz{11}$.
+
+
+
+
+
+%We now turn to the finite sample setting in which we release a hypothesis that minimizes the training error and is approximately fair. \rc{is the goal to be approx opt wrt sample or distribution?  This changes the proof dramatically} \dk{approx opt wrt distribution hence why we have concentration bounds}
+
+
+%Our algorithm for this task is an instantiation of the Exponential Mechanism \citep{MT07} to select a hypothesis $h$.  %This technique was similarly used previously for private PAC learning \cite{Kasiviswanathan:2011:WLP:2078965.2078976}.
+
+%\rc{para describing how the Exp Mech works. Requires a quality score and samples an element with probability exponentially weighted by quality score.  A lot of the definitions inside algorithm can move to this para, so algorithm can be stated more cleanly.} %For a given sample $Z$ of size $n$, we use $\Gamma^{Z}$ as our in-sample fairness measure.
+
+
+%Defining the sample
+%as $Z$, $|Z| = n$ and $\Gamma^{Z}$ as our in-sample fairness measure,
+%we give the algorithm:
+
+\begin{algorithm}
+\begin{algorithmic}
+  \caption{Approximately Fair Private Learner $\mathcal{A}(\H,Z,\eps)$}\label{alg:exp}
+  \STATE \textbf{Input:}\dk{we need to assume that alg knows $n$, and $P_a$, not sure how to include this} hypothesis class $\H$, sample $Z$, privacy parameter $\eps$
+  \IF {$PTR(Z,\eps, \delta) = \bot$}
+  	\STATE  \textbf{Output:} $\bot$ and \textbf{Halt.}
+  \ELSE
+	  \STATE Set $u(Z,h) = \Gamma^Z(h) + err^Z(h)$ and $\Delta u = \Delta\Gamma + \Delta err$
+	\STATE Sample hypothesis $h \in \mathcal{H}$ with probability proportional to
+	\begin{align*}
+	\exp(-\frac{\eps \cdot u(Z,h)}{2\Delta u})
+	\end{align*}
+	\STATE \textbf{Output:} sampled hypothesis $h$
+\ENDIF
+%\STATE $u(Z,h) = \Gamma^Z(h) + err^Z(h)$
+%\STATE $\Delta u = \Delta{\Gamma} + \Delta\ell$ \rc{what is $\Delta \ell$? Sensitivity of err(h)?} \dk{yes, in previous version we had the def of $l_1$ sensitivity in the prelims}
+%\STATE $err^Z(h) = \frac{1}{n} \sum_{(x,y) \in Z}\Pr[h(x) \neq y].$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+	\begin{algorithmic}
+		\caption{Propose-Test-Release $PTR(Z,\eps, \delta)$}\label{alg:ptr}
+		\STATE \textbf{Input:} sample $Z$, privacy parameter $\eps$
+		\STATE Query $M = \min_{a \in \{0,1\}}|Z_{1a}|/n + \text{Lap}(\frac{1}{n\eps})$
+		\IF{$M \geq \min_{a \in \{0,1\}}P_{1a} + \ln(\frac{1}{\delta})(\frac{1}{n\eps})$}
+			\STATE \textbf{Output:} $\top$
+		\ELSE 
+			\STATE \textbf{Output:} $\bot$
+		\ENDIF
+	\end{algorithmic}
+\end{algorithm}
+
+
+%The privacy of this mechanism follows from the differential privacy guarantees of the Exponential mechanism.
+%
+%\begin{theorem}[\citep{MT07}] \label{expmech}
+%	The algorithm $\A^\eps$ is $\eps$-differentially private.
+%\end{theorem}
+
+Our main result of this section shows that our Approximately Fair Private Learner of Algorithm \ref{alg:exp} computes an approximately fair hypothesis with good accuracy in a differentially private manner.
+
+%We now present the main theorem of this section, which states that Algorithm \ref{alg:exp} computes an approximately fair hypothesis with good accuracy in a differentially private manner.
+
+
+
+\begin{theorem}\label{thm.expmech}
+%\rc{need better statement of this. ref Definition \ref{def.privfairpac}?}
+	\dk{added that $\eps > \Omega(1/\sqrt{n})$} Any hypothesis class $\H$ is privately and approximately fairly
+	agnostically learnable with ($\alpha,\beta$)-accuracy by Algorithm \ref{alg:exp} $\mathcal{A}(\H,\cdot,\eps)$ with $\eps > \Omega(1/\sqrt{n})$ and
+%
+	\[n \geq 144(\ln|\H| + \ln1/\beta)\cdot \max_{a\in \{0,1\}}\left(\frac{1}{\alpha^2 P_{1a}},\frac{1}{\eps\alpha P_{1a}}\right)\]
+%
+	labeled examples drawn i.i.d.~from distribution $D$.
+\end{theorem}
+
+Though our guarantee holds for only the simple sum of the fairness and accuracy scores, one may weight the terms in the sum differently to achieve more preference on either fairness or accuracy. The sample size will still hold up to a constant that depends on the weighting.
+
+\begin{proof}
+	\dk{edited this to reflect that we now have a $\delta$ failure probability of being not $\eps$-DP}
+Algorithm \ref{alg:exp} first tests that all sample base rates, $|Z_a|/n$, are greater than the respective true base rates $P_a$. We then use the true base rate as an upper bound for our sensitivity. Which we can do since
+\begin{restatable}{lemma}{sensitivity}\label{lem.sensitivity} 
+	%\begin{lemma}\label{lem.sensitivity} 
+	$\Gamma^Z(h)$ has sensitivity $\Delta \Gamma = \min_{a \in \{0,1\}}2/(|Z_{1a}|-1),$
+	and $err^Z(h)$ has sensitivity $\Delta err = 1/n$.
+	%\[ \Delta \Gamma =  \max_{a \in \{0,1\}} \left( \frac{1}{|\z{1a}|},
+	%\frac{\gamma_{1a}^Z}{|\z{1a}|-1} + \frac{\gamma_{1\neg a}^Z}{|Z_{1\neg %a}|+1}, \frac{1 - \gamma_{1a}^Z}{|\z{1a}|+1} + \frac{1 - \gamma_{1\neg a}^Z}{|Z_{1\neg a}|-1},
+	%\frac{1 - \gamma_{1a}^Z}{|\z{1a}| + 1} +
+	%\frac{\gamma_{1\neg a}^Z}{|\z{1\neg a}| - 1}
+	%\right), \]
+	%	\\
+	%	where $\neg a = 1-a$.
+	%\end{lemma}
+\end{restatable}
+Specifically, if $\min_{a \in \{0,1\}}1/|Z_{1a}| \geq \min_{a \in \{0,1\}}nP_{1a}$ then $\min_{a \in \{0,1\}}2/(|Z_{1a}|-1) \leq \min_{a \in \{0,1\}}2/(nP_{1a}-1)$
+
+If the test fails, then we halt. If it passes then the rest of the algorithm is an instantiation of the Exponential Mechanism, which is known to be $\eps$-differentially private \citep{MT07}. However, our algorithm is not always guaranteed to be $\eps$-differentially private since if our test $PTR(Z,\eps,\delta)$ outputs a false-positive (i.e. the test passes but $\min_{a \in \{0,1\}}1/|Z_{1a}| < \min_{a \in \{0,1\}}nP_{1a}$), then the exponential mechanism may not have run with enough noise to ensure $\eps$-differential privacy. But, by Lemma \ref{lem.ptr},
+
+\begin{restatable}{lemma}{ptr}\label{lem.ptr} 
+	$PTR(\cdot,\cdot,\delta)$ outputs a false-positive with probability less than or equal to $\delta$. \dk{pf in appendix}
+\end{restatable}
+
+$PTR(\cdot,\cdot,\cdot)$ outputs a false-positive with probability $\delta$ and therefore our algorithm is  $(\eps,\delta)$-differentially private.
+\dk{not sure how to formalize following}
+Usually, $\delta$ should be exponential in $n$. However in the Propose-Test-Release algorithm, we add $\ln(\frac{1}{\delta})(\frac{1}{n\eps})$ to our threshold in order to give us a small false-positive probability. If $\delta = O(2^{-\sqrt{n}})$ then $\ln(\frac{1}{\delta})(\frac{1}{n\eps}) = \frac{\ln{2}}{\sqrt{n}\eps}$. But since $P_{1a} \in (0,1)$, if $\frac{\ln{2}}{\sqrt{n}\eps}$ is too large (near 1 or larger than 1) then Propose-Test-Release will always fail with high probability. Hence for our algorithm to output some hypothesis with nontrivial probability, we need that $\eps > \Omega(1/\sqrt{n})$.
+
+
+  Now we will show that if the algorithm outputs a hypothesis (and not $\bot$), the utility condition is also satisfied.  If the utility loss function $u(Z,h) = \Gamma^Z(h) + err^Z(h)$ used in Algorithm \ref{alg:exp} was our desired objective, then we could immediately apply accuracy guarantees of the Exponential Mechanism.  However, we actually wish to minimize a slightly different objective: $\Gamma^Z(h) + err(h)$, which we will denote $u(D,h)$.  Let the event $E = \{\mathcal{A}(\H,Z,\eps) = h \text{ with } u(D,h) > OPT + \alpha\}$.  We will show that event $E$ happens with low probability.
+  
+We will start by showing that $u(D,h)$ is close to $u(Z,h)$ with high probability.  We require Lemma \ref{lem.concentration} (stated below and proved in Appendix \ref{app.approx}), which relies on Chernoff-Hoeffding bounds (Theorem \ref{chernoff}) and Lemma \ref{woodworthLemma} from \citet{woodworthFollowUp}, both also stated in Appendix \ref{app.approx}.
+
+\begin{restatable}[Concentration of Utility]{lemma}{concentration}\label{lem.concentration}
+% \begin{lemma}[Concentration of Utility]\label{lem.concentration}
+	For any sample $Z$ of size $n$ drawn i.i.d.~from distribution $D$ and for any binary predictor $h$,
+	$$\Pr\bigl[\bigl|u(Z,h) - u(D,h)\bigr| > \rho\bigr] \leq 18\exp\left(-\min_{a}{\frac{\rho^2 n
+	P_{1a}}{16}}\right).$$
+%\end{lemma}
+\end{restatable}
+
+Applying a union bound over all $h \in \H$, Lemma \ref{lem.concentration} implies that
+	$$\Pr[|u(Z,h) - u(D,h)| \geq \rho \text{ for some } h \in \H] \leq 18|\H|\exp(-\min_{a}{\frac{\rho^2 n P_{1a}}{16}}).$$
+
+	Now we analyze $\mathcal{A}(\H,Z,\eps)$ conditioned on the event that for all
+	$h\in \H$, $|u(Z,h) - u(D,h)| < \rho$. For every $h \in \H$,
+        \begin{align*}
+\Pr[\mathcal{A}(\H,Z,\eps) = h]	&  = \frac{\exp(-\frac{\eps}{2\Delta u} \cdot
+		u(Z,h))}{\sum_{h'\in\H}\exp(-\frac{\eps}{2\Delta u} \cdot u(Z,h'))}\\
+	\leq& \frac{\exp(-\frac{\eps}{2\Delta u} \cdot
+		u(Z,h))}{\max_{h'\in\H}\exp(-\frac{\eps}{2\Delta u} \cdot u(Z,h'))} \\
+	= &\exp(-\frac{\eps}{2\Delta u}(u(Z,h) - \min_{h'\in\H}u(Z,h')))\\
+	\leq&  \exp(-\frac{\eps}{2\Delta u}(u(Z,h) - (OPT + \rho))).
+        \end{align*}
+
+	Hence the probability that $\mathcal{A}(\H,Z,\eps)$ outputs a hypothesis $h \in
+	\H$ such that $u(Z,h) > OPT + 2\rho$ is at most
+	$|\H|\exp(-\frac{\eps\cdot\rho}{2\Delta u})$.
+
+	Setting $\rho = \alpha/3$, we get the following bound on $\Pr[E]$: % $u(D,h) \geq OPT + \alpha$ implies
+%	$|u(D,h) - u(Z,h)| \geq \alpha/3$ or $u(Z,h) \geq OPT + 2\alpha/3$.
+%	Hence
+        \begin{align*}
+	\Pr[E] &  = \Pr[\A_{\eps} = h \text{ with } u(Z,h) > OPT + \alpha] \\
+	& \leq \Pr[|u(D,h) - u(Z,h)| \geq \alpha/3] + \Pr[u(Z,h) \geq OPT + 2\alpha/3]\\
+	& \leq |\H|(18\exp(-\min_{a}{\frac{\alpha^2 n P_{1a}}{144}}) + \exp(-\frac{\eps\cdot\alpha}{6\Delta u}))
+\end{align*}
+Then our desired utility guarantee holds for any $\beta$ satisfying:
+	$$ \beta \geq |\H|(18\exp(-\min_{a}{\frac{\alpha^2 n P_{1a}}{144}}) + \exp(-\frac{\eps\alpha}{6\Delta u})).$$
+
+To complete the proof and translate the bound on $\beta$ to a bound on $n$, we plug in the sensitivity bound of Lemma \ref{lem.sensitivity}. Thus the utility guarantee holds for
+	\begin{align*}
+	\beta &\geq |\H|(18\exp(-\min_{a}{\frac{\alpha^2 n P_{1a}}{144}}) + \exp(-\frac{\eps\alpha}{6\Delta u}))\\
+	\beta &\geq |\H|(19\exp(\max_{a}({-\frac{\alpha^2 n P_{1a}}{144},-\frac{\eps\alpha}{6\Delta u}}))\\
+	-\ln{1/\beta} & \geq \ln{|\H|} + \ln{19} + \max_{a}(\frac{\alpha^2 n P_{1a}}{144},\frac{\eps\alpha}{6\Delta u})\\
+	-\ln{1/\beta} & \geq \ln{|\H|} + \ln{19} + \max_{a}(-\frac{\alpha^2 n P_{1a}}{144},-\frac{\eps\alpha}{6(1/|Z_{1a}|+1/n)})\\
+	\max_{a}(\frac{\alpha^2 nP_{1a}}{144},\frac{\eps\alpha n}{6(n/|Z_{1a}|+1)})& \geq \ln{|\H|}+\ln{1/\beta}  + \ln{19} \\
+	n & \geq 144(\ln|\H| + \ln1/\beta)\cdot \max_{a\in \{0,1\}}\left(\frac{1}{\alpha^2 P_{1a}},\frac{n/|Z_{1a}|+1}{\eps\alpha}\right). \\
+	\end{align*}
+\end{proof}
+
+%To complete the proof of Theorem \ref{thm.expmech}, we require the following lemma, which bounds the sensitivity of $\Gamma^Z(h)$.  A proof is deferred to the Appendix. \rc{incorporate this into the main proof after editing it.}
+
+%\dk{assumption on $|Z_{1a}|$: So I was thinking more about a lower bound on $min_a {Z_{1a}}$ and I realized that if we do end up with a 'bad' sample, ie. one that is not representative of the true distribution, then necessarily our exponential mechanism will fail anyways because then our hypothesis released will not generalize to the distribution. So we are in that (low probability) scenario where the algorithm fails to release an accurate hypothesis. So in a sense this is an assumption we do not need to make? If the sample will generalize then necessarily by the concentration of utility lemma (lemma \ref{concentration}), that includes taking into account the concentration of $\gamma$ then $|Z_{1a}|$ will be close to $|P_{1a}|$.}
+
+%\begin{restatable}{lemma}{sensitivity}\label{lem.sensitivity} 
+%%\begin{lemma}\label{lem.sensitivity} 
+%$\Gamma^Z(h) = |\gamma_{10}^Z - \gamma_{11}^Z|$ has sensitivity,
+%	\[\Delta \Gamma =  \max_{a \in \{0,1\}} \frac{2}{|Z_{1a}|-1}\]
+%	%\[ \Delta \Gamma =  \max_{a \in \{0,1\}} \left( \frac{1}{|\z{1a}|},
+%	%\frac{\gamma_{1a}^Z}{|\z{1a}|-1} + \frac{\gamma_{1\neg a}^Z}{|Z_{1\neg %a}|+1}, \frac{1 - \gamma_{1a}^Z}{|\z{1a}|+1} + \frac{1 - \gamma_{1\neg a}^Z}{|Z_{1\neg a}|-1},
+%  %\frac{1 - \gamma_{1a}^Z}{|\z{1a}| + 1} +
+%  %\frac{\gamma_{1\neg a}^Z}{|\z{1\neg a}| - 1}
+%  %\right), \]
+%%	\\
+%%	where $\neg a = 1-a$.
+%%\end{lemma}
+%\end{restatable}
+
+\dk{
+
+We note that although Algorithm \ref{alg:exp} achieves our desiderata of privacy, fairness, and accuracy, it does not necessarily have a polynomial time implementation in general.  The running time of the Exponential Mechanism scales linearly with $|\H|$.  For most interesting hypothesis classes (e.g., the class of all linear classifiers), $|\H|$ will have exponential size. 
+
+In the next section, we remedy this by designing \emph{efficient} algorithms for private and approximately fair learning.
+
+%Note that in cases where $|\H|$ is not polynomial, the exponential mechanism does not necessarily have a polynomial time implementation.
+
+% \dk {Note: can do extension into other definitions of fairness (with constant factor).
+% 	Can also extend into a different norm for $u(Z,h)$ if we have a
+% 	concentration of measure theorem for the different norm. There are
+% 	also random matrix concentration bounds (can do concentration for all
+% 	functions of the confusion matrix?)}

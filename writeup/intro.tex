@@ -1,0 +1,64 @@
+
+\subsection{Overview}\label{subsec:overview}
+    While homophily in social networks has been widely studied and observed,
+    mechanisms to
+    attempt to explain the emergence of homophily are equally important.
+    One particular challenge, but also point of interest, in modeling
+    network formation in this context are the simultaneous dynamics of
+    formation/destruction of social ties and changes of individual states.
+    Out of this conjunction of model attributes arises a complex process that can
+    be thought of as a feedback loop between individual states and network structure.
+    More generally this can be seen as the of the interaction of
+    the micro (individual) and macro (structure) levels of a process.
+    In other words, network structure depends on individual states and individual
+    states depend on network structure.
+    We seek to improve on stylized models that study one process abstracted from the other.
+
+    Adaptive networks are the general class of dynamical networks whose topologies
+    and states coevolve~\cite{sayama2013modeling}.
+    In the context of cultural dis(integration) processes, we draw upon the
+    adaptive network model in~\cite{social-frag} which investigates a mechanism that models the emergence of
+    both cultural diversity and high connectivity.
+    Previous models of adaptive social network dynamics did not demonstrate how
+    such an outcome could occur.
+    Either they showed homogenization and well connectedness or diversity and
+    fragmented structure.
+    Though the model in~\cite{social-frag} has not yet been confirmed by empirical
+    data, a different (much simpler) dynamic adaptive network model in~\cite{brot2012feedback}
+    has been supported by empirical social network data.
+
+\subsection{Methods}\label{subsec:methods}
+    Following~\cite{social-frag}, we will simulate the dynamics of a social network
+    with an initial configuration of two culturally distant groups.
+    Each group
+    consists of 50 individuals (nodes).
+    Directed edges (representing information
+    flow) are initiated at random with an edge density of 0.2 and 0.02, within group
+    and between groups, respectively (directed stochastic block model).
+    Edge weights are initiated by drawing from $\textrm{U}[0,1]$.
+    Each individual's state or culture is represented by a vector in $\mathbb{R}^{10}$
+    with cultural distance measured by the euclidean distance.
+    Each individual will
+    have a cultural update function and will update edges accordingly, with another
+    function.
+    There will be parameters, one each, for cultural tolerance, rate of cultural
+    state change, and rate of edge weight change.
+    For various settings of the parameters, we will run the model for a fixed number of
+    iterations and plot the resulting average cultural distance between the two groups
+    and average shortest path length in the network.
+
+\subsection{Goals}\label{subsec:goals}
+    We seek to confirm the theoretical results in~\cite{social-frag} and also
+    investigate extensions and potential weaknesses.
+    We will also investigate if this model generates networks that correspond
+    to real social networks, in terms of small world property and clustering
+    coefficient.
+    For weaknesses, we would investigate the modeling assumption where an individual's
+    culture is represented by ``culture" vector along with
+    the seemingly arbitrary choice of cultural distance measured by the
+    euclidean distance.
+    To extend, we propose to use this model to observe the effect of cultural integration
+    efforts such as team-building sessions in the business merger context.
+    We will use the results from the confirmation section as a baseline.
+    Another possible extension is to see what happens in the model if there are more
+    than 2 initially culturally distinct groups.
