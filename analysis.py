@@ -14,20 +14,63 @@ def read_pickle(subpath):
     with (open(abs_file_path, 'rb')) as f:
         return pk.load(f)
 
-    
-def plotfig(std, cd, spl, label, filename=None, az=305, e=27):
+def scatter_gen(x, y, z, lx='x', ly='y', lz='z', colors=None, filename=None, az=305, e=27):
     fig = plt.figure()
-    fig.set_size_inches(10, 10)
+    fig.set_size_inches(7, 7)
     ax = fig.add_subplot(111, projection='3d')
-    colors = 'mbcgyr'
-    c = [colors[int(i*10)] for i in std]
-    ax.scatter(std, cd, spl, c=c, marker='.')
-
-
-    ax.set_xlabel("s.d. of " + label)
-    ax.set_ylabel("<CD>")
-    ax.set_zlabel("<SPL>")
+    
+    ax.scatter(x, y, z, c=colors, marker='.')
+ 
+    ax.set_xlabel(lx)
+    ax.set_ylabel(ly)
+    ax.set_zlabel(lz)
     ax.view_init(elev=e, azim=az)
     plt.draw()
     if filename:
         fig.savefig(filename, dpi=100)
+    return fig, ax
+        
+def plotfig(std, cd, spl, label, filename=None, az=305, e=27):
+    colors = 'mbcgyr'
+    c = [colors[int(i*10)] for i in std]
+    scatter_gen(std, cd, spl, "s.d. of " + label,
+                "<CD>", "<SPL>", c, filename, az, e)
+          
+def culture_avg_wrapper(df):
+    new_col = []
+    for index, row in df.iterrows():
+        new_col.append(culture_avg_moved(row['c1_init'],
+                                        row['c2_init'],
+                                        row['c_avg_init'],
+                                        row['mean_centers']))
+    return new_col
+            
+def culture_avg_moved(c1, c2, avg_init, avg_final):
+    #centers c1, c2
+    v = c2 - c1
+    v /= np.linalg.norm(v, 2) #create unit vector
+    return np.dot((avg_final[:10] - avg_init[:10]), v[:10])
+
+
+def data_cleanup(df):
+    #clean up tupled dataframe
+    #split df into two separate?
+    new_spl = []
+    new_diam = []
+    components = []
+    for index, row in df.iterrows():
+        if isinstance(row['SPL'], tuple):
+            spl, comps = row['SPL']
+            d, *_ = row['diam']
+        else:
+            comps = 1
+            d, spl = row['diam'], row['SPL']
+        new_spl.append(spl)
+        new_diam.append(d)
+        components.append(comps)
+
+    df.drop(columns = ['SPL', 'diam'])
+    df['SPL'], df['diam'], df['comps'] = new_spl, new_diam, components
+    return df
+
+    

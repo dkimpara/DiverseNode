@@ -96,6 +96,7 @@ def analyze(g, culturemat, culture_change_all, norm=2):  # for analysis of sayam
         d = nx.diameter(g_undir.subgraph(giant))
         data_dict['diam'] = (d, num_connected_components)
         #  analyze biggest component
+        # todo what is going on?
         spl = nx.average_shortest_path_length(g.subgraph(giant))
         data_dict['SPL'] = (spl, num_connected_components)
 
