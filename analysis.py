@@ -7,6 +7,9 @@ import matplotlib.pyplot as plt
 import analysis as analysis
 from mpl_toolkits.mplot3d import Axes3D
 
+def asnp(series):
+    return np.asarray(series.values, dtype = "float")
+
 def read_pickle(subpath):
     script_dir = os.path.dirname(__file__)
     rel_path = "tests/" + subpath 
@@ -14,9 +17,9 @@ def read_pickle(subpath):
     with (open(abs_file_path, 'rb')) as f:
         return pk.load(f)
 
-def scatter_gen(x, y, z, lx='x', ly='y', lz='z', colors=None, filename=None, az=305, e=27):
+def scatter_gen(x, y, z, lx='x', ly='y', lz='z', colors=None, filename=None, az=305, e=27, fsize=(7,7)):
     fig = plt.figure()
-    fig.set_size_inches(7, 7)
+    fig.set_size_inches(fsize[0],fsize[1])
     ax = fig.add_subplot(111, projection='3d')
     
     ax.scatter(x, y, z, c=colors, marker='.')
@@ -30,11 +33,11 @@ def scatter_gen(x, y, z, lx='x', ly='y', lz='z', colors=None, filename=None, az=
         fig.savefig(filename, dpi=100)
     return fig, ax
         
-def plotfig(std, cd, spl, label, filename=None, az=305, e=27):
+def plotfig(std, cd, spl, label, filename=None, az=305, e=27,fsize=(10,10)):
     colors = 'mbcgyr'
     c = [colors[int(i*10)] for i in std]
     scatter_gen(std, cd, spl, "s.d. of " + label,
-                "<CD>", "<SPL>", c, filename, az, e)
+                "<CD>", "<SPL>", c, filename, az, e, fsize)
           
 def culture_avg_wrapper(df):
     new_col = []
