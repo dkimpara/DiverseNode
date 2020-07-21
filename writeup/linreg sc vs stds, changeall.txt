@@ -1,0 +1,30 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                     sc   R-squared:                       0.622
+Model:                            OLS   Adj. R-squared:                  0.622
+Method:                 Least Squares   F-statistic:                     4305.
+Date:                Mon, 20 Jul 2020   Prob (F-statistic):               0.00
+Time:                        22:29:17   Log-Likelihood:                 29496.
+No. Observations:               15687   AIC:                        -5.898e+04
+Df Residuals:                   15680   BIC:                        -5.892e+04
+Df Model:                           6                                         
+Covariance Type:            nonrobust                                         
+=================================================================================
+                    coef    std err          t      P>|t|      [0.025      0.975]
+---------------------------------------------------------------------------------
+Intercept         1.0237      0.001    805.053      0.000       1.021       1.026
+std_d            -0.3050      0.005    -63.511      0.000      -0.314      -0.296
+std_rs           -0.0087      0.004     -2.299      0.022      -0.016      -0.001
+std_rw           -0.0046      0.004     -1.207      0.227      -0.012       0.003
+std_d:std_rs     -0.1346      0.013    -10.762      0.000      -0.159      -0.110
+std_d:std_rw      0.0034      0.012      0.277      0.782      -0.021       0.028
+std_rs:std_rw    -0.0314      0.010     -3.086      0.002      -0.051      -0.011
+==============================================================================
+Omnibus:                      829.822   Durbin-Watson:                   1.467
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):             1020.324
+Skew:                          -0.544   Prob(JB):                    2.75e-222
+Kurtosis:                       3.613   Cond. No.                         49.4
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
