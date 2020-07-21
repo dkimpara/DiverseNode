@@ -1,5 +1,5 @@
 \documentclass{article}
-
+\usepackage{pdfsync}
 \usepackage{fullpage}
 \usepackage{natbib}
 
@@ -11,17 +11,29 @@
 \usepackage{fancyhdr}
 \usepackage{bbm}
 \usepackage{enumitem}
+\usepackage{graphicx, subfig}
+\usepackage{caption}
+\usepackage{subcaption}
 % \usepackage{algorithm, algorithmic}
 \usepackage{cleveref}
 \usepackage{thm-restate}
 
+
+
 \newcommand\tab[1][0.5cm]{\hspace*{#1}}
-%
+\newcommand{\sd}{\sigma_d}
+\newcommand{\ss}{\sigma_{r_s}}
+\newcommand{\sw}{\sigma_{r_w}}
+\newcommand{\ds}{\sigma_{d}\sigma_{r_s}}
+\newcommand{\dw}{\sigma_{d}\sigma_{r_w}}
+\newcommand{\ssw}{\sigma_{r_s}\sigma_{r_w}}
+
 \theoremstyle{definition}
 \newtheorem{defn}{Definition}
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
 \newtheorem{proposition}{Proposition}
+\newtheorem{assumption}{Assumption}
 
 %
 \newenvironment{claim}[1]{\par\noindent\underline{Claim:}\space#1}{}
@@ -30,31 +42,37 @@
 \DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
 
-\newenvironment{problem}[2][Problem]{\begin{trivlist}
-		\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
-% end custom %
-
 \begin{document}
 
-\title{Coexistence of Cultural Diversity}
+\title{Coexistence of cultural diversity and disassortative structure}
  \author{Dhamma Kimpara}
-
-
-\renewcommand{\thefootnote}{\arabic{footnote}}
 
 \maketitle
 
-%\begin{abstract}
-%In this work, we investigate whether privacy and fairness can be simultaneously achieved by a single classifier in several different models. Some of the earliest work on fairness in algorithm design defined fairness as a guarantee of similar outputs for ``similar'' input data, a notion with tight technical connections to differential privacy. We study whether tensions exist between differential privacy and statistical notions of fairness, namely Equality of False Positives and Equality of False Negatives (EFP/EFN). We show that even under full distributional access, there are cases where the constraint of differential privacy precludes exact EFP/EFN. We then turn to ask whether one can learn a differentially private classifier which approximately satisfies EFP/EFN, and show the existence of a PAC learner which is private and approximately fair with high probability. We conclude by giving an efficient algorithm for classification that maintains utility and satisfies both privacy and approximate fairness with high probability.
-%\end{abstract}
 
 \input{intro.tex}
+
+\input{methods.tex}
+
+\input{confirm.tex}
+
+\input{splDiscrepancy.tex}
+
+\input{newAnalysis.tex}
+
+\input{c_all.tex}
+
 
 
 \newpage
 
 \bibliographystyle{plainnat}
-\bibliography{bib.bib}
+\bibliography{bib}
 
 
 \end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

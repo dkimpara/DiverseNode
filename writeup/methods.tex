@@ -1,0 +1,120 @@
+\section{Methods}\label{sec:methods}
+
+\subsection{Model}\label{subsec:model}
+    Following~\citep{social-frag}, we will simulate the dynamics of a social network
+    with an initial configuration of two culturally distant groups.
+    The goal is to investigate what population attributes give rise to particular
+    final configurations of the network in terms of cultural diversity and network structure.
+    Particularly, we are interested in the case where there is both high
+    cultural diversity and non-fragmented (highly connected) structure.
+
+    In this model, each group consists of 50 individuals (nodes).
+    Directed edges (representing information
+    flow) are initiated at random with an edge density of 0.2 and 0.02, within group
+    and between groups, respectively (directed stochastic block model).
+    Edge weights are initiated by drawing from $\textrm{U}[0,1]$.
+
+    To represent culture, each individual's state or culture is represented by a
+    vector in $\mathbb{R}^{10}$ with cultural distance measured by the euclidean distance.
+    This choice is based on empirical studies on measuring organizational culture.
+    Each culture will have its own ``center" cultural vector, $C_i$.
+    The two centers are initially
+    separated by $3.0$ (arbitrary units) in the cultural space.
+    Then for each individual in each group $i$, their cultural vector is drawn from
+    $C_i + [N(0, 0.1), \dots , N(0, 0.1)]^T$.
+
+    Now in each iteration of the simulation, each individual will interact with
+    one other individual and update their culture and corresponding edge.
+    Our interpretation was that the sequence of nodes performing actions would
+    be randomized in each iteration.
+    Each node, $v$, when it is their turn, performs as follows: first, with
+    probability 0.99, $v$ selects $u$ from its in-neighbors with probability
+    proportional to the edge weight.
+    Or, with the remaining probability (0.01), $v$ selects any $u$ from the
+    connected component in which $v$ belongs.
+    Now, $v$ decides whether to accept or reject $u$'s culture.
+    The probability of acceptance, $P_{A}$ is given by
+
+    \[P_A = \frac{1}{2} ^ {\frac{|c_v - c_u|}{d}} \].
+
+    Where $c_v$ and $c_u$ are $v$ and $u$'s cultural vectors, and $d$ is the
+    cultural tolerance, or the cultural distance at which $P_A = 0.5$.
+    If $u$'s culture is accepted, $c_v$ is updated as
+
+    \[c_v = (1-r_s)c_v + r_s c_u\]
+
+    where $r_s$ is the rate of cultural change, and the edge weight from $u$ to
+    $v$, $w_{uv}$ is updated as
+
+    \[w_{uv} = \text{logistic}(\text{logit}(w_{uv}) + r_w)\]
+
+    where $r_w$ is the rate of edge weight change. 
+    However, if the $u$'s culture is rejected, $v$ does not update their culture
+    but the edge weight is updated in the opposite direction as
+
+    \[w_{uv} = \text{logistic}(\text{logit}(w_{uv}) - r_w)\]
+
+    When an edge weight falls under 0.01, the edge is removed from the network.
+    
+    In all experiments, we use $d=0.5, r_s=0.5,$ and $r_w = 0.5$ as the mean
+    values.
+    In our extension of \citep{social-frag}, we include $d$, $r_s$, and $r_w$ in
+    culture vector $c_v$ for all individuals (resulting in $c_v \in \mathbb{R}^{13} $ ).
+
+\subsection{Experiments}\label{subsec:experiments}
+    For each experiment, we drew the behavior parameters of each individual,
+    $d, r_s$ and $r_w$, from $N(0.5, \sigma_{\dot})$ where $\sigma_{\dot}$
+    corresponds to the parameter being sampled ($d, r_s$ or $r_w$).
+    The standard deviations of $d, r_s$ and $r_w$, with
+    values between 0.0 and 0.5 at interval 0.1 (6 values for each standard deviation
+    resulting in 216 unique settings).
+    For each setting of the experimental standard deviations, we performed 100 independent
+    trials.
+    Each trial simulated 500 iterations of the process described in
+    section \ref{subsec:model} and analyzed for the following statistics:
+
+    \begin{defn}{Cultural Distance ($CD$).}
+        Let $c_v$ be the culture vector of individual $v$ and $A_1, A_2$
+        be the disjoint sets of individuals in each group in directed network $G$ then
+
+        \[ <CD> := \frac{1}{|A_1||A_2|} \sum_{v \in A_1} \sum_{u \in A_2} |u - v|.\]
+
+        Where $|\cdot|$ is the euclidean norm.
+    \end{defn}
+
+    \begin{defn}{Average Shortest Path Length ($SPL$).}
+
+        \[ <SPL> := \frac{1}{n(n-1)} \sum_{v \neq u} d(u,v)\]
+
+        Where $n$ is the number of nodes or individuals in $G$ and $d(u,v)$ is
+        the length of the shortest path from $u$ to $v$, where all edges have
+        weight/distance 1.
+        By convention \citep{hagberg2008exploring}, $d(u,v)=0$ if $v$ cannot be reached
+        from $u$.
+
+    \end{defn}
+
+
+    Here we note an ambiguity in the model: when $d, r_s$ and $r_w$ are drawn,
+    they can be below zero or greater than one. 
+    For certain parameters, such as $d$, one or both of these outcomes
+    makes the parameter nonsensical.
+    We chose to clip the values where appropriate in order for the model to make sense since
+    \citep{social-frag} does not mention how to handle these cases.
+    In experiments with high standard deviations (close to $\sigma{\dot}=0.5$ ),
+    this tends to cluster parameters at either $0.01$ or $0.99$.
+
+
+
+\subsection{Summary of Results}\label{subsec:summary}
+    First, we found that we were able to confirm the results, when analyzing the data
+    as described in \ref{subsec:experiments}.
+    However, while doing this, an ambiguity in how to handle resulting graphs that
+    were disconnected presented a potential weakness.
+    We investigated this ambiguity and found that when the analysis of the
+    shortest path length was confined to only either the largest weakly
+    connected component or the largest strongly connected component, the results
+    in terms of SPL diverged from the original results.
+    We then re-analyze the original experiments and perform this same analysis
+    on our extension where we include every individual's behavior parameters
+    ($d$, $r_s$, $r_w$) in their culture vector.

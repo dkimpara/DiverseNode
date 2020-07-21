@@ -1,66 +1,66 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=latex 2017.10.16)  13 MAR 2019 22:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (MiKTeX 2.9.6745 64-bit) (preloaded format=pdflatex 2018.8.3)  22 JUL 2020 00:32
 entering extended mode
- restricted \write18 enabled.
- %&-line parsing enabled.
-**main.tex
-(./main.tex
-LaTeX2e <2017-04-15>
-Babel <3.14> and hyphenation patterns for 84 language(s) loaded.
-(/usr/local/texlive/2017/texmf-dist/tex/latex/base/article.cls
+**./main.tex
+(main.tex
+LaTeX2e <2018-04-01> patch level 5
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\article.cls"
 Document Class: article 2014/09/29 v1.4h Standard LaTeX document class
-(/usr/local/texlive/2017/texmf-dist/tex/latex/base/size10.clo
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\size10.clo"
 File: size10.clo 2014/09/29 v1.4h Standard LaTeX file (size option)
 )
-\c@part=\count79
-\c@section=\count80
-\c@subsection=\count81
-\c@subsubsection=\count82
-\c@paragraph=\count83
-\c@subparagraph=\count84
-\c@figure=\count85
-\c@table=\count86
+\c@part=\count80
+\c@section=\count81
+\c@subsection=\count82
+\c@subsubsection=\count83
+\c@paragraph=\count84
+\c@subparagraph=\count85
+\c@figure=\count86
+\c@table=\count87
 \abovecaptionskip=\skip41
 \belowcaptionskip=\skip42
 \bibindent=\dimen102
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/preprint/fullpage.sty
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\pdfsync\pdfsync.sty
+Package: pdfsync 2008/01/26 v1.1
+)
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\preprint\fullpage.sty
 Package: fullpage 1999/02/23 1.1 (PWD)
 \FP@margin=\skip43
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/natbib/natbib.sty
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\natbib\natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibhang=\skip44
 \bibsep=\skip45
 LaTeX Info: Redefining \cite on input line 694.
-\c@NAT@ctr=\count87
+\c@NAT@ctr=\count88
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/amsmath/amsmath.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amsmath.sty"
 Package: amsmath 2017/09/02 v2.17a AMS math features
 \@mathmargin=\skip46
 
 For additional information on amsmath, use the `?' option.
-(/usr/local/texlive/2017/texmf-dist/tex/latex/amsmath/amstext.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amstext.sty"
 Package: amstext 2000/06/29 v2.01 AMS text
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/amsmath/amsgen.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amsgen.sty"
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks14
 \ex@=\dimen103
 ))
-(/usr/local/texlive/2017/texmf-dist/tex/latex/amsmath/amsbsy.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amsbsy.sty"
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 \pmbraise@=\dimen104
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/amsmath/amsopn.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsmath\amsopn.sty"
 Package: amsopn 2016/03/08 v2.02 operator names
 )
-\inf@bad=\count88
+\inf@bad=\count89
 LaTeX Info: Redefining \frac on input line 213.
-\uproot@=\count89
-\leftroot@=\count90
+\uproot@=\count90
+\leftroot@=\count91
 LaTeX Info: Redefining \overline on input line 375.
-\classnum@=\count91
-\DOTSCASE@=\count92
+\classnum@=\count92
+\DOTSCASE@=\count93
 LaTeX Info: Redefining \ldots on input line 472.
 LaTeX Info: Redefining \dots on input line 475.
 LaTeX Info: Redefining \cdots on input line 596.
@@ -69,15 +69,15 @@ LaTeX Info: Redefining \cdots on input line 596.
 \big@size=\dimen105
 LaTeX Font Info:    Redeclaring font encoding OML on input line 712.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 713.
-\macc@depth=\count93
-\c@MaxMatrixCols=\count94
+\macc@depth=\count94
+\c@MaxMatrixCols=\count95
 \dotsspace@=\muskip10
-\c@parentequation=\count95
-\dspbrk@lvl=\count96
+\c@parentequation=\count96
+\dspbrk@lvl=\count97
 \tag@help=\toks15
-\row@=\count97
-\column@=\count98
-\maxfields@=\count99
+\row@=\count98
+\column@=\count99
+\maxfields@=\count100
 \andhelp@=\toks16
 \eqnshift@=\dimen106
 \alignsep@=\dimen107
@@ -92,8 +92,8 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 713.
 LaTeX Info: Redefining \[ on input line 2817.
 LaTeX Info: Redefining \] on input line 2818.
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/amscls/amsthm.sty
-Package: amsthm 2015/03/04 v2.20.2
+("C:\Program Files\MiKTeX 2.9\tex\latex\amscls\amsthm.sty"
+Package: amsthm 2017/10/31 v2.20.4
 \thm@style=\toks19
 \thm@bodyfont=\toks20
 \thm@headfont=\toks21
@@ -104,44 +104,44 @@ Package: amsthm 2015/03/04 v2.20.2
 \thm@headsep=\skip51
 \dth@everypar=\toks24
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/amssymb.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\amssymb.sty"
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\amsfonts.sty"
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \symAMSa=\mathgroup4
 \symAMSb=\mathgroup5
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
 ))
-(/usr/local/texlive/2017/texmf-dist/tex/latex/mathtools/mathtools.sty
-Package: mathtools 2017/05/24 v1.19 mathematical typesetting tools
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\mathtools\mathtools.sty
+Package: mathtools 2018/01/08 v1.21 mathematical typesetting tools
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics/keyval.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\keyval.sty"
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks25
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/tools/calc.sty
-Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count100
-\calc@Bcount=\count101
+("C:\Program Files\MiKTeX 2.9\tex\latex\tools\calc.sty"
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count101
+\calc@Bcount=\count102
 \calc@Adimen=\dimen112
 \calc@Bdimen=\dimen113
 \calc@Askip=\skip52
 \calc@Bskip=\skip53
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count102
+\calc@Ccount=\count103
 \calc@Cskip=\skip54
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/mathtools/mhsetup.sty
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\mathtools\mhsetup.sty
 Package: mhsetup 2017/03/31 v1.3 programming setup (MH)
 )
 LaTeX Info: Thecontrolsequence`\('isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\)'isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\['isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
-\g_MT_multlinerow_int=\count103
+\g_MT_multlinerow_int=\count104
 \l_MT_multwidth_dim=\dimen114
 \origjot=\skip55
 \l_MT_shortvdotswithinadjustabove_dim=\dimen115
@@ -151,18 +151,19 @@ LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
 \l_MT_above_shortintertext_sep=\dimen119
 \l_MT_below_shortintertext_sep=\dimen120
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/xcolor/xcolor.sty
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\xcolor\xcolor.sty
 Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics-cfg/color.cfg
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics-cfg\color.cfg"
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
-Package xcolor Info: Driver file: dvips.def on input line 225.
+Package xcolor Info: Driver file: pdftex.def on input line 225.
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics-def/dvips.def
-File: dvips.def 2017/06/20 v3.1d Graphics/color driver for dvips
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics-def\pdftex.def"
+File: pdftex.def 2018/01/08 v1.0l Graphics/color driver for pdftex
 )
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
 Package xcolor Info: Model `RGB' extended on input line 1364.
 Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
 Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
@@ -171,34 +172,33 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/algorithms/algorithm.sty
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\algorithms\algorithm.sty
 Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
 nment
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/float/float.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\float\float.sty"
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
-\c@float@type=\count104
+\c@float@type=\count105
 \float@exts=\toks26
 \float@box=\box28
 \@float@everytoks=\toks27
 \@floatcapt=\box29
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/base/ifthen.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\base\ifthen.sty"
 Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
 )
 \@float@every@algorithm=\toks28
-\c@algorithm=\count105
+\c@algorithm=\count106
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/algorithms/algorithmic.sty
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\algorithms\algorithmic.sty
 Package: algorithmic 2009/08/24 v0.1 Document Style `algorithmic'
-\c@ALC@unique=\count106
-\c@ALC@line=\count107
-\c@ALC@rem=\count108
-\c@ALC@depth=\count109
+\c@ALC@unique=\count107
+\c@ALC@line=\count108
+\c@ALC@rem=\count109
+\c@ALC@depth=\count110
 \ALC@tlm=\skip56
 \algorithmicindent=\skip57
-)
-(/usr/local/texlive/2017/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
+) (C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\fancyhdr\fancyhdr.sty
 Package: fancyhdr 2017/06/30 v3.9a Extensive control of page headers and footer
 s
 \f@nch@headwidth=\skip58
@@ -211,54 +211,122 @@ s
 \f@nch@O@olf=\skip65
 \f@nch@O@orf=\skip66
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/bbm-macros/bbm.sty
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\bbm\bbm.sty
 Package: bbm 1999/03/15 V 1.2 provides fonts for set symbols - TH
 LaTeX Font Info:    Overwriting math alphabet `\mathbbm' in version `bold'
 (Font)                  U/bbm/m/n --> U/bbm/bx/n on input line 33.
 LaTeX Font Info:    Overwriting math alphabet `\mathbbmss' in version `bold'
 (Font)                  U/bbmss/m/n --> U/bbmss/bx/n on input line 35.
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/enumitem/enumitem.sty
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\enumitem\enumitem.sty
 Package: enumitem 2011/09/28 v3.5.2 Customized lists
 \labelindent=\skip67
 \enit@outerparindent=\dimen121
 \enit@toks=\toks29
 \enit@inbox=\box30
-\enitdp@description=\count110
+\enitdp@description=\count111
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/cleveref/cleveref.sty
-Package: cleveref 2013/12/28 v0.19 Intelligent cross-referencing
-Package cleveref Info: `amsthm' support loaded on input line 2858.
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphicx.sty"
+Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\graphics.sty"
+Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics\trig.sty"
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/thmtools/thm-restate.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\graphics-cfg\graphics.cfg"
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 99.
+)
+\Gin@req@height=\dimen122
+\Gin@req@width=\dimen123
+)
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\subfig\subfig.sty
+Package: subfig 2005/06/28 ver: 1.3 subfig package
+
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\caption\caption.sty
+Package: caption 2018/05/01 v3.3-147 Customizing captions (AR)
+
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\caption\caption3.sty
+Package: caption3 2018/05/27 v1.8a caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 64.
+\captionmargin=\dimen124
+\captionmargin@=\dimen125
+\captionwidth=\dimen126
+\caption@tempdima=\dimen127
+\caption@indent=\dimen128
+\caption@parindent=\dimen129
+\caption@hangindent=\dimen130
+)
+\c@ContinuedFloat=\count112
+Package caption Info: float package is loaded.
+)
+\c@KVtest=\count113
+\sf@farskip=\skip68
+\sf@captopadj=\dimen131
+\sf@capskip=\skip69
+\sf@nearskip=\skip70
+\c@subfigure=\count114
+\c@subfigure@save=\count115
+\c@lofdepth=\count116
+\c@subtable=\count117
+\c@subtable@save=\count118
+\c@lotdepth=\count119
+\sf@top=\skip71
+\sf@bottom=\skip72
+)
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\caption\subcaption.sty
+Package: subcaption 2018/05/01 v1.1-162 Sub-captions (AR)
+
+
+C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\caption\subcaption.sty:60: 
+Package subcaption Error: This package can't be used in cooperation
+(subcaption)                with the subfig package.
+
+See the subcaption package documentation for explanation.
+Type  H <return>  for immediate help
+If you do not understand this error, please take a closer look
+at the documentation of the `subcaption' package, especially the
+section about errors.
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+) (C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\cleveref\cleveref.sty
+Package: cleveref 2018/03/27 v0.21.4 Intelligent cross-referencing
+Package cleveref Info: `amsthm' support loaded on input line 3026.
+Package cleveref Info: `subfig' support loaded on input line 3164.
+)
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\thmtools\thm-restate.sty
 Package: thm-restate 2014/04/21 v66
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/thmtools/thmtools.sty
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\thmtools\thmtools.sty
 Package: thmtools 2014/04/21 v66
 \thmt@toks=\toks30
-\c@thmt@dummyctr=\count111
+\c@thmt@dummyctr=\count120
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/thmtools/thm-patch.sty
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\thmtools\thm-patch.sty
 Package: thm-patch 2014/04/21 v66
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/thmtools/parseargs.sty
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\thmtools\parseargs.sty
 Package: parseargs 2014/04/21 v66
 \@parsespec=\toks31
 ))
-(/usr/local/texlive/2017/texmf-dist/tex/latex/thmtools/thm-kv.sty
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\thmtools\thm-kv.sty
 Package: thm-kv 2014/04/21 v66
 Package thm-kv Info: Theorem names will be uppercased on input line 40.
 
-(/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\kvsetkeys.sty"
 Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
 
-(/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty"
 Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
 )
-(/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\etexcmds.sty"
 Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
 
-(/usr/local/texlive/2017/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifluatex.sty"
 Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
 Package ifluatex Info: LuaTeX not detected.
 )
@@ -269,120 +337,576 @@ Package etexcmds Info: Could not find \expanded.
 ))
 Package thm-kv Info: kvsetkeys patch (v1.16 or later) on input line 156.
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/thmtools/thm-autoref.sty
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\thmtools\thm-autoref.sty
 Package: thm-autoref 2014/04/21 v66
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/thmtools/aliasctr.sty
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\thmtools\aliasctr.sty
 Package: aliasctr 2014/04/21 v66
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/carlisle/remreset.sty)))
-(/usr/local/texlive/2017/texmf-dist/tex/latex/thmtools/thm-listof.sty
+("C:\Program Files\MiKTeX 2.9\tex\latex\carlisle\remreset.sty"
+
+Package remreset Warning: The remreset package is obsolete:
+(remreset)                \@removefomresset is defined.
+
+)))
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\thmtools\thm-listof.sty
 Package: thm-listof 2014/04/21 v66
 )
-(/usr/local/texlive/2017/texmf-dist/tex/latex/thmtools/thm-amsthm.sty
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\latex\thmtools\thm-amsthm.sty
 Package: thm-amsthm 2014/04/21 v66
 \thmt@style@headstyle=\toks32
 )))
-\c@defn=\count112
-\c@theorem=\count113
-\c@lemma=\count114
-\c@proposition=\count115
 
-(./main.aux)
+main.tex:25: LaTeX Error: Command \ss already defined.
+               Or name \end... illegal, see p.192 of the manual.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+\c@defn=\count121
+\c@theorem=\count122
+\c@lemma=\count123
+\c@proposition=\count124
+\c@assumption=\count125
+(main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 87.
-LaTeX Font Info:    ... okay on input line 87.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 45.
+LaTeX Font Info:    ... okay on input line 45.
+Configuring pdfsync
+\PDFSYNC@ut=\write3
+\openout3 = `main.pdfsync'.
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics/graphicx.sty
-Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
+\PDFSYNCf@li@=\count126
+\PDFSYNC@rder=\count127
+**** pdfsync.sty: Synchronizing at \everypar
+\PDFSYNCeveryp@r=\toks33
+**** pdfsync.sty: Synchronizing at \everymath
+\PDFSYNCeverym@th=\toks34
+**** pdfsync.sty: Synchronizing at \everyhbox
+\PDFSYNCeveryhb@x=\toks35
+**** pdfsync.sty: Synchronizing at \everyvbox
+\PDFSYNCeveryvb@x=\toks36
+**** pdfsync.sty: started
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2017/06/25 v1.2c Standard LaTeX Graphics (DPC,SPQR)
+(C:\Users\dhamm\AppData\Roaming\MiKTeX\2.9\tex\context\base\supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count128
+\scratchdimen=\dimen132
+\scratchbox=\box31
+\nofMPsegments=\count129
+\nofMParguments=\count130
+\everyMPshowfont=\toks37
+\MPscratchCnt=\count131
+\MPscratchDim=\dimen133
+\MPnumerator=\count132
+\makeMPintoPDFobject=\count133
+\everyMPtoPDFconversion=\toks38
+) ("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\epstopdf-base.sty"
+Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics/trig.sty
-Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
-)
-(/usr/local/texlive/2017/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
-File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
-)
-Package graphics Info: Driver file: dvips.def on input line 99.
-)
-\Gin@req@height=\dimen122
-\Gin@req@width=\dimen123
-)
-LaTeX Font Info:    Try loading font information for U+msa on input line 94.
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\grfext.sty"
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsa.fd
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\kvdefinekeys.sty"
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ltxcmds.sty"
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
+)))
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\kvoptions.sty"
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+)
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\pdftexcmds.sty"
+Package: pdftexcmds 2018/01/30 v0.27 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifpdf.sty"
+Package: ifpdf 2017/03/15 v3.2 Provides the ifpdf switch
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+38.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 456.
+)
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: subfig package v1.3 is loaded.
+Package caption Info: End \AtBeginDocument code.
+LaTeX Font Info:    Try loading font information for U+msa on input line 50.
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsa.fd"
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 94.
+LaTeX Font Info:    Try loading font information for U+msb on input line 50.
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/amsfonts/umsb.fd
+("C:\Program Files\MiKTeX 2.9\tex\latex\amsfonts\umsb.fd"
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 94.
+) (intro.tex
 
-(/usr/local/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <6> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 94.
-LaTeX Font Info:    Try loading font information for OMS+cmtt on input line 94.
-
-LaTeX Font Info:    No file OMScmtt.fd. on input line 94.
+Package natbib Warning: Citation `sayama2013modeling' on page 1 undefined on in
+put line 18.
 
 
-LaTeX Font Warning: Font shape `OMS/cmtt/m/n' undefined
-(Font)              using `OMS/cmsy/m/n' instead
-(Font)              for symbol `textbraceleft' on input line 94.
+Package natbib Warning: Citation `social-frag' on page 1 undefined on input lin
+e 20.
 
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <8> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 99.
-(./intro.tex [1
 
-]) (./preliminary.tex [2] [3] [4]) (./exact.tex [5])
-(./approximate.tex [6] [7] [8] [9])
+Package natbib Warning: Citation `social-frag' on page 1 undefined on input lin
+e 26.
+
+
+Package natbib Warning: Citation `brot2012feedback' on page 1 undefined on inpu
+t line 27.
+
+
+Package natbib Warning: Citation `social-frag' on page 1 undefined on input lin
+e 30.
+
+
+LaTeX Warning: Reference `sec:methods' on page 1 undefined on input line 32.
+
+
+LaTeX Warning: Reference `subsec:summary' on page 1 undefined on input line 34.
+
+
+
+LaTeX Warning: Reference `sec:confirm' on page 1 undefined on input line 35.
+
+
+Package natbib Warning: Citation `social-frag' on page 1 undefined on input lin
+e 35.
+
+
+LaTeX Warning: Reference `sec:discrep' on page 1 undefined on input line 36.
+
+
+LaTeX Warning: Reference `sec:change' on page 1 undefined on input line 38.
+
+) (methods.tex
+
+Package natbib Warning: Citation `social-frag' on page 1 undefined on input lin
+e 4.
+
+[1
+
+{C:/Users/dhamm/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
+
+Package natbib Warning: Citation `social-frag' on page 2 undefined on input lin
+e 61.
+
+methods.tex:66: Argument of \mathaccentV has an extra }
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
 Runaway argument?
-{ \par We note that although Algorithm \ref {alg:exp} achieves our de\ETC.
-! File ended while scanning use of \dk.
-<inserted text> 
-                \par 
-l.111 \input{approximate.tex}
-                             
-? 
-(./efficient.tex
-Overfull \hbox (1.80113pt too wide) in paragraph at lines 3--3
-[]\OT1/cmr/bx/n/14.4 An Ef-fi-cient Al-go-rithm for Ap-prox-i-mately Fair and P
-ri-vate Clas-
- []
+methods.tex:66: Paragraph ended before \mathaccentV was complete
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
 
-[10] [11]) [12] (./main.bbl [13]) [14] (./prelimsapp.tex) (./appendix.tex
-[15] [16] [17] [18] [19] [20]) [21] (./main.aux)
+methods.tex:66: Missing $ inserted
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
 
-LaTeX Font Warning: Some font shapes were not available, defaults substituted.
+methods.tex:66: Missing } inserted
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+methods.tex:66: Too many }'s
+You've closed more groups than you opened.
+Such booboos are generally harmless, so keep going.
+
+methods.tex:66: Missing $ inserted
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+methods.tex:66: Argument of \mathaccentV has an extra }
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+methods.tex:66: Paragraph ended before \mathaccentV was complete
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+methods.tex:66: Missing $ inserted
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+methods.tex:66: Missing } inserted
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+methods.tex:66: Too many }'s
+You've closed more groups than you opened.
+Such booboos are generally harmless, so keep going.
+
+methods.tex:67: Missing $ inserted
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+LaTeX Warning: Reference `subsec:model' on page 2 undefined on input line 74.
+
+
+Package natbib Warning: Citation `hagberg2008exploring' on page 2 undefined on 
+input line 92.
+
+
+Package natbib Warning: Citation `social-frag' on page 2 undefined on input lin
+e 103.
+
+methods.tex:104: Argument of \mathaccentV has an extra }
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+methods.tex:104: Paragraph ended before \mathaccentV was complete
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+methods.tex:104: Missing $ inserted
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+methods.tex:104: Missing } inserted
+I've inserted something that you may have forgotten.
+(See the <inserted text> above.)
+With luck, this will get me unwedged. But if you
+really didn't forget anything, try typing `2' now; then
+my insertion and my current dilemma will both disappear.
+
+[2]
+methods.tex:104: Too many }'s
+You've closed more groups than you opened.
+Such booboos are generally harmless, so keep going.
+
+methods.tex:106: Missing $ inserted
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+LaTeX Warning: Reference `subsec:experiments' on page 3 undefined on input line
+ 111.
+
+) (confirm.tex
+<images/base-d.png, id=23, 511.6716pt x 501.5538pt>
+File: images/base-d.png Graphic file (type png)
+<use images/base-d.png>
+Package pdftex.def Info: images/base-d.png  used on input line 3.
+(pdftex.def)             Requested size: 211.38832pt x 207.20728pt.
+<images/base-rs.png, id=25, 513.8397pt x 507.3354pt>
+File: images/base-rs.png Graphic file (type png)
+<use images/base-rs.png>
+Package pdftex.def Info: images/base-rs.png  used on input line 6.
+(pdftex.def)             Requested size: 164.41711pt x 162.33516pt.
+<images/base-rw.png, id=26, 505.89pt x 506.6127pt>
+File: images/base-rw.png Graphic file (type png)
+<use images/base-rw.png>
+Package pdftex.def Info: images/base-rw.png  used on input line 8.
+(pdftex.def)             Requested size: 164.41711pt x 164.65489pt.
+
+confirm.tex:36: Undefined control sequence
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+confirm.tex:36: Undefined control sequence
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+confirm.tex:36: Undefined control sequence
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+confirm.tex:36: Package amsmath Error: Multiple \label's: label '{eq:base}' wil
+l be lost.
+
+See the amsmath package documentation for explanation.
+Type  H <return>  for immediate help
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+confirm.tex:36: Undefined control sequence
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+LaTeX Warning: Reference `one' on page 3 undefined on input line 38.
+
+
+LaTeX Warning: Reference `two' on page 3 undefined on input line 47.
+
+) (splDiscrepancy.tex [3] [4 <./images/base-d.png> <./images/base-rs.png> <./im
+ages/base-rw.png>]
+
+LaTeX Warning: Reference `subsec:scwcreg' on page 5 undefined on input line 34.
+
+
+
+LaTeX Warning: File `images/discrep view 1.png' not found on input line 49.
+
+<images/discrep view 1.png, id=37, 730.22812pt x 892.08281pt>
+File: images/discrep view 1.png Graphic file (type png)
+<use images/discrep view 1.png>
+Package pdftex.def Info: images/discrep view 1.png  used on input line 49.
+(pdftex.def)             Requested size: 187.89914pt x 229.54033pt.
+
+LaTeX Warning: File `images/discrep view 2.png' not found on input line 51.
+
+<images/discrep view 2.png, id=38, 726.46407pt x 825.83531pt>
+File: images/discrep view 2.png Graphic file (type png)
+<use images/discrep view 2.png>
+Package pdftex.def Info: images/discrep view 2.png  used on input line 51.
+(pdftex.def)             Requested size: 187.89914pt x 213.60321pt.
+splDiscrepancy.tex:70: Undefined control sequence
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+splDiscrepancy.tex:70: Undefined control sequence
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+splDiscrepancy.tex:70: Undefined control sequence
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+LaTeX Warning: File `images/d - rs - compsize.png.png' not found on input line 
+70.
+
+
+splDiscrepancy.tex:70: LaTeX Error: Unknown graphics extension: .png.png.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+<images/d-rw-compsize.png, id=39, 463.7325pt x 481.04718pt>
+File: images/d-rw-compsize.png Graphic file (type png)
+<use images/d-rw-compsize.png>
+Package pdftex.def Info: images/d-rw-compsize.png  used on input line 73.
+(pdftex.def)             Requested size: 164.41711pt x 170.5564pt.
+splDiscrepancy.tex:75: Undefined control sequence
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+splDiscrepancy.tex:75: Undefined control sequence
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+splDiscrepancy.tex:75: Undefined control sequence
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+<images/rw-rs-compsize.png, id=40, 463.7325pt x 491.58656pt>
+File: images/rw-rs-compsize.png Graphic file (type png)
+<use images/rw-rs-compsize.png>
+Package pdftex.def Info: images/rw-rs-compsize.png  used on input line 75.
+(pdftex.def)             Requested size: 164.41711pt x 174.29317pt.
+splDiscrepancy.tex:79: Undefined control sequence
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+splDiscrepancy.tex:79: Undefined control sequence
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+splDiscrepancy.tex:79: Undefined control sequence
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+splDiscrepancy.tex:91: Undefined control sequence
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+splDiscrepancy.tex:91: Undefined control sequence
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+splDiscrepancy.tex:91: Package amsmath Error: Multiple \label's: label '{eq:bas
+e}' will be lost.
+
+See the amsmath package documentation for explanation.
+Type  H <return>  for immediate help
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+LaTeX Warning: Reference `subsec:scwcreg' on page 5 undefined on input line 95.
+
+
+) (changeAll.tex) [5] [6 <./images/discrep view 1.png> <./images/discrep view 2
+.png>] (main.bbl)
+
+Package natbib Warning: There were undefined citations.
+
+[7 <./images/d-rw-compsize.png> <./images/rw-rs-compsize.png>] (main.aux
+
+Package natbib Warning: Citation(s) may have changed.
+(natbib)                Rerun to get citations correct.
+
+main.aux:88: Missing \endcsname inserted
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+main.aux:89: Missing \endcsname inserted
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+main.aux:90: Missing \endcsname inserted
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+main.aux:91: Missing \endcsname inserted
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+main.aux:92: Missing \endcsname inserted
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+main.aux:93: Missing \endcsname inserted
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+main.aux:94: Missing \endcsname inserted
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+main.aux:95: Missing \endcsname inserted
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+main.aux:96: Missing \endcsname inserted
+The control sequence marked <to be read again> should
+not appear between \csname and \endcsname.
+
+)
+
+LaTeX Warning: There were undefined references.
 
 
 LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 5973 strings out of 492991
- 96031 string characters out of 6132661
- 184409 words of memory out of 5000000
- 9409 multiletter control sequences out of 15000+600000
- 13941 words of font info for 53 fonts, out of 8000000 for 9000
+ 7969 strings out of 492973
+ 133219 string characters out of 3135933
+ 218819 words of memory out of 3000000
+ 11677 multiletter control sequences out of 15000+200000
+ 11849 words of font info for 46 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 45i,12n,43p,1051b,530s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 45i,26n,52p,327b,551s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
+ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
+les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKT
+eX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/f
+onts/type1/public/amsfonts/cm/cmmi5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type
+1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
+amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
+cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.
+pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Pr
+ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program File
+s/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX 2
+.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts
+/type1/public/amsfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/pu
+blic/amsfonts/cm/cmsy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsf
+onts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/sym
+bols/msbm10.pfb>
+Output written on C:/Users\dhamm\Desktop\DiverseNode\writeup\main.pdf (7 pages,
+ 2009521 bytes).
+PDF statistics:
+ 109 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 36 words of extra memory for PDF output out of 10000 (max. 10000000)
 
-Output written on main.dvi (21 pages, 105744 bytes).

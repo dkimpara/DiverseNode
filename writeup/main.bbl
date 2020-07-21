@@ -1,138 +1,37 @@
-\begin{thebibliography}{20}
+\begin{thebibliography}{4}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
-\bibitem[Abernethy et~al.(2017)Abernethy, Lee, McMillan, and Tewari]{abernethy}
-Jacob~D. Abernethy, Chansoo Lee, Audra McMillan, and Ambuj Tewari.
-\newblock Online learning via differential privacy.
-\newblock arXiv pre-print 1711.10019, 2017.
+\bibitem[Brot et~al.(2012)Brot, Muchnik, Goldenberg, and
+  Louzoun]{brot2012feedback}
+Hilla Brot, Lev Muchnik, Jacob Goldenberg, and Yoram Louzoun.
+\newblock Feedback between node and network dynamics can produce real-world
+  network properties.
+\newblock \emph{Physica A: Statistical Mechanics and its Applications},
+  391\penalty0 (24):\penalty0 6645--6654, 2012.
 
-\bibitem[Bird et~al.(2016)Bird, Barocas, Crawford, Diaz, and Wallach]{BBC+16}
-Sarah Bird, Solon Barocas, Kate Crawford, Fernando Diaz, and Hanna Wallach.
-\newblock Exploring or exploiting? {S}ocial and ethical implications of
-  autonomous experimentation in {AI}.
-\newblock In \emph{Proceedings of the Workshop on Fairness, Accountability, and
-  Transparency in Machine Learning}, 2016.
+\bibitem[Hagberg et~al.(2008)Hagberg, Swart, and S~Chult]{hagberg2008exploring}
+Aric Hagberg, Pieter Swart, and Daniel S~Chult.
+\newblock Exploring network structure, dynamics, and function using networkx.
+\newblock Technical report, Los Alamos National Lab.(LANL), Los Alamos, NM
+  (United States), 2008.
 
-\bibitem[Carlini et~al.(2018)Carlini, Liu, Kos, Erlingsson, and Song]{CLK+18}
-Nicholas Carlini, Chang Liu, Jernej Kos, Ulfar Erlingsson, and Dawn Song.
-\newblock The secret sharer: Measuring unintended neural network memorization
-  and extracting secrets.
-\newblock arXiv pre-print 1802.08232, 2018.
+\bibitem[Sayama and Yamanoi(2020)]{social-frag}
+Hiroki Sayama and Junichi Yamanoi.
+\newblock Beyond social fragmentation: Coexistence of cultural diversity and
+  structural connectivity is possible with social constituent diversity.
+\newblock In \emph{International Conference on Network Science}, pages
+  171--181. Springer, 2020.
 
-\bibitem[Chaudhuri et~al.(2011)Chaudhuri, Monteleoni, and Sarwate]{dperm}
-Kamalika Chaudhuri, Claire Monteleoni, and Anand~D Sarwate.
-\newblock Differentially private empirical risk minimization.
-\newblock \emph{Journal of Machine Learning Research}, 12:\penalty0 1069--1109,
-  2011.
-
-\bibitem[Datta et~al.(2018)Datta, Sen, and Tschantz]{DST18}
-Anupam Datta, Shayak Sen, and Michael~Carl Tschantz.
-\newblock Correspondences between privacy and nondiscrimination: {W}hy they
-  should be studied together.
-\newblock arXiv pre-print 1808.01735, 2018.
-
-\bibitem[Dwork et~al.(2006)Dwork, McSherry, Nissim, and Smith]{DMNS06}
-Cynthia Dwork, Frank McSherry, Kobbi Nissim, and Adam Smith.
-\newblock Calibrating noise to sensitivity in private data analysis.
-\newblock In \emph{Proceedings of the 3rd Conference on Theory of
-  Cryptography}, TCC '06, pages 265--284, 2006.
-
-\bibitem[Dwork et~al.(2010)Dwork, Rothblum, and Vadhan]{DRV10}
-Cynthia Dwork, Guy~N. Rothblum, and Salil Vadhan.
-\newblock Boosting and differential privacy.
-\newblock In \emph{Proceedings of the IEEE 51st Annual Symposium on Foundations
-  of Computer Science}, FOCS '10, pages 51--60, 2010.
-
-\bibitem[Dwork et~al.(2012)Dwork, Hardt, Pitassi, Reingold, and
-  Zemel]{dworkfta}
-Cynthia Dwork, Moritz Hardt, Toniann Pitassi, Omer Reingold, and Richard Zemel.
-\newblock Fairness through awareness.
-\newblock In \emph{Proceedings of the 3rd Innovations in Theoretical Computer
-  Science Conference}, ITCS '12, pages 214--226, 2012.
-
-\bibitem[Ekstrand et~al.(2018)Ekstrand, Joshaghani, and
-  Mehrpouyan]{ekstrandprivfair}
-Michael~D. Ekstrand, Rezvan Joshaghani, and Hoda Mehrpouyan.
-\newblock Privacy for all: Ensuring fair and equitable privacy protections.
-\newblock In \emph{Proceedings of the 1st Conference on Fairness,
-  Accountability and Transparency}, FAT* '18, pages 35--47. PMLR, 2018.
-
-\bibitem[Freund and Schapire(1996)]{freund}
-Yoav Freund and Robert~E. Schapire.
-\newblock Game theory, on-line prediction and boosting.
-\newblock In \emph{Proceedings of the Ninth Annual Conference on Computational
-  Learning Theory}, COLT '96, pages 325--332, 1996.
-
-\bibitem[Hardt et~al.(2016)Hardt, Price, and Srebro]{hardteqop}
-Moritz Hardt, Eric Price, and Nathan Srebro.
-\newblock Equality of opportunity in supervised learning.
-\newblock In \emph{Advances in Neural Information Processing Systems 29}, NIPS
-  '16, pages 3315--3323, 2016.
-
-\bibitem[Hebert-Johnson et~al.(2018)Hebert-Johnson, Kim, Reingold, and
-  Rothblum]{HKR+18}
-Ursula Hebert-Johnson, Michael Kim, Omer Reingold, and Guy Rothblum.
-\newblock Multicalibration: {C}alibration for the
-  (computationally-identifiable) masses.
-\newblock In \emph{Proceedings of the 35th International Conference on Machine
-  Learning}, ICML '18, pages 1939--1948, 2018.
-
-\bibitem[Jagielski et~al.(2019)Jagielski, Kearns, Mao, Oprea,
-  Sharifi-Malvajerdi, and Ullman]{JKM+19}
-Matthew Jagielski, Michael Kearns, Jieming Mao, Aaron Oprea, Alina~Roth, Saeed
-  Sharifi-Malvajerdi, and Jonathan Ullman.
-\newblock Differentially private fair learning.
-\newblock \emph{arXiv preprint arXiv:1812.02696}, 2019.
-
-\bibitem[Kalai and Vempala(2005)]{kalai}
-Adam Kalai and Santosh Vempala.
-\newblock Efficient algorithms for online decision problems.
-\newblock \emph{Journal of Computer and System Sciences}, 71\penalty0
-  (3):\penalty0 291--307, 2005.
-
-\bibitem[Kearns et~al.(2014)Kearns, Pai, Roth, and Ullman]{ullman}
-Michael~J. Kearns, Mallesh~M. Pai, Aaron Roth, and Jonathan Ullman.
-\newblock Mechanism design in large games: Incentives and privacy.
-\newblock In \emph{Proceedings of the 5th Conference on Innovations in
-  Theoretical Computer Scienc}, ITCS '14, pages 403--410, 2014.
-
-\bibitem[Kearns et~al.(2018)Kearns, Neel, Roth, and Wu]{gerrymandering}
-Michael~J. Kearns, Seth Neel, Aaron Roth, and Zhiwei~Steven Wu.
-\newblock Preventing fairness gerrymandering: Auditing and learning for
-  subgroup fairness.
-\newblock In \emph{Proceedings of the 35th International Conference on Machine
-  Learning}, ICML '18. PMLR, 2018.
-
-\bibitem[McGregor et~al.(2010)McGregor, Mironov, Pitassi, Reingold, Talwar, and
-  Vadhan]{2dplimits}
-Andrew McGregor, Ilya Mironov, Toniann Pitassi, Omer~Reingold Reingold, Kunal
-  Talwar, and Salil Vadhan.
-\newblock The limits of two-party differential privacy.
-\newblock In \emph{Proceedings of the IEEE 51st Annual Symposium on Foundations
-  of Computer Science}, FOCS '10, pages 81--90, 2010.
-
-\bibitem[Mc{S}herry and Talwar(2007)]{MT07}
-Frank Mc{S}herry and Kunal Talwar.
-\newblock Mechanism design via differential privacy.
-\newblock In \emph{Proceedings of the 48th annual IEEE Symposium on Foundations
-  of Computer Science}, FOCS '07, pages 94--103, 2007.
-
-\bibitem[Narasimhan(2018)]{pmlr-v84-narasimhan18a}
-Harikrishna Narasimhan.
-\newblock Learning with complex loss functions and constraints.
-\newblock In \emph{Proceedings of the 21st International Conference on
-  Artificial Intelligence and Statistics}, AISTATS '18, pages 1646--1654. PMLR,
-  2018.
-
-\bibitem[Woodworth et~al.(2017)Woodworth, Gunasekar, Ohannessian, and
-  Srebro]{woodworthFollowUp}
-Blake Woodworth, Suriya Gunasekar, Mesrob~I. Ohannessian, and Nathan Srebro.
-\newblock Learning non-discriminatory predictors.
-\newblock In \emph{Proceedings of the 2017 Conference on Learning Theory}, COLT
-  '17, pages 1920--1953. PMLR, 2017.
+\bibitem[Sayama et~al.(2013)Sayama, Pestov, Schmidt, Bush, Wong, Yamanoi, and
+  Gross]{sayama2013modeling}
+Hiroki Sayama, Irene Pestov, Jeffrey Schmidt, Benjamin~James Bush, Chun Wong,
+  Junichi Yamanoi, and Thilo Gross.
+\newblock Modeling complex systems with adaptive networks.
+\newblock \emph{Computers \& Mathematics with Applications}, 65\penalty0
+  (10):\penalty0 1645--1664, 2013.
 
 \end{thebibliography}
