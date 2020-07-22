@@ -1,31 +1,45 @@
-\section{New Analysis}
-%0.8 scc views
-We now present the new analysis method applied to the original data.
-We measure $SPL_s$, the
-shortest path length in the LSCC of the network on networks where the size of
-the LSCC is at least 80\% of the original number of individuals.
-
 \begin{figure}[hbt!]\centering
-    \subfloat[]{\label{}
-    \includegraphics[width=.45\linewidth]{images/d cd spl 0.8 scc.png}}\par
+    \subfloat[$\sd$]{
+    \includegraphics[width=.45\linewidth]{images/base-reduced-d.png}}\par
 
-    \subfloat[]{\label{}
-    \includegraphics[width=.35\linewidth]{images/rs cd spl 0.8 scc redcued.png}}\hfill
-    \subfloat[]{\label{}
-    \includegraphics[width=.35\linewidth]{images/rw cd spl 0.8 scc reduced.png}}
+    \subfloat[$\ss$]{
+    \includegraphics[width=.35\linewidth]{images/base-reduced-rs.png}}\hfill
+    \subfloat[$\sw$]{
+    \includegraphics[width=.35\linewidth]{images/base-reduced-rw.png}}
 
-    \caption{3D scatter plots showing the effect on $SPL_s$ and CD of each
+    \caption{3D scatter plots of the original model
+    showing the effect on $SPL_s$ and CD of each
     standard deviation of
-    (a) $d$, (b) $r_s$ and (c)$r_w$. Each dot is the result of one simulation run, colored
-    according to the standard deviation value.}
-    \label{figure}
+    (a) $d$, (b) $r_s$ and (c) $r_w$. Each dot is the result of one simulation run, colored
+    according to the standard deviation value. Only networks where $|LSCC|$ is at
+    least 80\% of the original network were included.}
+    \label{fig:base-reduced}
 \end{figure}
 
-\subsection{Linear Regression}
+\section{New Analysis}\label{sec:newAnalysis}
+%0.8 scc views
+We now present the new analysis method applied to the original data.
+We measure $SPL_s$, the average
+shortest path length in the LSCC of the network where the size of
+the LSCC is at least 80\% of the original number of individuals.
 
-\begin{gather}\label{eq:reduced}
-    <CD> ~ \thicksim ~ 2.28 + 1.73\sd + 1.82\sr - 2.20\sw -
+In figure \ref{fig:base-reduced} there is no obvious decrease in $SPL_s$,
+contradicting the results in the original paper.
+We do however confirm that $<CD>$ is maintained as $\sd$ and $\ss$ increases.
+
+
+\subsection{New Analysis: Linear Regression}
+
+\begin{gather}
+    <CD> ~ \thicksim ~ 2.28 + 1.73\sd + 1.82\ss - 2.20\sw -
                 5.44\ds + 2.92\dw + 3.05\ssw \label{red1}\\
-    <SPL_s> ~ \thicksim ~ 2.40 - 0.27\sd + 0.22\sr - 0.10 \sw -
+    <SPL_s> ~ \thicksim ~ 2.40 + 0.27\sd + 0.22\ss - 0.10 \sw -
                 0.14\ds + 0.17\dw + 0.17\ssw \label{red2}
 \end{gather}
+
+In terms of $<CD>$ equation (\ref{red1}) is very close to equation (\ref{one}).
+However, as foreshadowed, $<SPL_s>$ shows a very different behavior.
+In equation (\ref{red2}), $<SPL_s>$ actually increases with $\sd$, which is
+directly opposite to the relationship observed in the original results.
+Again, this points to the weakness in $<SPL>$ as originally defined.
+All terms were extremely significant as per the ANOVA analysis.

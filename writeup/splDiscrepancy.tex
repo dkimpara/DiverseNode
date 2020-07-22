@@ -6,7 +6,7 @@ While investigating the results of the previous section, we
 noticed that some trials resulted in a disconnected graph.
 However, these were only a small proportion (2\%) of the trials
 so the disconnected graphs were ignored in the analysis.
-The same protocol was also followed in the original paper.
+This same protocol was also followed in the original paper.
 
 We first noticed that a significant number of graphs were
 disconnected when we ran the same experiment but with our extension
@@ -16,7 +16,7 @@ This trend was also observed when the group sizes were unbalanced
 (10 and 40 individuals).
 We concluded that in order to compare results between differing
 initial conditions and models, we needed to think carefully
-about how to handle the
+about how to handle
 the disconnected graphs.
 
 In an organization with required performance goals, it is reasonable
@@ -27,35 +27,23 @@ We propose that if the organization size remains at greater than 80\%
 of the original, the organization is still viable.
 We performed our further analyses with this assumption.
 
-There are however, two ways to determine organizational size in a
-directed graph.
+There are however, two ways to determine organization size
+(connected component size) in a directed graph.
 One is to look at the largest strongly connected component (LSCC) and the other
 is to look at the largest weakly connected component (LWCC).
-We will see in section \ref{subsec:scwcreg} that in our experiments,
-the size of the LSCC is highly correlated with the size of the LWCC.
+Note that in our experiments,
+the size of the LSCC is highly correlated with the size of the LWCC (see appendix). Hence we only focus on the LSCC.
 
-\begin{defn}[$SPL_s$ and $SPL_w$:]
-    We define $SPL_s$ and $SPL_w$ on a network $G$
-    as the average shortest path length in $G$ of the largest strongly connected component
-    and the undirected version of the largest weakly connected component, respectively.
+\begin{defn}[$SPL$, $SPL_s$ and $SPL_w$]
+    $SPL$ is the average shortest path length on the whole network $G$.
+    We define $SPL_s$
+    as the average shortest path length in the largest strongly connected component in $G$. Similarly, $SPL_w$ is the average shortest path length in the undirected version of the largest weakly connected component of in $G$.
 \end{defn}
 
-We then applied this new analyses, analyzing the largest
-connected component to the original experiment.
+We then applied this new analysis, analyzing the largest
+connected component, to the original experiment.
 
-\subsection{Comparison Plots}
-\begin{figure}[hbt!]\centering
-    \subfloat[]{\label{View 1}
-    \includegraphics[width=.4\linewidth]{images/discrep view 1.png}}\hfill
-    \subfloat[]{\label{View 2}
-    \includegraphics[width=.4\linewidth]{images/discrep view 2.png}}
-
-    \caption{3D scatter plots showing CD, each
-    standard deviation of $d$, and $SPL$ in red,
-    $SPL_s$ in green, and $SPL_w$ in blue.}
-    \label{figure}
-\end{figure}
-
+\subsection{Comparing Different Measurements of SPL}
 
 Figure 2 shows the same plot as done in the previous section, on the
 same experiment data, except now
@@ -64,48 +52,72 @@ Note that both $SPL_s$ and $SPL_w$ do not decrease as $\sd$ increases,
 contrary to the trend of $SPL$.
 However, the trend in CD remains similar.
 
-\subsection{Component sizes}
-\begin{figure}[hbt!]\centering
-    \subfloat[]{\label{$\sd$ and $\sr$}
-    \includegraphics[width=.45\linewidth]{images/d - rs - compsize.png.png}}\par
+\begin{figure*}[hbt!]\centering
+    \subfloat{\label{View 2}
+    \includegraphics[width=.5\linewidth]{images/discrep-2.png}}
 
-    \subfloat[]{\label{$\sd$ and $\sw$}
-    \includegraphics[width=.35\linewidth]{images/d-rw-compsize.png}}\hfill
-    \subfloat[]{\label{$\sr$ and $\sw$}
-    \includegraphics[width=.35\linewidth]{images/rw-rs-compsize.png}}
+    \caption{3D scatter plots showing CD, each
+    standard deviation of $d$, and $SPL$ in red,
+    $SPL_s$ in green, and $SPL_w$ in blue.}
+    \label{fig:scwcSPL}
+\end{figure*}
+
+
+\begin{figure}[hbt!]\centering
+    \subfloat[$\sd$ and $\ss$]{\label{sr}
+    \includegraphics[width=.45\linewidth]{images/drscc.png}}\par
+
+    \subfloat[$\sd$ and $\sw$]{\label{dw}
+    \includegraphics[width=.35\linewidth]{images/drwcc.png}}\hfill
+    \subfloat[$\ss$ and $\sw$]{\label{dw}
+    \includegraphics[width=.35\linewidth]{images/rwrscc.png}}
 
     \caption{3D surface plots showing the interactions between the diversities
-    of combinations of $\sd$, $\sr$ and $\sw$ on the average size of the
+    of combinations of $\sd$, $\ss$ and $\sw$ on the average size of the
     LSCC and WSCC (higher surface).}
-    \label{figure}
+    \label{stdscc}
 \end{figure}
-Figure 3 shows surface pltos of different combinations of the standard deviations
-and the average LSCC and LWCC (higher surface) of all the trials for each pair of values.
-We observe that these plots imply that $\sd$ have a large negative correlation
-with the LSCC and LWCC.
+\subsection{Component sizes}
+Figure 3 shows surface plots of different combinations of the standard deviations
+and the average $|LSCC|$ and $|LWCC|$ (higher surface) of all the trials for each pair of values.
+We observe that these plots imply that $\sd$ has a large negative correlation
+with $|LSCC|$ and $|LWCC|$.
 The regression analysis on the average LSCC confirms this observation:
 
-\begin{gather}\label{eq:base}
-    |LSCC| ~ \thicksim ~ 1.04 - 0.40\sd - 0.01\sr - 0.02\sw -
-                0.11\ds + 9,16\dw + 0.01\ssw \label{three}\\
+\begin{gather}
+    |LSCC| ~ \thicksim ~ 1.04 - 0.40\sd - 0.01\ss - 0.02\sw -
+                0.11\ds + 9,16\dw + 0.01\ssw \label{three}
 \end{gather}
 
 The resulting R-squared was 0.7 and all terms were extremely significant
 according to the ANOVA analysis except for $\ssw$.
-Note that in \ref{subsec:scwcreg}, we show that the size of the LSCC and LWCC
+Note that in the appendix, we show that the size of the LSCC and LWCC
 are highly correlated so we focus only on the LSCC.
 
 \subsection{Definition of SPL}
-From the two previous sections, we have seen that $SPL_s$ and $SPL_w$ do not
-correlate with the trend of $SPL$ when $\sd$ increases.
-We have also seen a trend that the networks become significantly less
+\begin{figure}[hbt!]\centering
+    \subfloat{
+    \includegraphics[width=.6\linewidth]{images/scSPLview1.png}}\par
+
+    \caption{3D scatter plot showing the interactions between $\sd$, the size
+    of the LSCC, and $SPL$ as defined in the original paper. Disconencted networks
+    were excluded from this analysis.}
+    \label{fig:scSPL}
+\end{figure}
+
+Figure \ref{fig:scSPL} shows the relationship between $\sd$, the size of the LSCC
+and $SPL$. We see that at $\sd= 0.4, 0.5$, the trials with lower $SPL$  largely
+correlate with smaller sizes of the LSCC.
+From the two previous sections, we have seen that when $\sd$ increases,
+$SPL_s$ and $SPL_w$ do not correlate with the trend of $SPL$.
+We have also seen that the networks become significantly less
 strongly connected as $\sd$ increases.
-Here we suspect that a nuance in the definition of SPL maybe the cause of this
+Here we posit that a nuance in the definition of SPL is the cause of this
 discrepancy.
 
 Notice that in the definition of SPL, the distance from node $u$ to $v$ is 0 when
 $v$ is not reachable from $u$.
-This is also reflected in the standard library algorithms for calculating
+This is also reflected in the standard library algorithm for calculating
 SPL in networkx.
 The downward trend in $SPL$ can be explained by this fact and the fact that
 the size of the LSCC decreases as $\sd$ increases.
@@ -121,7 +133,6 @@ strongly connected directed graph, the SPL metric does not make sense.
 Even if many nodes are not reachable from each other, the SPL will still be
 low and could even be below 1.
 There is no way to distinguish between strong connectivity and high
-fragmentation.
+fragmentation (or decreased reachability).
 
-\subsection{Regression for SC vs WC} \label{subsec:scwcreg}
 

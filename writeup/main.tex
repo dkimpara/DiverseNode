@@ -13,16 +13,16 @@
 \usepackage{enumitem}
 \usepackage{graphicx, subfig}
 \usepackage{caption}
-\usepackage{subcaption}
 % \usepackage{algorithm, algorithmic}
 \usepackage{cleveref}
 \usepackage{thm-restate}
+\usepackage{listings, pdfpages}
 
 
 
 \newcommand\tab[1][0.5cm]{\hspace*{#1}}
 \newcommand{\sd}{\sigma_d}
-\newcommand{\ss}{\sigma_{r_s}}
+\renewcommand{\ss}{\sigma_{r_s}}
 \newcommand{\sw}{\sigma_{r_w}}
 \newcommand{\ds}{\sigma_{d}\sigma_{r_s}}
 \newcommand{\dw}{\sigma_{d}\sigma_{r_w}}
@@ -35,16 +35,10 @@
 \newtheorem{proposition}{Proposition}
 \newtheorem{assumption}{Assumption}
 
-%
-\newenvironment{claim}[1]{\par\noindent\underline{Claim:}\space#1}{}
-\newenvironment{claimproof}[1]{\par\noindent\underline{Proof:}\space#1}
-
-\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
-\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
 
 \begin{document}
 
-\title{Coexistence of cultural diversity and disassortative structure}
+\title{Coexistence of cultural diversity and highly connective structure}
  \author{Dhamma Kimpara}
 
 \maketitle
@@ -62,6 +56,9 @@
 
 \input{c_all.tex}
 
+\input{conclusion.tex}
+
+
 
 
 \newpage
@@ -69,7 +66,11 @@
 \bibliographystyle{plainnat}
 \bibliography{bib}
 
+\newpage
 
+\appendix
+
+\input{appendix.tex}
 \end{document}
 
 %%% Local Variables:

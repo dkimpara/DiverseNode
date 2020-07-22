@@ -37,7 +37,7 @@ def plotfig(std, cd, spl, label, filename=None, az=305, e=27,fsize=(10,10)):
     colors = 'mbcgyr'
     c = [colors[int(i*10)] for i in std]
     scatter_gen(std, cd, spl, "s.d. of " + label,
-                "<CD>", "<SPL>", c, filename, az, e, fsize)
+                "|LSCC|", "<SPL>", c, filename, az, e, fsize)
           
 def culture_avg_wrapper(df):
     new_col = []

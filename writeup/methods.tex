@@ -35,20 +35,20 @@
     Now, $v$ decides whether to accept or reject $u$'s culture.
     The probability of acceptance, $P_{A}$ is given by
 
-    \[P_A = \frac{1}{2} ^ {\frac{|c_v - c_u|}{d}} \].
+    \[P_A = \frac{1}{2} ^ {\frac{|c_v - c_u|}{d}} .\]
 
     Where $c_v$ and $c_u$ are $v$ and $u$'s cultural vectors, and $d$ is the
     cultural tolerance, or the cultural distance at which $P_A = 0.5$.
     If $u$'s culture is accepted, $c_v$ is updated as
 
-    \[c_v = (1-r_s)c_v + r_s c_u\]
+    \[c_v = (1-r_s)c_v + r_s c_u.\]
 
-    where $r_s$ is the rate of cultural change, and the edge weight from $u$ to
+    Where $r_s$ is the rate of cultural change. The edge weight from $u$ to
     $v$, $w_{uv}$ is updated as
 
-    \[w_{uv} = \text{logistic}(\text{logit}(w_{uv}) + r_w)\]
+    \[w_{uv} = \text{logistic}(\text{logit}(w_{uv}) + r_w).\]
 
-    where $r_w$ is the rate of edge weight change. 
+    Where $r_w$ is the rate of edge weight change. 
     However, if the $u$'s culture is rejected, $v$ does not update their culture
     but the edge weight is updated in the opposite direction as
 
@@ -58,15 +58,15 @@
     
     In all experiments, we use $d=0.5, r_s=0.5,$ and $r_w = 0.5$ as the mean
     values.
-    In our extension of \citep{social-frag}, we include $d$, $r_s$, and $r_w$ in
-    culture vector $c_v$ for all individuals (resulting in $c_v \in \mathbb{R}^{13} $ ).
+    In our extended model, we include $d$, $r_s$, and $r_w$ in
+    culture vector $c_v$ for all individuals, hence $c_v \in \mathbb{R}^{13}$.
 
 \subsection{Experiments}\label{subsec:experiments}
     For each experiment, we drew the behavior parameters of each individual,
-    $d, r_s$ and $r_w$, from $N(0.5, \sigma_{\dot})$ where $\sigma_{\dot}$
-    corresponds to the parameter being sampled ($d, r_s$ or $r_w$).
-    The standard deviations of $d, r_s$ and $r_w$, with
-    values between 0.0 and 0.5 at interval 0.1 (6 values for each standard deviation
+    $d, r_s$ and $r_w$, from $N(0.5, \sigma_{-})$ where
+    $\sigma_{-}$ corresponds to the parameter being sampled ($d, r_s$, or $r_w$).
+    The standard deviations $\sd, \ss$, and $\sw$, were each varied
+    between 0.0 and 0.5 at interval 0.1 (6 values for each standard deviation
     resulting in 216 unique settings).
     For each setting of the experimental standard deviations, we performed 100 independent
     trials.
@@ -84,7 +84,7 @@
 
     \begin{defn}{Average Shortest Path Length ($SPL$).}
 
-        \[ <SPL> := \frac{1}{n(n-1)} \sum_{v \neq u} d(u,v)\]
+        \[ <SPL> := \frac{1}{n(n-1)} \sum_{v \neq u} d(u,v).\]
 
         Where $n$ is the number of nodes or individuals in $G$ and $d(u,v)$ is
         the length of the shortest path from $u$ to $v$, where all edges have
@@ -101,20 +101,21 @@
     makes the parameter nonsensical.
     We chose to clip the values where appropriate in order for the model to make sense since
     \citep{social-frag} does not mention how to handle these cases.
-    In experiments with high standard deviations (close to $\sigma{\dot}=0.5$ ),
+    In experiments with high standard deviations $\sigma_{-} \thicksim 0.5$,
     this tends to cluster parameters at either $0.01$ or $0.99$.
 
 
 
 \subsection{Summary of Results}\label{subsec:summary}
-    First, we found that we were able to confirm the results, when analyzing the data
+    First, we found that we were able to confirm the results when analyzing the data
     as described in \ref{subsec:experiments}.
-    However, while doing this, an ambiguity in how to handle resulting graphs that
-    were disconnected presented a potential weakness.
+    However, while doing this, an ambiguity in how to handle
+    disconnected graphs presented a potential weakness.
     We investigated this ambiguity and found that when the analysis of the
     shortest path length was confined to only either the largest weakly
     connected component or the largest strongly connected component, the results
     in terms of SPL diverged from the original results.
-    We then re-analyze the original experiments and perform this same analysis
+    We then re-analyzed the original experiments and performed this same analysis
     on our extension where we include every individual's behavior parameters
-    ($d$, $r_s$, $r_w$) in their culture vector.
+    ($d$, $r_s$, $r_w$) in their culture vector. Note that we have omitted ANOVA 
+    tables in order to not clutter the project.
